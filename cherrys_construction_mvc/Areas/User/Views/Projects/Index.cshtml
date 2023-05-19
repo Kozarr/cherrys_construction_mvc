@@ -48,7 +48,7 @@ else
     <div class="container" data-aos="fade-up">
 
         <div class="portfolio-isotope" data-portfolio-filter="*" data-portfolio-layout="masonry" data-portfolio-sort="original-order">
-            @if (Model.Tags.Any())
+            @if (Model.Tags != null)
             {
                 <ul class="portfolio-flters" data-aos="fade-up" data-aos-delay="100">
                     <li data-filter="*" class="filter-active">All</li>
@@ -66,7 +66,7 @@ else
             {
                 <p class="text-danger">Please add Tags before projects</p>
             }
-            @if (Model.Projects.Any())
+            @if (Model.Projects != null)
             {
                 <div class="row gy-4 portfolio-container" data-aos="fade-up" data-aos-delay="200">
 

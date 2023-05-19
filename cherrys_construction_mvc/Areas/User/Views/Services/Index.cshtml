@@ -43,7 +43,7 @@ else
     <partial name="_WebsiteSettingsWarningPartial" />
 }
 <!-- ======= Servie Cards Section ======= -->
-@if (Model.ServiceTypes.Any())
+@if (Model.ServiceTypes!=null)
 {
     var DataAOS = 100;
     <section id="services-cards" class="services-cards section">
@@ -65,7 +65,7 @@ else
 }
 else { }
 <!-- End Servie Cards Section -->
-@if (Model.Services.Any())
+@if (Model.Services != null)
 {
 <!-- ======= Services Section ======= -->
 <section id="services" class="services section-bg">
@@ -105,7 +105,7 @@ else { }
 else { }
 <!-- End Services Section -->
 <!-- ======= Company Values Features Section ======= -->
-@if (Model.CompanyValues.Any())
+@if (Model.CompanyValues != null)
 {
     int tabItem = 1;
     int tabContentItem = 1;
@@ -177,7 +177,7 @@ else { }
 else { }
 <!-- End Company Values Features Section -->
 <!-- ======= Testimonials Section ======= -->
-@if (Model.Testimonies.Any())
+@if (Model.Testimonies != null)
 {
     <section id="testimonials" class="testimonials section">
         <div class="container" data-aos="fade-up">

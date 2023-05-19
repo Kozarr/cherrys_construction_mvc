@@ -35,10 +35,10 @@ namespace cherrys_construction_mvc.DbInitializer
             try
             {
                 // if this is true - we have some migrations that have not been applied to the database
-                if (_context.Database.GetPendingMigrations().Any())
-                {
-                    _context.Database.Migrate();
-                }
+                //if (_context.Database.GetPendingMigrations().Any())
+                //{
+                //    _context.Database.Migrate();
+                //}
             }
             catch (Exception)
             {             
