@@ -1,0 +1,47 @@
+/*--------------------------------------------------------------
+# Admin Panel
+Template: Resi Pro
+--------------------------------------------------------------*/
+.admin-panel {
+    padding-top: 150px;
+
+    .box {
+        height: 270px;
+        padding: 30px 30px;
+        box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.10);
+        transition: all ease-in-out 0.3s;
+
+        i {
+            display: block;
+            font-size: 3rem;
+            font-weight: 700;
+            color: $cherrys-blue;
+            padding: 0;
+        }
+
+        h4 {
+            font-size: 24px;
+            font-weight: 600;
+            padding: 0;
+            margin: 20px 0;
+            color: $cherrys-black;
+        }
+
+        p {
+            color: lighten($cherrys-black, 40);
+            font-size: 15px;
+            margin: 0;
+            padding: 0;
+        }
+
+        &:hover {
+            background: $cherrys-blue;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+            transform: scale(1.04);
+
+            i, h4, p {
+                color: $white;
+            }
+        }
+    }
+}

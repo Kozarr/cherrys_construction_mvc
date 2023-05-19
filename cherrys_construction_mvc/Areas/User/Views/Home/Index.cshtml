@@ -1,0 +1,405 @@
+﻿@using cherrys_construction_mvc.ViewModels.Home;
+@model HomeViewModel
+@{
+    ViewData["Title"] = Breadcrumb.HomeTitle;
+}
+
+<!-- ======= Hero Section ======= -->
+<section id="hero" class="hero">
+    @if (Model.HeroSlider == null)
+    {
+
+        <div class="vh-100" style="background-color: slategrey;">
+            <p class="text-center vh-100" style="transform: translate(0%,50%);font-size:20px;">Please add a Hero</p>
+        </div>
+    }
+    else
+    {
+        int slideItem = 1;
+        <div class="info d-flex align-items-center">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6 text-center">
+                        @if (Model.HeroSlider.Title != null)
+                        {
+                            <h2 data-aos="fade-down">@Model.HeroSlider.Title</h2>
+                        }
+                        <div data-aos="fade-up" data-aos-delay="200">@Html.Raw(Model.HeroSlider.Description)</div>
+                        <a data-aos="fade-up" data-aos-delay="200" href="#constructions" class="btn-get-started">@Model.HeroSlider.ButtonText</a>
+                        <a data-aos="fade-up" data-aos-delay="200" class="btn-get-started" asp-area="User" asp-controller="Contact" asp-action="Index">Contact us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="hero-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="6000">
+            @if (Model.HeroSlider.Images.Any())
+            {
+                @foreach (var image in Model.HeroSlider.Images)
+                {
+                    string imageLink = image.PathImage.Remove(0, 8);
+                    string newLink = ("~/images/" + imageLink);
+                    @if (slideItem == 1)
+                    {
+                        <div class="carousel-item active" style="background-image: url('@Url.Content(newLink)')"></div>
+                    }
+                    else
+                    {
+                        <div class="carousel-item" style="background-image: url('@Url.Content(newLink)')"></div>
+                    }
+                    slideItem += 1;
+                }
+            }
+            else
+            {
+                <div class="carousel-item active" style="background-color: grey;"></div>
+            }
+
+
+            <a class="carousel-control-prev" href="#hero-carousel" role="button" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
+            </a>
+
+            <a class="carousel-control-next" href="#hero-carousel" role="button" data-bs-slide="next">
+                <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
+            </a>
+
+        </div>
+    }
+</section><!-- End Hero Section -->
+@if (Model.CompanyInfo == null)
+{
+    <partial name="_WebsiteSettingsWarningPartial" />
+}
+
+<!-- ======= CTA Section ======= -->
+@if (Model.CompanyInfo != null)
+{
+    @if (Model.CallToActionSettings != null)
+    {
+        <section id="get-started" class="get-started section-bg">
+            <div class="container">
+
+                <div class="row justify-content-between gy-4">
+
+                    <div class="col-lg-6 d-flex align-items-center" data-aos="fade-up">
+                        <div class="content">
+                            <h3>@Model.CallToActionSettings.Title</h3>
+                            <p>@Html.Raw(Model.CallToActionSettings.Description)</p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-5" data-aos="fade">
+                        <form asp-action="Mail" method="post" enctype="multipart/form-data" class="php-email-form">
+                            <h3>@Model.CallToActionSettings.FormTitle</h3>
+                            <p>@Html.Raw(Model.CallToActionSettings.FormDescription)</p>
+                            <div class="row gy-3">
+                                <div class="col-md-12">
+                                    <input asp-for="@Model.Message.Name" type="text" class="form-control" placeholder="Name" />
+                                    <span asp-validation-for="@Model.Message.Name" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <input asp-for="@Model.Message.Email" type="text" class="form-control" placeholder="Email" />
+                                    <span asp-validation-for="@Model.Message.Email" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <input asp-for="@Model.Message.Phone" type="text" class="form-control" placeholder="Phone" />
+                                </div>
+
+                                <div class="col-md-12">
+                                    <input asp-for="@Model.Message.Subject" type="text" class="form-control" placeholder="Subject" required />
+                                    <span asp-validation-for="@Model.Message.Subject" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <textarea id="tinyMceMail" asp-for="@Model.Message.Body" class="form-control" typeof="text" rows="2" placeholder="Message" required></textarea>
+                                </div>
+
+                                <div class="col-md-12 text-center">
+                                    <div class="loading">Loading</div>
+                                    <div class="error-message"></div>
+                                    <div class="sent-message">Your request has been sent successfully. Thank you!</div>
+
+                                    <button type="submit">@Model.CallToActionSettings.ButtonText</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- End Quote Form -->
+
+                </div>
+            </div>
+        </section>
+    }
+    else
+    {
+        <p class="text-danger">Please add a call to action.</p>
+    }
+}
+else { }
+<!-- End CTA Section -->
+<!-- ======= Service Types Section ======= -->
+<section id="constructions" class="constructions">
+    <div class="container" data-aos="fade-up">
+        @if (Model.ServiceTypes != null)
+        {
+            <div class="section-header">
+                <h2>Industries</h2>
+                <p></p>
+            </div>
+
+            <div class="row gy-4">
+                @foreach (var item in Model.ServiceTypes)
+                {
+                    @if(item != null)
+                    {
+                        string imageLink = item.ImageLink.Remove(0, 8);
+                        string image = ("~/images/" + imageLink);
+
+                        <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                            <div class="card-item h-100">
+                                <div class="row">
+                                    <div class="col-xl-5">
+
+                                        <div class="card-bg" style="background-image: url('@Url.Content(image)');">
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-7 d-flex align-items-center">
+                                        <div class="card-body">
+                                            <h4 class="card-title">@item.Title</h4>
+                                            <p>@Html.Raw(item.Description)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-danger">Failed to load Service Category</p>
+                    }
+                }
+            </div>
+        }
+        else
+        {
+            <p class="text-danger">Please Add Service Categories</p>
+        }
+
+    </div>
+</section>
+<!-- End Service Types Section -->
+@if (Model.Services != null)
+{
+    @if (Model.Services.Any())
+    {
+        <!-- ======= Services Section ======= -->
+        <section id="services" class="services section-bg">
+            <div class="container" data-aos="fade-up">
+
+                <div class="section-header">
+                    <h2>Services</h2>
+                   @* <p>
+                        How we can help you achive your project
+                    </p>*@
+                </div>
+
+                <div class="row gy-4">
+
+                    @foreach (var service in Model.Services)
+                    {
+                        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                            <div class="service-item position-relative h-100">
+                                <div class="icon">
+                                    @if (service.Icon != null || service.Icon == "")
+                                    {
+                                        <i class="@service.Icon"></i>
+                                    }
+                                </div>
+                                <h3>@service.Title</h3>
+                                <p>@Html.Raw(service.Description)</p>
+                                <a asp-area="User" asp-controller="Service" asp-action="Details" asp-route-id="@service.Id" class="readmore stretched-link">Learn more <i class="bi bi-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+        </section>
+    }
+    else { }
+    <!-- End Services Section -->
+}
+
+<!-- ======= Company Certificates Section ======= -->
+<section id="alt-services" class="alt-services">
+    <div class="container" data-aos="fade-up">
+        @if (Model.CompanyCertificates != null)
+        {
+            <div class="row justify-content-around gy-4">
+                @if (Model.CertSettings != null)
+                {
+                    string imageLink = Model.CertSettings.ImageLink.Remove(0, 8);
+                    string image = ("~/images/" + imageLink);
+                    <div class="col-lg-6 img-bg" style="background-image: url('@Url.Content(image)');" data-aos="zoom-in" data-aos-delay="100"></div>
+                }
+                <div class="col-lg-5 d-flex flex-column justify-content-center">
+                    @if (Model.CertSettings != null)
+                    {
+                        <h3>@Model.CertSettings.Title</h3>
+                        @Html.Raw(Model.CertSettings.Description)
+                    }               
+                    @foreach (var item in Model.CompanyCertificates)
+                    {
+                        <div class="icon-box d-flex position-relative" data-aos="fade-up" data-aos-delay="100">
+                            @if (item.Icon != null || item.Icon == "")
+                            {
+                                <i class="@item.Icon flex-shrink-0"></i>
+                            }
+                            else
+                            {
+                                <i class="bi bi-check-square flex-shrink-0"></i>
+                            }
+                            <div>
+                                <h4><a class="stretched-link">@item.Title</a></h4>
+                                <p>@Html.Raw(item.Description)</p>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        }
+        else
+        {
+        }
+    </div>
+</section>
+<!-- End Company Certificates Section -->
+<!-- ======= Company Values Features Section ======= -->
+<section id="features" class="features section">
+    <div class="container" data-aos="fade-up" data-aos-delay="150">
+        @if (Model.CompanyValues != null)
+        {
+            int tabItem = 1;
+            int tabContentItem = 1;
+            int dataAosDelay = 100;
+            <ul class="nav nav-tabs row g-2 d-flex">
+                @foreach (var item in Model.CompanyValues)
+                {
+                    @if (tabItem == 1)
+                    {
+                        <li class="nav-item col-3">
+                            <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#tab-@tabItem">
+                                <h4>@item.Title</h4>
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item col-3">
+                            <a class="nav-link show" data-bs-toggle="tab" data-bs-target="#tab-@tabItem">
+                                <h4>@item.Title</h4>
+                            </a>
+                        </li>
+                    }
+                    tabItem += 1;
+                }
+            </ul>
+            <div class="tab-content">
+                @foreach (var item in Model.CompanyValues)
+                {
+                    @if (tabContentItem == 1)
+                    {
+                        <div class="tab-pane active show" id="tab-@tabContentItem">
+                            <div class="row">
+                                <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="@dataAosDelay">
+                                    <h3>@item.Title</h3>
+                                    <p class="fst-italic">@Html.Raw(item.Description)</p>
+                                </div>
+                                <div class="col-lg-6 order-1 order-lg-2 text-center" data-aos="fade-up" data-aos-delay="@dataAosDelay">
+                                    <img src="@item.ImageLink" alt="" class="img-fluid">
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="tab-pane show" id="tab-@tabContentItem">
+                            <div class="row">
+                                <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="@dataAosDelay">
+                                    <h3>@item.Title</h3>
+                                    <p class="fst-italic">@Html.Raw(item.Description)</p>
+                                </div>
+                                <div class="col-lg-6 order-1 order-lg-2 text-center" data-aos="fade-up" data-aos-delay="@dataAosDelay">
+                                    <img src="@item.ImageLink" alt="" class="img-fluid">
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    tabContentItem += 1;
+                    dataAosDelay += 100;
+                }
+
+            </div>
+        }
+        else
+        {
+        }
+    </div>
+</section>
+<!-- End Company Values Features Section -->
+<!-- ======= Testimonials Section ======= -->
+<section id="testimonials" class="testimonials section">
+    <div class="container" data-aos="fade-up">
+        @if (Model.Testimonies != null)
+        {
+            <div class="section-header">
+                <h2>Testimonials</h2>
+                <p></p>
+            </div>
+
+            <div class="slides-2 swiper">
+                <div class="swiper-wrapper">
+                    @foreach (var item in Model.Testimonies)
+                    {
+                        <div class="swiper-slide">
+                            <div class="testimonial-wrap">
+                                <div class="testimonial-item">
+                                    <img src="@item.ImageLink" class="testimonial-img" alt="">
+                                    <h3>@item.Name</h3>
+                                    <h4>@item.Position</h4>
+                                    <div class="stars">
+                                        @for (int star = 0; star != item.Stars; star++)
+                                        {
+                                            <i class="bi bi-star-fill"></i>
+                                        }
+                                    </div>
+                                    <p>
+                                        @Html.Raw(@item.Description)
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        }
+        else
+        {
+        }
+
+    </div>
+</section>
+<!-- End Testimonials Section -->
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

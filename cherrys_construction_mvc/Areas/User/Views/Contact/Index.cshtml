@@ -1,0 +1,222 @@
+﻿@using cherrys_construction_mvc.ViewModels.Contact;
+@model ContactViewModel
+@{
+    ViewData["Title"] = Breadcrumb.UserContactTitle;
+}
+
+<!-- ======= Breadcrumbs ======= -->
+@if (Model.CompanyInfo != null && Model.CompanyInfo.NavigationImageURL != null)
+{
+    string imageLink = Model.CompanyInfo.NavigationImageURL.Remove(0, 8);
+    string image = ("~/images/" + imageLink);
+    <div class="breadcrumbs d-flex align-items-center" style="background-image: url('@Url.Content(image)');">
+        <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+
+            <h2>@Breadcrumb.UserContactTitle</h2>
+            <ol>
+                <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Index">@Breadcrumb.HomeTitle</a></li>
+                <li>@Breadcrumb.UserContactTitle</li>
+            </ol>
+
+        </div>
+    </div>
+
+    <!-- End Breadcrumbs -->
+}
+else
+{
+    <div class="breadcrumbs d-flex align-items-center" style="background-color: darkslategray;">
+        <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+
+            <h2>@Breadcrumb.UserContactTitle</h2>
+            <ol>
+                <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Index">@Breadcrumb.HomeTitle</a></li>
+                <li>@Breadcrumb.UserContactTitle</li>
+            </ol>
+
+        </div>
+    </div>
+
+    <!-- End Breadcrumbs -->
+}
+@if (Model.CompanyInfo == null)
+{
+    <partial name="_WebsiteSettingsWarningPartial" />
+}
+<!-- ======= Contact Section ======= -->
+@if (Model.CompanyInfo != null)
+{
+    <section id="contact" class="contact">
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+            <div class="row gy-4">
+
+                <!-- START of Social Media -->
+                @if (Model.CompanyInfo.FaceBookLink == null && Model.CompanyInfo.InstagramLink == null &&
+               Model.CompanyInfo.YoutubeLink == null && Model.CompanyInfo.LinkedInLink == null && Model.CompanyInfo.TwitterLink == null) { }
+                else
+                {
+                    <div class="col-lg-6">
+                        <div class="info-item d-flex flex-column justify-content-center align-items-center">
+                            <div class="social-links row">
+                                <div class="col">
+                                    @if (Model.CompanyInfo.FaceBookLink != null)
+                                    {
+                                        <li>
+                                            <a href="@Model.CompanyInfo.FaceBookLink"><i class="fa-brands fa-facebook"></i></a>
+                                        </li>
+                                    }
+                                </div>
+                                <div class="col">
+                                    @if (Model.CompanyInfo.InstagramLink != null)
+                                    {
+                                        <li>
+                                            <a href="@Model.CompanyInfo.InstagramLink"><i class="fa-brands fa-instagram"></i></a>
+                                        </li>
+                                    }
+
+                                </div>
+                                <div class="col">
+                                    @if (Model.CompanyInfo.YoutubeLink != null)
+                                    {
+                                        <li>
+                                            <a href="@Model.CompanyInfo.YoutubeLink"><i class="fa-brands fa-youtube"></i></a>
+                                        </li>
+                                    }
+                                </div>
+                                <div class="col">
+                                    @if (Model.CompanyInfo.LinkedInLink != null)
+                                    {
+                                        <li>
+                                            <a href="@Model.CompanyInfo.LinkedInLink"><i class="fa-brands fa-linkedin"></i></a>
+                                        </li>
+                                    }
+                                </div>
+                                <div class="col">
+                                    @if (Model.CompanyInfo.TwitterLink != null)
+                                    {
+                                        <li>
+                                            <a href="@Model.CompanyInfo.TwitterLink"><i class="fa-brands fa-twitter"></i></a>
+                                        </li>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- END of Social Media -->
+                }
+                @if (Model.CompanyInfo.FaceBookLink == null && Model.CompanyInfo.InstagramLink == null &&
+               Model.CompanyInfo.YoutubeLink == null && Model.CompanyInfo.LinkedInLink == null && Model.CompanyInfo.TwitterLink == null)
+                {
+                    <div class="col-lg-6 col-md-6">
+                        <div class="info-item d-flex flex-column justify-content-center align-items-center">
+                            <i class="fa-solid fa-envelope"></i>
+                            <h3>Email Us</h3>
+                            <a href="mailto: @Model.CompanyInfo.CompanyEmail"><p>@Model.CompanyInfo.CompanyEmail</p></a>
+                        </div>
+                    </div>
+
+                    <!-- End Info Item -->
+
+                    <div class="col-lg-6 col-md-6">
+                        <div class="info-item  d-flex flex-column justify-content-center align-items-center">
+                            <i class="fa-solid fa-phone"></i>
+                            <h3>Call Us</h3>
+                            <a href="tel:+1 @Model.CompanyInfo.CompanyPhoneNumber"><p>+1 @Model.CompanyInfo.CompanyPhoneNumber</p></a>
+                        </div>
+                    </div>
+
+                    <!-- End Info Item -->
+                }
+                else
+                {
+                    <div class="col-lg-3 col-md-6">
+                        <div class="info-item d-flex flex-column justify-content-center align-items-center">
+                            <i class="fa-solid fa-envelope"></i>
+                            <h3>Email Us</h3>
+                            <a href="mailto: @Model.CompanyInfo.CompanyEmail"><p>@Model.CompanyInfo.CompanyEmail</p></a>
+                        </div>
+                    </div>
+
+                    <!-- End Info Item -->
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="info-item  d-flex flex-column justify-content-center align-items-center">
+                            <i class="fa-solid fa-phone"></i>
+                            <h3>Call Us</h3>
+                            <a href="tel:+1 @Model.CompanyInfo.CompanyPhoneNumber"><p>+1 @Model.CompanyInfo.CompanyPhoneNumber</p></a>
+                        </div>
+                    </div>
+
+                    <!-- End Info Item -->
+                }
+            </div>
+
+            <div class="row gy-4 mt-1">
+                @if (Model.CompanyInfo.ServiceArea == null)
+                {
+                    <div class="col-lg-4">
+                        <div class="info-item  d-flex flex-column justify-content-center align-items-center">
+                            <i class="fa-solid fa-map"></i>
+                            <h3>Our Area of Service</h3>
+                            <p>Kentucky</p>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-lg-4">
+                        <div class="info-item  d-flex flex-column justify-content-center align-items-center">
+                            <i class="fa-solid fa-map"></i>
+                            <h3>Our Area of Service</h3>
+                            <p>@Model.CompanyInfo.ServiceArea</p>
+                        </div>
+                    </div>
+                }
+
+                <div class="col-lg-8">
+                    <form method="post" asp-action="Index" enctype="multipart/form-data" class="php-email-form">
+                        <div class="row gy-4">
+                            <div class="form-floating col-6">
+                                <div class="">
+                                    <input asp-for="@Model.Message.Name" type="text" id="obj1" class="form-control" placeholder="Full Name" />
+                                    <span asp-validation-for="@Model.Message.Name" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-floating col-6">
+                                <div>
+                                    <input asp-for="@Model.Message.Email" type="email" id="obj2" class="form-control" placeholder="Email" />
+                                    <span asp-validation-for="@Model.Message.Email" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-floating col-12">
+                                <div class="">
+                                    <input asp-for="@Model.Message.Subject" type="text" class="form-control" placeholder="Subject" />
+                                    <span asp-validation-for="@Model.Message.Subject" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-floating col-12">
+                                <div>
+                                    <textarea asp-for="@Model.Message.Body" id="obj3" class="form-control" placeholder="Body"></textarea>
+                                    <span asp-validation-for="@Model.Message.Body" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit">@Model.CompanyInfo.SendButton</button>
+                            </div>
+                        </div>
+                    </form>
+                </div><!-- End Contact Form -->
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- End Contact Section -->
+}
+else { }
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

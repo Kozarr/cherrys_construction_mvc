@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = Breadcrumb.ProjectsDashboardTitle;
+}
+
+<!-- ======= Breadcrumbs ======= -->
+<div class="breadcrumbs d-flex align-items-center" style="background-image: url('/assets/img/breadcrumbs-bg.jpg');">
+    <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+
+        <h2>@Breadcrumb.ProjectsDashboardTitle</h2>
+        <ol>
+            <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Index">@Breadcrumb.HomeTitle</a></li>
+            <li><a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.AdminController" asp-action="Index">@Breadcrumb.AdminTitle</a></li>
+            <li>@Breadcrumb.ProjectsDashboardTitle</li>
+        </ol>
+
+    </div>
+</div><!-- End Breadcrumbs -->
+
+<!-- ======= Admin Panel ======= -->
+<section id="admin-panel" class="admin-panel">
+    <div class="container">
+        <div class="section-header">
+            <h2>@Breadcrumb.ProjectsDashboardTitle</h2>
+        </div>
+
+        <div class="row gy-4">
+
+            <div class="col-lg-6 col-md-6">
+                <a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.ProjectsController" asp-action="Index">
+                    <div class="box">
+                        <i class="fa-solid fa-hammer"></i>
+                        <h4>@Breadcrumb.ProjectsTitle</h4>
+                        <p>
+                            You can manage projects that you want to showcase to users here.
+                        </p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.TagsController" asp-action="Index">
+                    <div class="box">
+                        <i class="fa-solid fa-tags"></i>
+                        <h4>@Breadcrumb.TagsTitle</h4>
+                        <p>
+                            These are the sorting tags that sort the projects on the user side.
+                        </p>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+

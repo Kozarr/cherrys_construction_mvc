@@ -1,0 +1,395 @@
+/*--------------------------------------------------------------
+# Set main reusable colors and fonts using CSS variables
+# Learn more about CSS variables at https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
+--------------------------------------------------------------*/
+/* Fonts */
+:root {
+    --font-default: #{$font-default};
+    --font-primary: #{$font-primary};
+    --font-secondary: #{$font-secondary};
+}
+
+/* Colors */
+:root {
+    --color-default: #{$default};
+    --color-primary: #{$primary};
+    --color-secondary: #{$secondary};
+}
+
+/* Smooth scroll behavior */
+:root {
+    scroll-behavior: smooth;
+}
+
+/*--------------------------------------------------------------
+# General
+--------------------------------------------------------------*/
+body {
+    font-family: var(--font-default);
+    color: $text-color;
+    overflow-x: hidden;
+}
+
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+    color: lighten($primary, 10);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-primary);
+}
+
+.create-btn {
+    display: inline-block;
+    padding: 12px 40px;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: var(--font-primary);
+    letter-spacing: 1px;
+    border-radius: 4px;
+    color: $cherrys-yellow;
+    background-color: $cherrys-blue;
+    transition: all 0.3s ease-in-out;
+    margin-bottom: 20px;
+    border: none;
+
+    &:hover {
+        background-color: lighten($cherrys-blue,15);
+    }
+}
+
+.back-btn {
+    display: inline-block;
+    padding: 12px 40px;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: var(--font-primary);
+    letter-spacing: 1px;
+    border-radius: 4px;
+    color: $cherrys-white;
+    background-color: $cherrys-gray;
+    transition: all 0.3s ease-in-out;
+    margin-bottom: 20px;
+
+    &:hover {
+        background-color: lighten($cherrys-gray,15);
+        color: $cherrys-white;
+    }
+}
+
+.delete-btn {
+    display: inline-block;
+    padding: 12px 40px;
+    border: none;
+    border-radius: 4px;
+    color: $cherrys-white;
+    background-color: $cherrys-red;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    transition: all 0.3s ease-in-out;
+    font-family: var(--font-primary);
+
+    &:hover {
+        background-color: lighten($cherrys-red, 15);
+        color: $cherrys-white;
+    }
+}
+
+.edit-btn {
+    display: inline-block;
+    padding: 12px 40px;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: var(--font-primary);
+    letter-spacing: 1px;
+    border: none;
+    border-radius: 4px;
+    color: $cherrys-black;
+    background-color: $cherrys-yellow;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+        background-color: lighten($cherrys-yellow,15);
+    }
+}
+
+.add-btn-container {
+    margin-top: 60px;
+    margin-bottom: 10px;
+
+    .add-button {
+        font-size: 3rem;
+        padding: 14px 14px;
+        clip-path: circle();
+        background-color: $cherrys-blue;
+        color: $cherrys-white;
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+            background-color: $cherrys-yellow;
+            color: $cherrys-black;
+        }
+    }
+}
+
+.account-btn {
+    display: inline-block;
+    padding: 8px 30px;
+    font-size: 18px;
+    font-weight: 500;
+    font-family: var(--font-primary);
+    letter-spacing: 1px;
+    border: none;
+    border-radius: 4px;
+    color: $cherrys-black;
+    background-color: $white;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+        background-color: lighten($cherrys-yellow,15);
+    }
+
+    &.selected {
+        background-color: $cherrys-yellow;
+    }
+
+    &.active {
+        background-color: $cherrys-yellow;
+    }
+}
+
+.account-form {
+    margin-bottom: 5rem;
+    margin-top: 5rem;
+
+    input {
+        margin-bottom: 1rem;
+    }
+
+    button {
+        margin-bottom: 0.8rem;
+    }
+
+    a, form {
+        margin-bottom: 0.8rem;
+    }
+}
+
+
+
+.p-overflow {
+    display: flex;
+    overflow: hidden;
+    line-clamp: 3;
+}
+
+label {
+    color: grey;
+}
+
+
+
+.account {
+    .form-check-input {
+        color: blue;
+    }
+    .form-links{
+        a {
+            color: grey;
+        }
+        color: grey;
+    } 
+    .login-form-label {
+        label {
+            color: $cherrys-blue;
+        }
+    }
+
+    .form-check-label {
+        color: $cherrys-blue;
+    }
+}
+
+/*--------------------------------------------------------------
+# Sections & Section Header
+--------------------------------------------------------------*/
+section {
+    padding: 80px 0;
+    overflow: hidden;
+}
+
+.section-bg {
+    background-color: lighten($secondary, 62);
+}
+
+.section-header {
+    text-align: center;
+    padding-bottom: 70px;
+
+    h2 {
+        font-size: 32px;
+        font-weight: 700;
+        position: relative;
+        color: $cherrys-blue;
+
+        &:before, &:after {
+            content: '';
+            width: 50px;
+            height: 2px;
+            background: $cherrys-yellow;
+            display: inline-block;
+        }
+
+        &:before {
+            margin: 0 15px 10px 0;
+        }
+
+        &:after {
+            margin: 0 0 10px 15px;
+        }
+    }
+
+    p {
+        margin: 0 auto 0 auto;
+        color: $text-color;
+
+        @media (min-width: 1199px) {
+            max-width: 60%;
+        }
+    }
+}
+/*--------------------------------------------------------------
+# Breadcrumbs
+--------------------------------------------------------------*/
+.breadcrumbs {
+    padding: 140px 0 60px 0;
+    min-height: 30vh;
+    position: relative;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    &:before {
+        content: '';
+        background-color: rgba($black, 0.6);
+        position: absolute;
+        inset: 0;
+    }
+
+    h2 {
+        font-size: 56px;
+        font-weight: 500;
+        color: #fff;
+        font-family: var(--font-secondary);
+    }
+
+    ol {
+        display: flex;
+        flex-wrap: wrap;
+        list-style: none;
+        padding: 0 0 10px 0;
+        margin: 0;
+        font-size: 16px;
+        font-weight: 600;
+        color: $cherrys-yellow;
+
+        a {
+            color: rgba(#fff, .8);
+            transition: 0.3s;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        li + li {
+            padding-left: 10px;
+        }
+
+        li + li::before {
+            display: inline-block;
+            padding-right: 10px;
+            color: #fff;
+            content: "/";
+        }
+    }
+}
+/*--------------------------------------------------------------
+# Scroll top button
+--------------------------------------------------------------*/
+.scroll-top {
+    position: fixed;
+    visibility: hidden;
+    opacity: 0;
+    right: 15px;
+    bottom: 15px;
+    z-index: 99999;
+    background: var(--color-primary);
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    transition: all 0.4s;
+
+    i {
+        font-size: 24px;
+        color: $white;
+        line-height: 0;
+    }
+
+    &:hover {
+        background: lighten($cherrys-blue, 10);
+        color: $white;
+    }
+
+    &.active {
+        visibility: visible;
+        opacity: 1;
+    }
+}
+/*--------------------------------------------------------------
+# Preloader
+--------------------------------------------------------------*/
+#preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    overflow: hidden;
+    background: #fff;
+    transition: all 0.6s ease-out;
+
+    &:before {
+        content: "";
+        position: fixed;
+        top: calc(50% - 30px);
+        left: calc(50% - 30px);
+        border: 6px solid #fff;
+        border-color: var(--color-primary) transparent var(--color-primary) transparent;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: animate-preloader 1.5s linear infinite;
+    }
+}
+
+@keyframes animate-preloader {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+/*--------------------------------------------------------------
+# Disable aos animation delay on mobile devices
+--------------------------------------------------------------*/
+@media screen and (max-width: 768px) {
+    [data-aos-delay] {
+        transition-delay: 0 !important;
+    }
+}

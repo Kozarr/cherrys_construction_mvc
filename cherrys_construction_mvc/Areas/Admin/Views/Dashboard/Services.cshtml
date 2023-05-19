@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = Breadcrumb.ServicesDashboardTitle;
+}
+
+<!-- ======= Breadcrumbs ======= -->
+<div class="breadcrumbs d-flex align-items-center" style="background-image: url('/assets/img/breadcrumbs-bg.jpg');">
+    <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+
+        <h2>@Breadcrumb.ServicesDashboardTitle</h2>
+        <ol>
+            <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Index">@Breadcrumb.HomeTitle</a></li>
+            <li><a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.AdminController" asp-action="Index">@Breadcrumb.AdminTitle</a></li>
+            <li>@Breadcrumb.ServicesDashboardTitle</li>
+        </ol>
+
+    </div>
+</div><!-- End Breadcrumbs -->
+
+<!-- ======= Admin Panel ======= -->
+<section id="admin-panel" class="admin-panel">
+    <div class="container">
+        <div class="section-header">
+            <h2>@Breadcrumb.ServicesDashboardTitle</h2>
+        </div>
+
+        <div class="row gy-4">
+
+            <div class="col-lg-6 col-md-12">
+                <a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.ServicesController" asp-action="Index">
+                    <div class="box">
+                        <i class="fa-regular fa-screwdriver-wrench"></i>
+                        <h4>@Breadcrumb.ServicesTitle</h4>
+                        <p>
+                            Manage the services this company offers.
+                        </p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.ServiceCategoriesController" asp-action="Index">
+                    <div class="box">
+                        <i class="fa-solid fa-list"></i>
+                        <h4>@Breadcrumb.ServiceCategoriesTitle</h4>
+                        <p>
+                            You can manage your service types here.
+                        </p>
+                    </div>
+                </a>
+            </div>      
+
+        </div>
+    </div>
+</section>
+
+

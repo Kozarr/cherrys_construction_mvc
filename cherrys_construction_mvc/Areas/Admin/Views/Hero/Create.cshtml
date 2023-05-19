@@ -1,0 +1,72 @@
+﻿@model HeroSliderRequest
+
+@{
+    ViewData["Title"] = Breadcrumb.HeroTitle;
+}
+
+<!-- ======= Breadcrumbs ======= -->
+<div class="breadcrumbs d-flex align-items-center" style="background-image: url('/assets/img/breadcrumbs-bg.jpg');">
+    <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+
+        <h2>@Breadcrumb.HeroTitle</h2>
+        <ol>
+            <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Index">@Breadcrumb.HomeTitle</a></li>
+            <li><a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.AdminController" asp-action="Index">@Breadcrumb.AdminTitle</a></li>
+            <li><a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.HeroController" asp-action="Index">@Breadcrumb.HeroTitle</a></li>
+            <li>@Breadcrumb.Create</li>
+        </ol>
+
+    </div>
+</div><!-- End Breadcrumbs -->
+
+
+<section id="list" class="list">
+    <div class="row">
+        <div class="col-lg-6" style="margin-left: auto; margin-right:auto;">
+
+            <!-- Multi Columns Form -->
+            <form method="post" asp-action="Create" enctype="multipart/form-data">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-md-12 form-floating mb-3">
+                            <input asp-for="Title" id="obj1" class="form-control" placeholder="Hero Title" />
+                            <label asp-for="Title" for="obj1">Hero Title</label>
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-12 mb-5">
+                            <label asp-for="Description">Hero Description</label>
+                            <textarea asp-for="Description" class="form-control"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-12 form-floating mb-3">
+                            <input asp-for="ButtonText" id="obj2" class="form-control" placeholder="Hero Button Text" />
+                            <label asp-for="ButtonText" for="obj2">Hero Scroll Down Button (Text)</label>
+                            <span asp-validation-for="ButtonText" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <label asp-for="ListImages">Images</label>
+                            <input asp-for="ListImages" multiple type="file" class="form-control" />
+                            <span asp-validation-for="ListImages" class="text-danger"></span>
+                        </div>
+
+                        <div class="mt-3">
+                            <a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.AdminController" asp-action="Index" class="back-btn">@Breadcrumb.Back</a>
+                            <button type="submit" class="create-btn">@Breadcrumb.Create</button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </form><!-- End Multi Columns Form -->
+
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
+

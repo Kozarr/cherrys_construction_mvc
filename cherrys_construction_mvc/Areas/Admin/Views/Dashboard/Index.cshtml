@@ -1,0 +1,230 @@
+﻿@{
+    ViewData["Title"] = Breadcrumb.AdminTitle;
+}
+
+<!-- ======= Breadcrumbs ======= -->
+<div class="breadcrumbs d-flex align-items-center" style="background-image: url('/assets/img/breadcrumbs-bg.jpg');">
+    <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+
+        <h2>@Breadcrumb.AdminTitle</h2>
+        <ol>
+            <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Index">@Breadcrumb.HomeTitle</a></li>
+            <li>@Breadcrumb.AdminTitle</li>
+        </ol>
+
+    </div>
+</div><!-- End Breadcrumbs -->
+
+<!-- ======= Admin Panel ======= -->
+<section id="admin-panel" class="admin-panel">
+    <div class="container">
+        <div class="section-header">
+            <h2>Content Panels</h2>
+        </div>
+
+        <div class="row gy-4">
+
+            <div class="col-lg-6 col-md-12">
+                <a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.AdminController" asp-action="Projects">
+                    <div class="box">
+                        <i class="fa-solid fa-hammer"></i>
+                        <h4>@Breadcrumb.ProjectsTitle</h4>
+                        <p>
+                            You can manage projects that you want to showcase to people here.
+                        </p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-6 col-md-12">
+                <a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.AdminController" asp-action="Services">
+                    <div class="box">
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                        <h4>@Breadcrumb.ServicesTitle</h4>
+                        <p>
+                            You can manage your services items here.
+                        </p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-6 col-md-6">
+                <a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.AdminController" asp-action="Certificates">
+                    <div class="box">
+                        <i class="fa-regular fa-certificate"></i>
+                        <h4>@Breadcrumb.CertificatesTitle</h4>
+                        <p>
+                            Manage Company Certificates and Certificate Section Information
+                        </p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.ValuesController" asp-action="Index">
+                    <div class="box">
+                        <i class="fa-solid fa-ranking-star"></i>
+                        <h4>@Breadcrumb.ValuesTitle</h4>
+                        <p>
+                            Your company values that you want to mention on the website.
+                        </p>
+                    </div>
+                </a>
+            </div>
+          
+            <div class="col-lg-3 col-md-6">
+                <a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.StoryController" asp-action="Index">
+                    <div class="box">
+                        <i class="fa-solid fa-clock"></i>
+                        <h4>@Breadcrumb.StoryTitle</h4>
+                        <p>
+                            You can manage the story of your company here.
+                        </p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-6 col-md-6">
+                <a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.AdminController" asp-action="Qualities">
+                    <div class="box">
+                        <i class="fa-solid fa-bullseye"></i>
+                        <h4>@Breadcrumb.QualitiesTitle</h4>
+                        <p>
+                            You can manage your company qualities here.
+                        </p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.MembersController" asp-action="Index">
+                    <div class="box">
+                        <i class="fa-solid fa-helmet-safety"></i>
+                        <h4>@Breadcrumb.MembersTitle</h4>
+                        <p>
+                            Here you can manage your emplayees profiles.
+                        </p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.TestimoniesController" asp-action="Index">
+                    <div class="box">
+                        <i class="fa-regular fa-star-half-stroke"></i>
+                        <h4>@Breadcrumb.TestimoniesTitle</h4>
+                        <p>
+                            You can manage all Customer Reviews in this Panel
+                        </p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.HeroController" asp-action="Index">
+                    <div class="box">
+                        <i class="fa-solid fa-panorama"></i>
+                        <h4>@Breadcrumb.HeroTitle</h4>
+                        <p>
+                            Hero: The welcome slider on the home page (first thing you see).
+                        </p>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+@if (User.IsInRole(StaticDetails.Role_Admin))
+{
+    <section id="admin-panel" class="admin-panel">
+        <div class="container">
+            <div class="section-header">
+                <h2>Website Panels</h2>
+            </div>
+            <div class="row gy-4">
+
+                <div class="col-lg-6 col-md-12">
+                    <a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.WebsiteSettingsController" asp-action="Index">
+                        <div class="box">
+                            <i class="fa-solid fa-gear"></i>
+                            <h4>@Breadcrumb.WebsiteSettingsTitle</h4>
+                            <p>
+                                This is the first thing you have to add.
+                                Manage You website info across from here.
+                            </p>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.MailFormSettingsController" asp-action="Index">
+                        <div class="box">
+                            <i class="fa-solid fa-envelope-open-text"></i>
+                            <h4>@Breadcrumb.MailFormSettingsTitle</h4>
+                            <p>
+                                Manage the home page contact form content here.
+                            </p>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.LegalDocumentsController" asp-action="Index">
+                        <div class="box">
+                            <i class="fa-regular fa-file-lines"></i>
+                            <h4>@Breadcrumb.LegalDocumentsTitle</h4>
+                            <p>
+                                Manage you website policies here.
+                            </p>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+}
+
+<section id="admin-panel" class="admin-panel">
+    <div class="container">
+        <div class="section-header">
+            <h2>Account Panels</h2>
+        </div>
+
+        <div class="row gy-4">
+
+            <div class="col-lg-6 col-md-12">
+                <a asp-area="Identity" asp-page="/Account/Manage/Index">
+                    <div class="box">
+                        <i class="fa-solid fa-user"></i>
+                        <h4>My Account</h4>
+                        <p>
+                            Manage your account.
+                        </p>
+                    </div>
+                </a>
+            </div>
+
+            @if (User.IsInRole(StaticDetails.Role_Admin))
+            {
+                <div class="col-lg-6 col-md-6">
+                    <a asp-area="Identity" asp-page="/Account/Register">
+                        <div class="box">
+                            <i class="fa-regular fa-id-badge"></i>
+                            <h4>Add User</h4>
+                            <p>
+                                You can Add Users to manage the website content.
+                            </p>
+                        </div>
+                    </a>
+                </div>
+            }
+
+        </div>
+
+    </div>
+</section>
+

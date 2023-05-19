@@ -1,0 +1,54 @@
+﻿@using cherrys_construction_mvc.ViewModels.Home;
+@model LegalVM
+
+@{
+    if(Model == null)
+    {
+        ViewData["Title"] = "Legal Document";
+    }
+    else
+    {
+        ViewData["Title"] = Model.LegalDocument.Title;
+    }
+}
+
+<!-- ======= Breadcrumbs ======= -->
+@if (Model.CompanyInfo != null && Model.CompanyInfo.NavigationImageURL != null)
+{
+    string imageLink = Model.CompanyInfo.NavigationImageURL.Remove(0, 8);
+    string image = ("~/images/" + imageLink);
+    <div class="breadcrumbs d-flex align-items-center" style="background-image: url('@Url.Content(image)');">
+        <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+            <h2>@Model.LegalDocument.Title</h2>
+        </div>
+    </div>
+
+    <!-- End Breadcrumbs -->
+}
+else
+{
+    <div class="breadcrumbs d-flex align-items-center" style="background-color: darkslategray;">
+        <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+            <h2>@ViewData["Title"]</h2>
+        </div>
+    </div>
+
+    <!-- End Breadcrumbs -->
+}
+
+<section>
+    <div class="container">
+        <div class="section-header">
+            <h2>@Model.LegalDocument.Title</h2>
+        </div>
+
+        <div>
+            @Html.Raw(Model.LegalDocument.Body)
+        </div>
+    </div>
+</section>
+
+
+
+
+

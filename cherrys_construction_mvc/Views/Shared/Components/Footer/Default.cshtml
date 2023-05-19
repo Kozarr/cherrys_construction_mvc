@@ -1,0 +1,120 @@
+﻿@model FooterCVM
+
+<!-- ======= Footer ======= -->
+@if (Model != null)
+{
+    @if (Model.CompanyInfo != null)
+    {
+        string image = "";
+        string style = "";
+        @if (Model.CompanyInfo.FooterImageURL != null)
+        {
+            string imageLink = Model.CompanyInfo.FooterImageURL.Remove(0, 8);
+            image = ("~/images/" + imageLink);
+        }
+        else
+        {
+            style = "background-color: grey;";
+        }
+        <footer id="footer" class="footer" style="background: url('@Url.Content(image)');
+    background-size: cover;
+    @style
+    background-repeat: no-repeat;">
+
+            <div class="footer-content position-relative">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-lg-5 col-md-6">
+                            <div class="footer-info">
+                                <h3>Cherry's Construction</h3>
+                                <p>
+                                    <strong>Located:</strong> Lexington, KY
+                                    <br>
+                                    @if (Model.CompanyInfo.CompanyPhoneNumber != null)
+                                    {
+                                        <a href="tel:+1 @Model.CompanyInfo.CompanyPhoneNumber"><strong>Phone:</strong> +1 @Model.CompanyInfo.CompanyPhoneNumber</a>
+                                        <br>
+                                    }
+                                    @if (Model.CompanyInfo.CompanyEmail != null)
+                                    {
+                                        <a href="mailto: @Model.CompanyInfo.CompanyEmail"><strong>Email:</strong> @Model.CompanyInfo.CompanyEmail</a>
+                                        <br>
+                                    }
+
+                                </p>
+                                <div class="social-links d-flex mt-3">
+                                    @if (Model.CompanyInfo.FaceBookLink != null)
+                                    {
+                                        <a href="@Model.CompanyInfo.FaceBookLink" class="d-flex align-items-center justify-content-center"><i class="fa-brands fa-facebook"></i></a>
+                                    }
+                                    @if (Model.CompanyInfo.InstagramLink != null)
+                                    {
+                                        <a href="@Model.CompanyInfo.InstagramLink" class="d-flex align-items-center justify-content-center"><i class="fa-brands fa-instagram"></i></a>
+                                    }
+                                    @if (Model.CompanyInfo.YoutubeLink != null)
+                                    {
+                                        <a href="@Model.CompanyInfo.YoutubeLink" class="d-flex align-items-center justify-content-center"><i class="fa-brands fa-youtube"></i></a>
+                                    }
+                                    @if (Model.CompanyInfo.LinkedInLink != null)
+                                    {
+                                        <a href="@Model.CompanyInfo.LinkedInLink" class="d-flex align-items-center justify-content-center"><i class="fa-brands fa-linkedin"></i></a>
+                                    }
+                                    @if (Model.CompanyInfo.TwitterLink != null)
+                                    {
+                                        <a href="@Model.CompanyInfo.TwitterLink" class="d-flex align-items-center justify-content-center"><i class="fa-brands fa-square-twitter"></i></a>
+                                    }
+                                </div>
+                            </div>
+                        </div><!-- End footer info column-->
+
+                        <div class="col-lg-3 col-md-3 footer-links">
+                            <h4>Legal</h4>
+                            <ul>
+                                @if (Model.LegalDocuments.Any())
+                                {
+                                    @foreach (var doc in Model.LegalDocuments)
+                                    {
+                                        <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Legal" asp-route-id="@doc.Id">@doc.Title</a></li>
+                                    }
+                                }
+                            </ul>
+                        </div><!-- End footer links column-->
+
+                        <div class="col-lg-3 col-md-3 footer-links">
+                            <h4>Navigation</h4>
+                            <ul>
+                                <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Index">@Breadcrumb.HomeTitle</a></li>
+                                <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.UserAboutController" asp-action="Index">@Breadcrumb.UserAboutTitle</a></li>
+                                <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.UserServicesController" asp-action="Index">@Breadcrumb.UserServicesTitle</a></li>
+                                <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.UserProjectsController" asp-action="Index">@Breadcrumb.UserProjectsTitle</a></li>
+                                <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.UserContactController" asp-action="Index">@Breadcrumb.UserContactTitle</a></li>
+                            </ul>
+                        </div><!-- End footer links column-->
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-legal text-center position-relative">
+                <div class="container">
+
+                    <div class="copyright">
+                        <div class="credits">
+                            <p>Designed & Developed by <strong><span><a href="https://xurnet.com">Xurnet</a></span></strong></p>
+                        </div>
+                        @if (Model.CompanyInfo.CompanyName != null)
+                        {
+                            <p>&copy; Copyright <strong><span>@Model.CompanyInfo.CompanyName</span></strong> All Rights Reserved</p>
+                        }
+                    </div>
+
+                </div>
+            </div>
+
+        </footer>
+    }
+    else { }
+}
+else { }
+<!-- End Footer -->

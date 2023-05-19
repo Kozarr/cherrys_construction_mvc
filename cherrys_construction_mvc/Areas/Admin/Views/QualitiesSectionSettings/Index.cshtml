@@ -1,0 +1,67 @@
+﻿@model IEnumerable<CompanyQualitiySettingResponce>
+
+@{
+    ViewData["Title"] = Breadcrumb.QualitiesSectionSettingsTitle;
+}
+
+<!-- ======= Breadcrumbs ======= -->
+<div class="breadcrumbs d-flex align-items-center" style="background-image: url('/assets/img/breadcrumbs-bg.jpg');">
+    <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+
+        <h2>@Breadcrumb.QualitiesSectionSettingsTitle</h2>
+        <ol>
+            <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Index">@Breadcrumb.HomeTitle</a></li>
+            <li><a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.AdminController" asp-action="Index">@Breadcrumb.AdminTitle</a></li>
+            <li><a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.AdminController" asp-action="Qualities">@Breadcrumb.QualitiesSectionSettingsDashboardTitle</a></li>
+            <li>@Breadcrumb.QualitiesSectionSettingsTitle</li>
+        </ol>
+
+    </div>
+</div><!-- End Breadcrumbs -->
+
+<section id="list" class="list">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-header">
+            <h2>@Breadcrumb.QualitiesSectionSettingsTitle</h2>
+        </div>
+
+        @if(Model != null)
+        {
+            @if (Model.Any())
+            {
+                foreach (var item in Model)
+                {
+                    <div class="row gy-4 list-item featured mt-4" data-aos="fade-up" data-aos-delay="100">
+                        <div class="col-lg-8 d-flex align-items-center justify-content-center">
+                            <div>
+                                <h3>@item.Title</h3>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-4 d-flex flex-row justify-content-around align-items-center">
+                            <div class="m-auto">
+                                <a class="edit-btn" asp-area="@Breadcrumb.AdminArea" asp-action="Edit" asp-route-id="@item.Id">@Breadcrumb.Edit</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            }
+            else
+            {
+                <div class="col-12 add-btn-container text-center" data-aos="fade-up" data-aos-delay="100">
+                    <a class="add-button" asp-area="@Breadcrumb.AdminArea" asp-action="Create"><i class="bi bi-plus"></i></a>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12 add-btn-container text-center" data-aos="fade-up" data-aos-delay="100">
+                <a class="add-button" asp-area="@Breadcrumb.AdminArea" asp-action="Create"><i class="bi bi-plus"></i></a>
+            </div>
+        }
+
+
+    </div>
+</section>

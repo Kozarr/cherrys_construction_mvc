@@ -1,0 +1,63 @@
+﻿@model IEnumerable<ServiceResponce>
+
+@{
+    ViewData["Title"] = Breadcrumb.ServicesTitle;
+}
+
+<!-- ======= Breadcrumbs ======= -->
+<div class="breadcrumbs d-flex align-items-center" style="background-image: url('/assets/img/breadcrumbs-bg.jpg');">
+    <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+
+        <h2>@Breadcrumb.ServicesTitle</h2>
+        <ol>
+            <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Index">@Breadcrumb.HomeTitle</a></li>
+            <li><a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.AdminController" asp-action="Index">@Breadcrumb.AdminTitle</a></li>
+            <li><a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.AdminController" asp-action="Services">@Breadcrumb.ServicesDashboardTitle</a></li>
+            <li>@Breadcrumb.ServicesTitle</li>
+        </ol>
+
+    </div>
+</div><!-- End Breadcrumbs -->
+
+<section id="list" class="list">
+    <div class="container" data-aos="fade-up">
+
+        @if (Model.Any())
+        {
+            <div class="text-center">
+                <div class="container" data-aos="fade-up">
+                @foreach (var service in Model)
+                {
+                        <div class="row gy-4 member-item featured mt-4" data-aos="fade-up" data-aos-delay="200">
+                            <div>
+                                <h3>@service.Title </h3>
+                                @if (service.Icon != null || service.Icon != "")
+                                {
+                                    <div class="icon"><i class="@service.Icon"></i></div>
+                                }                             
+                            </div>
+                            <div class="col-lg-9">
+                                <p>@Html.Raw(service.Description)</p>
+                            </div>
+                            <div class="col-lg-3 d-flex justify-content-around align-items-center mb-3">
+                                <div class="text-center"><a class="edit-btn" asp-area="@Breadcrumb.AdminArea" asp-action="Edit" asp-route-id="@service.Id">@Breadcrumb.Edit</a></div>
+                                <div class="text-center"><a class="delete-btn" asp-area="@Breadcrumb.AdminArea" asp-action="Delete" asp-route-id="@service.Id">@Breadcrumb.Delete</a></div>
+                            </div>
+
+                        </div><!-- End Members Item -->                  
+                }
+                </div>
+                <div class="col-12 add-btn-container" data-aos="fade-up" data-aos-delay="100">
+                    <a class="add-button" asp-area="@Breadcrumb.AdminArea" asp-action="Create"><i class="bi bi-plus"></i></a>
+                </div>
+
+            </div>
+        }
+        else
+        {
+            <div class="col-12 add-btn-container text-center" data-aos="fade-up" data-aos-delay="100">
+                <a class="add-button" asp-area="@Breadcrumb.AdminArea" asp-action="Create"><i class="bi bi-plus"></i></a>
+            </div>
+        }
+    </div>
+</section>

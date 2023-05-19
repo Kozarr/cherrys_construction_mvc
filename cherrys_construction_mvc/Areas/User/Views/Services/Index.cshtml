@@ -1,0 +1,222 @@
+﻿@using cherrys_construction_mvc.ViewModels.Service;
+@model ServiceViewModel
+
+@{
+    ViewData["Title"] = Breadcrumb.UserServicesTitle;
+}
+
+<!-- ======= Breadcrumbs ======= -->
+@if (Model.CompanyInfo != null && Model.CompanyInfo.NavigationImageURL != null)
+{
+    string imageLink = Model.CompanyInfo.NavigationImageURL.Remove(0, 8);
+    string image = ("~/images/" + imageLink);
+    <div class="breadcrumbs d-flex align-items-center" style="background-image: url('@Url.Content(image)');">
+        <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+
+            <h2>@Breadcrumb.UserServicesTitle</h2>
+            <ol>
+                <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Index">@Breadcrumb.HomeTitle</a></li>
+                <li>@Breadcrumb.UserServicesTitle</li>
+            </ol>
+
+        </div>
+    </div>
+    <!-- End Breadcrumbs -->
+}
+else
+{
+    <div class="breadcrumbs d-flex align-items-center" style="background-color: darkslategray;">
+        <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+
+            <h2>@Breadcrumb.UserServicesTitle</h2>
+            <ol>
+                <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Index">@Breadcrumb.HomeTitle</a></li>
+                <li>@Breadcrumb.UserServicesTitle</li>
+            </ol>
+
+        </div>
+    </div>
+    <!-- End Breadcrumbs -->
+}
+@if (Model.CompanyInfo == null)
+{
+    <partial name="_WebsiteSettingsWarningPartial" />
+}
+<!-- ======= Servie Cards Section ======= -->
+@if (Model.ServiceTypes.Any())
+{
+    var DataAOS = 100;
+    <section id="services-cards" class="services-cards section">
+        <div class="container" data-aos="fade-up">
+            <div class="row gy-4">
+
+                @foreach (var item in Model.ServiceTypes)
+                {
+                    <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="@DataAOS">
+                        <h3>@item.Title</h3>
+                        <p>@Html.Raw(item.Description)</p>
+                    </div>
+                    DataAOS += 100;
+                }
+
+            </div>
+        </div>
+    </section>
+}
+else { }
+<!-- End Servie Cards Section -->
+@if (Model.Services.Any())
+{
+<!-- ======= Services Section ======= -->
+<section id="services" class="services section-bg">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-header">
+            <h2>Services</h2>
+           @* <p>
+                How we can help you achive your project
+            </p>*@
+        </div>
+
+        <div class="row gy-4">
+
+                @foreach(var service in Model.Services)
+                {
+                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                        <div class="service-item position-relative h-100">
+                            <div class="icon">
+                                @if(service.Icon != null || service.Icon == "")
+                                {
+                                    <i class="@service.Icon"></i>
+                                }
+                            </div>
+                            <h3>@service.Title</h3>
+                            <p>@Html.Raw(service.Description)</p>
+                            <a asp-area="User" asp-controller="Service" asp-action="Details" asp-route-id="@service.Id" class="readmore stretched-link">Learn more <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                }
+
+        </div>
+
+    </div>
+</section>
+}
+else { }
+<!-- End Services Section -->
+<!-- ======= Company Values Features Section ======= -->
+@if (Model.CompanyValues.Any())
+{
+    int tabItem = 1;
+    int tabContentItem = 1;
+    int dataAosDelay = 100;
+    <section id="features" class="features section">
+        <div class="container" data-aos="fade-up" data-aos-delay="150">
+
+            <ul class="nav nav-tabs row g-2 d-flex">
+                @foreach (var item in Model.CompanyValues)
+                {
+                    @if (tabItem == 1)
+                    {
+                        <li class="nav-item col-3">
+                            <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#tab-@tabItem">
+                                <h4>@item.Title</h4>
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item col-3">
+                            <a class="nav-link show" data-bs-toggle="tab" data-bs-target="#tab-@tabItem">
+                                <h4>@item.Title</h4>
+                            </a>
+                        </li>
+                    }
+                    tabItem += 1;
+                }
+            </ul>
+            <div class="tab-content">
+                @foreach (var item in Model.CompanyValues)
+                {
+                    @if (tabContentItem == 1)
+                    {
+                        <div class="tab-pane active show" id="tab-@tabContentItem">
+                            <div class="row">
+                                <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="@dataAosDelay">
+                                    <h3>@item.Title</h3>
+                                    <p class="fst-italic">@Html.Raw(item.Description)</p>
+                                </div>
+                                <div class="col-lg-6 order-1 order-lg-2 text-center" data-aos="fade-up" data-aos-delay="@dataAosDelay">
+                                    <img src="@item.ImageLink" alt="" class="img-fluid">
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="tab-pane show" id="tab-@tabContentItem">
+                            <div class="row">
+                                <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="@dataAosDelay">
+                                    <h3>@item.Title</h3>
+                                    <p class="fst-italic">@Html.Raw(item.Description)</p>
+                                </div>
+                                <div class="col-lg-6 order-1 order-lg-2 text-center" data-aos="fade-up" data-aos-delay="@dataAosDelay">
+                                    <img src="@item.ImageLink" alt="" class="img-fluid">
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    tabContentItem += 1;
+                    dataAosDelay += 100;
+                }
+
+            </div>
+        </div>
+    </section>
+}
+else { }
+<!-- End Company Values Features Section -->
+<!-- ======= Testimonials Section ======= -->
+@if (Model.Testimonies.Any())
+{
+    <section id="testimonials" class="testimonials section">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-header">
+                <h2>Testimonials</h2>
+          @*      <p>See what our clients are saying about us.</p>*@
+            </div>
+
+            <div class="slides-2 swiper">
+                <div class="swiper-wrapper">
+                    @foreach (var item in Model.Testimonies)
+                    {
+                        <div class="swiper-slide">
+                            <div class="testimonial-wrap">
+                                <div class="testimonial-item">
+                                    <img src="@item.ImageLink" class="testimonial-img" alt="">
+                                    <h3>@item.Name</h3>
+                                    <h4>@item.Position</h4>
+                                    <div class="stars">
+                                        @for (int star = 0; star != item.Stars; star++)
+                                        {
+                                            <i class="bi bi-star-fill"></i>
+                                        }
+                                    </div>
+                                    <p>
+                                        @Html.Raw(@item.Description)
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+
+        </div>
+    </section>
+}
+else { }
+<!-- End Testimonials Section -->

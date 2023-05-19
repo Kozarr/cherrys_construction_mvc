@@ -1,0 +1,123 @@
+﻿@using cherrys_construction_mvc.ViewModels.Project;
+@model ProjectDetailsViewModel
+
+@{
+    ViewData["Title"] = Breadcrumb.UserProjectDetailsTitle;
+    if (Model.Project != null)
+    {
+        ViewData["Title"] = Model.Project.Title;
+    }
+}
+
+<!-- ======= Breadcrumbs ======= -->
+@if (Model.CompanyInfo != null && Model.CompanyInfo.NavigationImageURL != null)
+{
+    string imageLink = Model.CompanyInfo.NavigationImageURL.Remove(0, 8);
+    string image = ("~/images/" + imageLink);
+    <div class="breadcrumbs d-flex align-items-center" style="background-image: url('@Url.Content(image)');">
+        <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+
+            <h2>@ViewData["Title"]</h2>
+            <ol>
+                <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Index">@Breadcrumb.HomeTitle</a></li>
+                <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.UserProjectsController" asp-action="Index">@Breadcrumb.UserProjectsTitle</a></li>
+                <li>@ViewData["Title"]</li>
+            </ol>
+
+        </div>
+    </div>
+    <!-- End Breadcrumbs -->
+}
+else
+{
+    <div class="breadcrumbs d-flex align-items-center" style="background-color: darkslategray;">
+        <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+
+            <h2>@ViewData["Title"]</h2>
+            <ol>
+                <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Index">@Breadcrumb.HomeTitle</a></li>
+                <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.UserProjectsController" asp-action="Index">@Breadcrumb.UserProjectsTitle</a></li>
+                <li>@ViewData["Title"]</li>
+            </ol>
+
+        </div>
+    </div>
+    <!-- End Breadcrumbs -->
+}
+
+<!-- ======= Projet Details Section ======= -->
+@if (Model.Project != null)
+{
+    <section id="project-details" class="project-details">
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+            @if (Model.Project.Images.Any())
+            {
+                <div class="position-relative h-70">
+                    <div class="slides-1 portfolio-details-slider swiper">
+                        <div class="swiper-wrapper text-center">
+                            @foreach (var item in Model.Project.Images)
+                            {
+                                <div class="swiper-slide">
+                                    <img src="@item.PathImage" alt="">
+                                </div>
+                            }
+
+                        </div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+
+                </div>
+            }
+            <div class="row justify-content-between gy-4 mt-4">
+
+                <div class="col-lg-8">
+                    <div class="portfolio-description">
+                        <h2>@Model.Project.Title</h2>
+                        <p>
+                            @Html.Raw(Model.Project.Description)
+                        </p>
+
+                        @if (Model.Project.ProjectTestimony.Id != 0)
+                        {
+                            <div class="testimonial-item">
+                                <p>
+                                    @Html.Raw(Model.Project.ProjectTestimony.Description)
+                                </p>
+                                <div>
+                                    <img src="@Model.Project.ProjectTestimony.ImageLink" class="testimonial-img" alt="">
+                                    <h3>@Model.Project.ProjectTestimony.Name</h3>
+                                    <h4>@Model.Project.ProjectTestimony.Position</h4>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="portfolio-info">
+                        <h3>Project information</h3>
+                        <ul>
+                            <li><strong>Category</strong> <span>@Model.Project.ProjectServiceType.Title</span></li>
+                            <li><strong>Client</strong> <span>@Model.Project.ClientName</span></li>
+                            <li><strong>Project Start Date</strong> <span>@Model.Project.ProjectStartDate.ToString("D")</span></li>
+                            <li><strong>Project End Date</strong> <span>@Model.Project.ProjectEndDate.ToString("D")</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+}
+else
+{
+    <div class="text-center mt-5">
+        <p class="text-danger" style="font-size: 2rem;">Project Details Not Found, Contact Administration for Details</p>
+    </div>
+}
+<!-- End Projet Details Section -->

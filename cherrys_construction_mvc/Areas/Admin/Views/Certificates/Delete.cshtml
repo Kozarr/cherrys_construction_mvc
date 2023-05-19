@@ -1,0 +1,57 @@
+﻿@model CompanyCertificateResponce
+
+@{
+    ViewData["Title"] = Breadcrumb.CertificatesTitle;
+}
+
+<!-- ======= Breadcrumbs ======= -->
+<div class="breadcrumbs d-flex align-items-center" style="background-image: url('/assets/img/breadcrumbs-bg.jpg');">
+    <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+        <h2>@Breadcrumb.CertificatesTitle</h2>
+        <ol>
+            <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Index">@Breadcrumb.HomeTitle</a></li>
+            <li><a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.AdminController" asp-action="Index">@Breadcrumb.AdminTitle</a></li>
+            <li><a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.CertificatesController" asp-action="Index">@Breadcrumb.CertificatesTitle</a></li>
+            <li>@Breadcrumb.Delete</li>
+        </ol>
+    </div>
+</div><!-- End Breadcrumbs -->
+
+<section id="list" class="list">
+    <div class="row">
+        <div class="col-lg-6" style="margin-left: auto; margin-right:auto;">
+
+            <form method="post" asp-action="Delete">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-md-12">
+                            <div class="form-floating mb-3">
+                                @if (Model.Icon != null || Model.Icon != " ")
+                                {
+                                    <div class="text-center">
+                                        <i class="@Model.Icon flex-shrink-0" style="font-size: 2rem;color:#0B2547"></i>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-floating mb-3">
+                                <input id="obj12" asp-for="Title" class="form-control" placeholder="Certificate Title" disabled />
+                                <label for="obj12" asp-for="Title">Certificate Name / Title</label>
+                            </div>
+                        </div>                     
+                        <div class="col-md-12">
+                            <textarea id="readonly" asp-for="Description" class="form-control" placeholder="Certificate Description"></textarea>
+                        </div>
+                        <div class="mt-3">
+                            <a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.CertificatesController" asp-action="Index" class="back-btn">@Breadcrumb.Back</a>
+                            <button type="submit" class="delete-btn">@Breadcrumb.Delete</button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</section>

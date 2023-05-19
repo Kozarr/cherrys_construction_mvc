@@ -1,0 +1,38 @@
+﻿@using cherrys_construction_mvc.Utility;
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<header id="header" class="header d-flex align-items-center fixed-top">
+
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+        <a asp-area="User" asp-controller="Home" asp-action="Index" class="logo d-flex align-items-center">
+            <img src="~/assets/img/brand/cherrys-logo-white.png" alt="Logo">
+        </a>
+       
+        <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+        <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li><a asp-area="User" asp-controller="Home" asp-action="Index">Home</a></li>
+                <li><a asp-area="User" asp-controller="About" asp-action="Index">About</a></li>
+                <li><a asp-area="User" asp-controller="Service" asp-action="Index">Services</a></li>
+                <li><a asp-area="User" asp-controller="Project" asp-action="Index">Projects</a></li>
+                <li><a asp-area="User" asp-controller="Contact" asp-action="Index">Contact</a></li>
+                @if (User.IsInRole(StaticDetails.Role_Admin))
+                {
+                    <li><a asp-area="Admin" asp-controller="AdminPanel" asp-action="Index">Admin Panel</a></li>
+                }
+                @if (User.IsInRole(StaticDetails.Role_Employee))
+                {
+                        <li><a asp-area="Admin" asp-controller="AdminPanel" asp-action="Index">Admin Panel</a></li>
+                }
+
+                <partial name="_LoginPartial" />
+            </ul>
+        </nav><!-- .navbar -->
+    </div>
+
+</header>
+

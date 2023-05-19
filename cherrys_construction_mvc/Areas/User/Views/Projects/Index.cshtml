@@ -1,0 +1,115 @@
+﻿@using cherrys_construction_mvc.ViewModels.Project;
+@model ProjectViewModel
+
+@{
+    ViewData["Title"] = Breadcrumb.UserProjectsTitle;
+}
+
+<!-- ======= Breadcrumbs ======= -->
+@if (Model.CompanyInfo != null && Model.CompanyInfo.NavigationImageURL != null)
+{
+    string imageLink = Model.CompanyInfo.NavigationImageURL.Remove(0, 8);
+    string image = ("~/images/" + imageLink);
+    <div class="breadcrumbs d-flex align-items-center" style="background-image: url('@Url.Content(image)');">
+        <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+
+            <h2>@Breadcrumb.UserProjectsTitle</h2>
+            <ol>
+                <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Index">@Breadcrumb.HomeTitle</a></li>
+                <li>@Breadcrumb.UserProjectsTitle</li>
+            </ol>
+
+        </div>
+    </div>
+    <!-- End Breadcrumbs -->
+}
+else
+{
+    <div class="breadcrumbs d-flex align-items-center" style="background-color: darkslategray;">
+        <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+
+            <h2>@Breadcrumb.UserProjectsTitle</h2>
+            <ol>
+                <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Index">@Breadcrumb.HomeTitle</a></li>
+                <li>@Breadcrumb.UserProjectsTitle</li>
+            </ol>
+
+        </div>
+    </div>
+    <!-- End Breadcrumbs -->
+}
+
+@if (Model.CompanyInfo == null)
+{
+    <partial name="_WebsiteSettingsWarningPartial" />
+}
+<!-- ======= Our Projects Section ======= -->
+<section id="projects" class="projects">
+    <div class="container" data-aos="fade-up">
+
+        <div class="portfolio-isotope" data-portfolio-filter="*" data-portfolio-layout="masonry" data-portfolio-sort="original-order">
+            @if (Model.Tags.Any())
+            {
+                <ul class="portfolio-flters" data-aos="fade-up" data-aos-delay="100">
+                    <li data-filter="*" class="filter-active">All</li>
+
+                    @foreach (var item in Model.Tags)
+                    {
+                        string tagName = ".";
+                        string Name = item.Name.Replace(" ", "");
+                        tagName += Name;
+                        <li data-filter="@tagName">@item.Name</li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p class="text-danger">Please add Tags before projects</p>
+            }
+            @if (Model.Projects.Any())
+            {
+                <div class="row gy-4 portfolio-container" data-aos="fade-up" data-aos-delay="200">
+
+                    @foreach (var project in Model.Projects)
+                    {
+                        string tags = "";
+                        @foreach (var tag in project.ProjectTags)
+                        {
+                            var tagName = tag.Tag.Name.Replace(" ", "");
+                            tags += tagName;
+                            tags += " ";
+                        }
+
+                        <div class="col-lg-4 col-md-6 portfolio-item @tags">
+                            <a asp-area="User" asp-action="Details" asp-route-id="@project.Id" title="More Details" class="details-link">
+                                <div class="portfolio-content h-100">
+                                    @if (project.Images.Any())
+                                    {
+                                        <img src="@project.Images[0].PathImage" class="img-fluid" alt="">
+                                    }
+                                    <div class="portfolio-info">
+                                        <h4>@project.ProjectServiceType.Title</h4>
+                                        <p>@project.Title</p>
+
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+
+                        <!-- End Projects Item -->
+                    }
+
+                </div>
+
+                <!-- End Projects Container -->
+            }
+            else
+            {
+                <p class="text-danger">Please add projects</p>
+            }
+
+        </div>
+
+    </div>
+</section><!-- End Our Projects Section -->

@@ -1,0 +1,84 @@
+﻿@using cherrys_construction_mvc.ViewModels.Service;
+@model ServiceViewModel
+
+@{
+    ViewData["Title"] = Breadcrumb.UserServiceDetailsTitle;
+    if (Model.Service != null)
+    {
+        ViewData["Title"] = Model.Service.Title;
+    }
+}
+
+<!-- ======= Breadcrumbs ======= -->
+@if (Model.CompanyInfo != null && Model.CompanyInfo.NavigationImageURL != null)
+{
+    string imageLink = Model.CompanyInfo.NavigationImageURL.Remove(0, 8);
+    string image = ("~/images/" + imageLink);
+    <div class="breadcrumbs d-flex align-items-center" style="background-image: url('@Url.Content(image)');">
+        <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+
+            <h2>@ViewData["Title"]</h2>
+            <ol>
+                <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Index">@Breadcrumb.HomeTitle</a></li>
+                <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.UserServicesController" asp-action="Index">@Breadcrumb.UserServicesTitle</a></li>
+                <li>@ViewData["Title"]</li>
+            </ol>
+
+        </div>
+    </div>
+    <!-- End Breadcrumbs -->
+}
+else
+{
+    <div class="breadcrumbs d-flex align-items-center" style="background-color: darkslategray;">
+        <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+
+            <h2>@ViewData["Title"]</h2>
+            <ol>
+                <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Index">@Breadcrumb.HomeTitle</a></li>
+                <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.UserServicesController" asp-action="Index">@Breadcrumb.UserServicesTitle</a></li>
+                <li>@ViewData["Title"]</li>
+            </ol>
+
+        </div>
+    </div>
+    <!-- End Breadcrumbs -->
+}
+<!-- ======= Service Details Section ======= -->
+<section id="service-details" class="service-details">
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row gy-4">
+
+            <div class="col-lg-4">
+                <div class="services-list">
+
+                    @if (Model.Services.Any())
+                    {
+                        string active = "";
+                        @foreach (var service in Model.Services)
+                        {
+                            @if (service.Id == Model.Service.Id)
+                            {
+                                active = "active";
+                            }
+                            else { active = ""; }
+                            <a class="@active" asp-asp-area="User" asp-action="Details" asp-route-id="@service.Id">@service.Title</a>
+                        }
+                    }
+                </div>
+
+            </div>
+
+            <div class="col-lg-8">
+                <img src="@Model.Service.ImageLink" alt="" class="img-fluid services-img">
+                <h3>@Model.Service.ArticleTitle</h3>
+                <p>
+                    @Html.Raw(Model.Service.ArticleDescription)
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+</section><!-- End Service Details Section -->

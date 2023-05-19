@@ -1,0 +1,91 @@
+﻿@model CallToActionSettingRequest
+
+@{
+    ViewData["Title"] = Breadcrumb.MailFormSettingsTitle;
+}
+
+<!-- ======= Breadcrumbs ======= -->
+<div class="breadcrumbs d-flex align-items-center" style="background-image: url('/assets/img/breadcrumbs-bg.jpg');">
+    <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+
+        <h2>@Breadcrumb.MailFormSettingsTitle</h2>
+        <ol>
+            <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Index">@Breadcrumb.HomeTitle</a></li>
+            <li><a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.AdminController" asp-action="Index">@Breadcrumb.AdminTitle</a></li>
+            <li><a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.MailFormSettingsController" asp-action="Index">@Breadcrumb.MailFormSettingsTitle</a></li>
+            <li>@Breadcrumb.Edit</li>
+        </ol>
+
+    </div>
+</div><!-- End Breadcrumbs -->
+
+
+<section id="list" class="list">
+    <div class="row">
+        <div class="col-lg-6" style="margin-left: auto; margin-right:auto;">
+
+            <!-- Multi Columns Form -->
+            <form method="post" asp-action="Edit" enctype="multipart/form-data">
+                <div class="card">
+                    <div class="card-body row">
+                        <div class="col-md-12">
+                            <div class="form-floating mb-3">
+                                <input asp-for="Title" id="title" class="form-control" placeholder="Section Title" />
+                                <label asp-for="Title" for="title">Section Title</label>
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="mb-5">
+                                <label asp-for="Description">Section Description</label>
+                                <textarea asp-for="Description" class="form-control"></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                        </div>
+                        
+                        <h4 style="font-size:1.5rem;">Email Form Information</h4>
+
+                        <div class="col-md-9">
+                            <div class="form-floating mb-3">
+                                <input for="objtitle" asp-for="FormTitle" class="form-control" placeholder="Email Form Title" />
+                                <label for="objtitle" asp-for="FormTitle">Email Form Title</label>
+                                <span asp-validation-for="FormTitle" class="text-danger"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3">
+                            <div class="form-floating mb-3">
+                                <input id="objbutton" type="text" asp-for="ButtonText" class="form-control" placeholder="Submit Button" />
+                                <label for="objbutton" asp-for="ButtonText">Email Form Submit Button</label>
+                                <span asp-validation-for="ButtonText" class="text-danger"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-12">
+                            <div class="form-floating mb-3">
+                                <label asp-for="FormDescription">Email Form Description</label>
+                                <textarea asp-for="FormDescription" class="form-control"></textarea>
+                                <span asp-validation-for="FormDescription" class="text-danger"></span>
+                            </div>
+                        </div>
+                       
+                        <div class="mt-3">
+                            <a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.MailFormSettingsController" asp-action="Index" class="back-btn">@Breadcrumb.Back</a>
+                            <button type="submit" class="edit-btn">@Breadcrumb.Save</button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </form><!-- End Multi Columns Form -->
+
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
+
