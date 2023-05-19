@@ -57,7 +57,7 @@ namespace cherrys_construction_mvc.DbInitializer
                 // 1. Creating The Admin User
                 _userManager.CreateAsync(new ApplicationUser
                 {
-                    UserName = "Admin Account",
+                    UserName = "admin@web.com",
                     Email = "admin@web.com",
                     Name = "Admin Account",
                     PhoneNumber = "1234567891",
@@ -69,7 +69,7 @@ namespace cherrys_construction_mvc.DbInitializer
                 }, "Admin789*").GetAwaiter().GetResult();
 
                 // 2. Finding the user in Database
-                ApplicationUser user = _context.ApplicationUsers.FirstOrDefault(u => u.Email == "admin@test.com");
+                ApplicationUser user = _context.ApplicationUsers.FirstOrDefault(u => u.Email == "admin@web.com");
 
                 if (user != null)
                 {
