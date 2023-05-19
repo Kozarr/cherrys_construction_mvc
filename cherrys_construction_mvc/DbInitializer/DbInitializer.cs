@@ -54,7 +54,7 @@ namespace cherrys_construction_mvc.DbInitializer
                 // if role are not created, then create admin user
 
 
-                // 1. Creating The Admin User
+                // 1.Creating The Admin User
                 _userManager.CreateAsync(new ApplicationUser
                 {
                     UserName = "admin@web.com",
