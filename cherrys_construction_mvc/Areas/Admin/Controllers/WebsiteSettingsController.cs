@@ -55,7 +55,7 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
             }
             else
             {
-                if (ModelState.IsValid)
+                if (item.CompanyInfo != null)
                 {                   
                     if (item.NavigationImage != null)
                     {
