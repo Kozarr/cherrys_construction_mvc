@@ -1,18 +1,25 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace cherrys_construction_mvc.ViewModels.Requests
 {
     public class MemberRequest
     {
+        [Required]
         [Display(Name = "Name")]
         public string Name { get; set; }
         [Display(Name = "Role")]
-        public string Role { get; set; }
+        [ValidateNever]
+        public string? Role { get; set; }
         [Display(Name = "Description")]
+        [Required]
         public string Description { get; set; }
-        public string ImageLink { get; set; }
+        [ValidateNever]
+        public string? ImageLink { get; set; }
         [Display(Name = "Instagram Link")]
-        public string InstagramLink { get; set; }
-        public IFormFile Image { get; set; }
+        [ValidateNever]
+        public string? InstagramLink { get; set; }
+        [ValidateNever]
+        public IFormFile? Image { get; set; }
     }
 }

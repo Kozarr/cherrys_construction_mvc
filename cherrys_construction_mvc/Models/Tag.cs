@@ -6,8 +6,8 @@ namespace cherrys_construction_mvc.Models
     {
 
         public int Id { get; set; }
-        public string Name { get; set; }
-        public virtual ICollection<ProjectTag> ProjectTags { get; set; }
+        public string? Name { get; set; }
+        public virtual ICollection<ProjectTag>? ProjectTags { get; set; }
 
     }
 }

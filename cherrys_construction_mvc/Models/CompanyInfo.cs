@@ -15,9 +15,9 @@ namespace cherrys_construction_mvc.Models
         [Required]
         public string CompanyEmail { get; set; }
 
-        public string ServiceArea { get; set; }
-        public string NavigationImageURL { get; set; }
-        public string FooterImageURL { get; set; }
+        public string? ServiceArea { get; set; }
+        public string? NavigationImageURL { get; set; }
+        public string? FooterImageURL { get; set; }
 
         [Required]
         public string SendButton { get; set; }

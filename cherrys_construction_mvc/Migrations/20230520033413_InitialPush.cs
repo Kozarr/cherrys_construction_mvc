@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace cherrys_construction_mvc.Migrations
 {
     /// <inheritdoc />
-    public partial class newDb : Migration
+    public partial class InitialPush : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -62,9 +62,9 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Subject = table.Column<string>(type: "nvarchar(140)", maxLength: 140, nullable: false),
                     Body = table.Column<string>(type: "nvarchar(max)", maxLength: 500000, nullable: false)
                 },
@@ -96,9 +96,9 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Icon = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Icon = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -111,9 +111,9 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageLink = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageLink = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -129,9 +129,9 @@ namespace cherrys_construction_mvc.Migrations
                     CompanyName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CompanyPhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CompanyEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ServiceArea = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NavigationImageURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FooterImageURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ServiceArea = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NavigationImageURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FooterImageURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SendButton = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FaceBookLink = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     InstagramLink = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -150,9 +150,9 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Icon = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Icon = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -165,9 +165,9 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageLink = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageLink = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -180,11 +180,11 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ArticleTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ArticleDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ArticleSmallText = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageLink = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ArticleTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ArticleDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ArticleSmallText = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageLink = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -197,9 +197,9 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageLink = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageLink = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -212,9 +212,9 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ButtonText = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ButtonText = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -227,8 +227,8 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Body = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Body = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -241,11 +241,11 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageLink = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    InstagramLink = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    InstagramLink = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -258,12 +258,12 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Icon = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ArticleTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ArticleDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageLink = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Icon = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ArticleTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ArticleDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageLink = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -276,12 +276,12 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageLink = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IconImage = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PageTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PageDescription = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IconImage = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PageTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PageDescription = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -294,7 +294,7 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -433,12 +433,12 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ClientName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClientName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProjectStartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ProjectEndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ServiceTypeId = table.Column<int>(type: "int", nullable: true)
+                    ServiceTypeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -447,7 +447,8 @@ namespace cherrys_construction_mvc.Migrations
                         name: "FK_Projects_ServiceTypes_ServiceTypeId",
                         column: x => x.ServiceTypeId,
                         principalTable: "ServiceTypes",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -501,12 +502,12 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Stars = table.Column<int>(type: "int", nullable: false),
-                    Position = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageLink = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProjectId = table.Column<int>(type: "int", nullable: true)
+                    Position = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProjectId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -515,7 +516,8 @@ namespace cherrys_construction_mvc.Migrations
                         name: "FK_Testimonies_Projects_ProjectId",
                         column: x => x.ProjectId,
                         principalTable: "Projects",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -581,8 +583,7 @@ namespace cherrys_construction_mvc.Migrations
                 name: "IX_Testimonies_ProjectId",
                 table: "Testimonies",
                 column: "ProjectId",
-                unique: true,
-                filter: "[ProjectId] IS NOT NULL");
+                unique: true);
         }
 
         /// <inheritdoc />

@@ -168,32 +168,31 @@ else { }
             </div>
 
             <div class="row gy-5">
-                @foreach (var item in Model.Members)
+                @if (Model.Members.Any())
                 {
-                    <div class="col-lg-4 col-md-6 member" data-aos="fade-up" data-aos-delay="@DataAOS">
-                        <div class="member-img">
-                            <img src="@item.ImageLink" class="img-fluid" />
-                            @if (item.InstagramLink != null)
-                            {
-                                <div class="social">
-                                    @*<a href="#"><i class="bi bi-twitter"></i></a>
-                        <a href="#"><i class="bi bi-facebook"></i></a>*@
-                                    <a href="@item.InstagramLink"><i class="bi bi-instagram"></i></a>
-                                    @*<a href="#"><i class="bi bi-linkedin"></i></a>*@
-                                </div>
-                            }
+                    @foreach (var item in Model.Members)
+                    {
+                        <div class="col-lg-4 col-md-6 member" data-aos="fade-up" data-aos-delay="@DataAOS">
+                            <div class="member-img">
+                                <img src="@item.ImageLink" class="img-fluid" />
+                                @if (!string.IsNullOrWhiteSpace(item.InstagramLink))
+                                {
+                                    <div class="social">
+                                        <a href="@item.InstagramLink"><i class="bi bi-instagram"></i></a>
+                                    </div>
+                                }
+                            </div>
+                            <div class="member-info text-center">
+                                <h4>@item.Name</h4>
+                                <span>@item.Role</span>
+                                <p>@Html.Raw(item.Description)</p>
+                            </div>
                         </div>
-                        <div class="member-info text-center">
-                            <h4>@item.Name</h4>
-                            <span>@item.Role</span>
-                            <p>@Html.Raw(item.Description)</p>
-                        </div>
-                    </div>
-                    DataAOS += 150;
+                        DataAOS += 50;
+                    }
                 }
+                
             </div>
-
-
 
         </div>
     </section>

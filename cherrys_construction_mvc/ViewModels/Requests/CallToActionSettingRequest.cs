@@ -6,9 +6,9 @@
         
         public string Description { get; set; }
        
-        public string FormTitle { get; set; }
+        public string? FormTitle { get; set; }
        
-        public string FormDescription { get; set; }
+        public string? FormDescription { get; set; }
        
         public string ButtonText { get; set; }
     }

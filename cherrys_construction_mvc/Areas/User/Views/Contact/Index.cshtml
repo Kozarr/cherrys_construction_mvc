@@ -51,15 +51,15 @@ else
             <div class="row gy-4">
 
                 <!-- START of Social Media -->
-                @if (Model.CompanyInfo.FaceBookLink == null && Model.CompanyInfo.InstagramLink == null &&
-               Model.CompanyInfo.YoutubeLink == null && Model.CompanyInfo.LinkedInLink == null && Model.CompanyInfo.TwitterLink == null) { }
+                @if (string.IsNullOrWhiteSpace(Model.CompanyInfo.FaceBookLink) && string.IsNullOrWhiteSpace(Model.CompanyInfo.InstagramLink) &&
+            string.IsNullOrWhiteSpace(Model.CompanyInfo.YoutubeLink) && string.IsNullOrWhiteSpace(Model.CompanyInfo.LinkedInLink) && string.IsNullOrWhiteSpace(Model.CompanyInfo.TwitterLink)) { }
                 else
                 {
                     <div class="col-lg-6">
                         <div class="info-item d-flex flex-column justify-content-center align-items-center">
                             <div class="social-links row">
                                 <div class="col">
-                                    @if (Model.CompanyInfo.FaceBookLink != null)
+                                    @if (!string.IsNullOrWhiteSpace(Model.CompanyInfo.FaceBookLink))
                                     {
                                         <li>
                                             <a href="@Model.CompanyInfo.FaceBookLink"><i class="fa-brands fa-facebook"></i></a>
@@ -67,7 +67,7 @@ else
                                     }
                                 </div>
                                 <div class="col">
-                                    @if (Model.CompanyInfo.InstagramLink != null)
+                                    @if (!string.IsNullOrWhiteSpace(Model.CompanyInfo.InstagramLink))
                                     {
                                         <li>
                                             <a href="@Model.CompanyInfo.InstagramLink"><i class="fa-brands fa-instagram"></i></a>
@@ -76,7 +76,7 @@ else
 
                                 </div>
                                 <div class="col">
-                                    @if (Model.CompanyInfo.YoutubeLink != null)
+                                    @if (!string.IsNullOrWhiteSpace(Model.CompanyInfo.YoutubeLink))
                                     {
                                         <li>
                                             <a href="@Model.CompanyInfo.YoutubeLink"><i class="fa-brands fa-youtube"></i></a>
@@ -84,7 +84,7 @@ else
                                     }
                                 </div>
                                 <div class="col">
-                                    @if (Model.CompanyInfo.LinkedInLink != null)
+                                    @if (!string.IsNullOrWhiteSpace(Model.CompanyInfo.LinkedInLink))
                                     {
                                         <li>
                                             <a href="@Model.CompanyInfo.LinkedInLink"><i class="fa-brands fa-linkedin"></i></a>
@@ -92,7 +92,7 @@ else
                                     }
                                 </div>
                                 <div class="col">
-                                    @if (Model.CompanyInfo.TwitterLink != null)
+                                    @if (!string.IsNullOrWhiteSpace(Model.CompanyInfo.TwitterLink))
                                     {
                                         <li>
                                             <a href="@Model.CompanyInfo.TwitterLink"><i class="fa-brands fa-twitter"></i></a>
@@ -103,8 +103,8 @@ else
                         </div>
                     </div> <!-- END of Social Media -->
                 }
-                @if (Model.CompanyInfo.FaceBookLink == null && Model.CompanyInfo.InstagramLink == null &&
-               Model.CompanyInfo.YoutubeLink == null && Model.CompanyInfo.LinkedInLink == null && Model.CompanyInfo.TwitterLink == null)
+                @if (string.IsNullOrWhiteSpace(Model.CompanyInfo.FaceBookLink) && string.IsNullOrWhiteSpace(Model.CompanyInfo.InstagramLink) &&
+            string.IsNullOrWhiteSpace(Model.CompanyInfo.YoutubeLink) && string.IsNullOrWhiteSpace(Model.CompanyInfo.LinkedInLink) && string.IsNullOrWhiteSpace(Model.CompanyInfo.TwitterLink))
                 {
                     <div class="col-lg-6 col-md-6">
                         <div class="info-item d-flex flex-column justify-content-center align-items-center">
@@ -151,7 +151,7 @@ else
             </div>
 
             <div class="row gy-4 mt-1">
-                @if (Model.CompanyInfo.ServiceArea == null)
+                @if (string.IsNullOrWhiteSpace(Model.CompanyInfo.ServiceArea))
                 {
                     <div class="col-lg-4">
                         <div class="info-item  d-flex flex-column justify-content-center align-items-center">

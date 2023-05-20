@@ -44,23 +44,23 @@
 
                                 </p>
                                 <div class="social-links d-flex mt-3">
-                                    @if (Model.CompanyInfo.FaceBookLink != null)
+                                    @if (!string.IsNullOrWhiteSpace(Model.CompanyInfo.FaceBookLink))
                                     {
                                         <a href="@Model.CompanyInfo.FaceBookLink" class="d-flex align-items-center justify-content-center"><i class="fa-brands fa-facebook"></i></a>
                                     }
-                                    @if (Model.CompanyInfo.InstagramLink != null)
+                                    @if (!string.IsNullOrWhiteSpace(Model.CompanyInfo.InstagramLink))
                                     {
                                         <a href="@Model.CompanyInfo.InstagramLink" class="d-flex align-items-center justify-content-center"><i class="fa-brands fa-instagram"></i></a>
                                     }
-                                    @if (Model.CompanyInfo.YoutubeLink != null)
+                                    @if (!string.IsNullOrWhiteSpace(Model.CompanyInfo.YoutubeLink))
                                     {
                                         <a href="@Model.CompanyInfo.YoutubeLink" class="d-flex align-items-center justify-content-center"><i class="fa-brands fa-youtube"></i></a>
                                     }
-                                    @if (Model.CompanyInfo.LinkedInLink != null)
+                                    @if (!string.IsNullOrWhiteSpace(Model.CompanyInfo.LinkedInLink))
                                     {
                                         <a href="@Model.CompanyInfo.LinkedInLink" class="d-flex align-items-center justify-content-center"><i class="fa-brands fa-linkedin"></i></a>
                                     }
-                                    @if (Model.CompanyInfo.TwitterLink != null)
+                                    @if (!string.IsNullOrWhiteSpace(Model.CompanyInfo.TwitterLink))
                                     {
                                         <a href="@Model.CompanyInfo.TwitterLink" class="d-flex align-items-center justify-content-center"><i class="fa-brands fa-square-twitter"></i></a>
                                     }
@@ -71,13 +71,20 @@
                         <div class="col-lg-3 col-md-3 footer-links">
                             <h4>Legal</h4>
                             <ul>
-                                @if (Model.LegalDocuments.Any())
+                                @if(Model!= null)
                                 {
-                                    @foreach (var doc in Model.LegalDocuments)
+                                    @if(Model.LegalDocuments!= null)
                                     {
-                                        <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Legal" asp-route-id="@doc.Id">@doc.Title</a></li>
+                                        @if (Model.LegalDocuments.Any())
+                                        {
+                                            @foreach (var doc in Model.LegalDocuments)
+                                            {
+                                                <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Legal" asp-route-id="@doc.Id">@doc.Title</a></li>
+                                            }
+                                        }
                                     }
                                 }
+                                
                             </ul>
                         </div><!-- End footer links column-->
 

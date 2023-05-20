@@ -4,7 +4,7 @@
     {
         public string Title { get; set; }
         public string Description { get; set; }
-        public string ImageLink { get; set; }
-        public IFormFile Image { get; set; }
+        public string? ImageLink { get; set; }
+        public IFormFile? Image { get; set; }
     }
 }
