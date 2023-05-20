@@ -20,15 +20,15 @@ namespace cherrys_construction_mvc.ViewModels.Requests
         [Required(ErrorMessage = "Please add text to the send button")]
         public string SendButton { get; set; }
 
- 
+        [ValidateNever]
         public string? FaceBookLink { get; set; }
-  
+        [ValidateNever]
         public string? InstagramLink { get; set; }
-   
+        [ValidateNever]
         public string? YoutubeLink { get; set; }
-       
+        [ValidateNever]
         public string? LinkedInLink { get; set; }
-    
+        [ValidateNever]
         public string? TwitterLink { get; set; }
 
     }

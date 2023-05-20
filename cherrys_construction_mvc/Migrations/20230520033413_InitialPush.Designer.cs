@@ -12,8 +12,8 @@ using cherrys_construction_mvc.Data;
 namespace cherrys_construction_mvc.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230520024945_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20230520033413_InitialPush")]
+    partial class InitialPush
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
