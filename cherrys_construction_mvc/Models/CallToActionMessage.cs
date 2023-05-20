@@ -8,12 +8,12 @@ namespace cherrys_construction_mvc.Models
     {
         [Key]
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string? Name { get; set; }
         [Required]
         [EmailAddress]
         public string Email { get; set; }
         [Phone]
-        public string Phone { get; set; }
+        public string? Phone { get; set; }
         [Required]
         [StringLength(140, ErrorMessage = "The subject must be less then 140 characters long.")]
         [StringValidator]
