@@ -24,13 +24,6 @@ namespace cherrys_construction_mvc.Services
         public async Task CreateCompanyInfoAsync(CompanyInfoRequest request)
         {
             var compInfo = _mapper.Map<CompanyInfo>(request);
-
-            if(compInfo.FaceBookLink == null) { compInfo.FaceBookLink = ""; }
-            if (compInfo.InstagramLink == null) { compInfo.InstagramLink = ""; }
-            if (compInfo.YoutubeLink == null) { compInfo.YoutubeLink = ""; }
-            if (compInfo.LinkedInLink == null) { compInfo.LinkedInLink = ""; }
-            if (compInfo.TwitterLink == null) { compInfo.TwitterLink = ""; }
-
             await _companyInfoRepository.AddAsync(compInfo);
             await _companyInfoRepository.SaveChangesAsync();
         }
