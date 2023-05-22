@@ -17,10 +17,10 @@ namespace cherrys_construction_mvc.Models
         [Required]
         [StringLength(140, ErrorMessage = "The subject must be less then 140 characters long.")]
         [StringValidator]
-        public string Subject { get; set; }
+        public string? Subject { get; set; }
         [Required]
         [StringLength(500000, ErrorMessage = "Maximum character size: 500,000")]
-        public string Body { get; set; }
+        public string? Body { get; set; }
         
 
     }

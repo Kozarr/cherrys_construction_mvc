@@ -357,18 +357,15 @@ namespace cherrys_construction_mvc.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FaceBookLink")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FooterImageURL")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("InstagramLink")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LinkedInLink")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NavigationImageURL")
@@ -382,11 +379,9 @@ namespace cherrys_construction_mvc.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TwitterLink")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("YoutubeLink")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

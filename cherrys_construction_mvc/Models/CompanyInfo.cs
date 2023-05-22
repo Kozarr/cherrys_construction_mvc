@@ -20,13 +20,13 @@ namespace cherrys_construction_mvc.Models
         public string? FooterImageURL { get; set; }
 
         [Required]
-        public string SendButton { get; set; }
+        public string? SendButton { get; set; }
 
         // Social Links
-        public string FaceBookLink { get; set; }
-        public string InstagramLink { get; set; }
-        public string YoutubeLink { get; set; }
-        public string LinkedInLink { get; set; }
-        public string TwitterLink { get; set; }
+        public string? FaceBookLink { get; set; }
+        public string? InstagramLink { get; set; }
+        public string? YoutubeLink { get; set; }
+        public string? LinkedInLink { get; set; }
+        public string? TwitterLink { get; set; }
     }
 }
