@@ -13,12 +13,12 @@ namespace cherrys_construction_mvc.Models
         public string? Description { get; set; }
         [Display(Name = "Form Title")]
         [Required]
-        public string FormTitle { get; set; }
+        public string? FormTitle { get; set; }
         [Display(Name = "Form Description")]
         [Required]
-        public string FormDescription { get; set; }
+        public string? FormDescription { get; set; }
         [Display(Name = "Button Text")]
         [Required]
-        public string ButtonText { get; set; }
+        public string? ButtonText { get; set; }
     }
 }
