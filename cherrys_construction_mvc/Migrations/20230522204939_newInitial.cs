@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace cherrys_construction_mvc.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialPush : Migration
+    public partial class newInitial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -133,11 +133,11 @@ namespace cherrys_construction_mvc.Migrations
                     NavigationImageURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FooterImageURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SendButton = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FaceBookLink = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    InstagramLink = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    YoutubeLink = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LinkedInLink = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TwitterLink = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    FaceBookLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    InstagramLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    YoutubeLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LinkedInLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TwitterLink = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

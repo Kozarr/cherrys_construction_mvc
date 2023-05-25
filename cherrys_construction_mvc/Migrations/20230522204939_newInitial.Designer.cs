@@ -12,8 +12,8 @@ using cherrys_construction_mvc.Data;
 namespace cherrys_construction_mvc.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230520033413_InitialPush")]
-    partial class InitialPush
+    [Migration("20230522204939_newInitial")]
+    partial class newInitial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -360,18 +360,15 @@ namespace cherrys_construction_mvc.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FaceBookLink")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FooterImageURL")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("InstagramLink")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LinkedInLink")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NavigationImageURL")
@@ -385,11 +382,9 @@ namespace cherrys_construction_mvc.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TwitterLink")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("YoutubeLink")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

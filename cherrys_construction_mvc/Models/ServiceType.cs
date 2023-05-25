@@ -13,7 +13,7 @@ namespace cherrys_construction_mvc.Models
         public string? PageTitle { get; set; }
         public string? PageDescription { get; set; }
 
-        public List<Project> Projects { get; set; } = new();
+        public List<Project>? Projects { get; set; } = new();
 
     }
 }
