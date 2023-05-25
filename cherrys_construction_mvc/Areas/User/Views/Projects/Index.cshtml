@@ -64,7 +64,6 @@ else
             }
             else
             {
-                <p class="text-danger">Please add Tags before projects</p>
             }
             @if (Model.Projects != null)
             {
@@ -85,7 +84,7 @@ else
                                 <div class="portfolio-content h-100">
                                     @if (project.Images.Any())
                                     {
-                                        <img src="@project.Images[0].PathImage" class="img-fluid" alt="">
+                                        <img src="@project.Images.First().PathImage" class="img-fluid" alt="">
                                     }
                                     <div class="portfolio-info">
                                         <h4>@project.ProjectServiceType.Title</h4>
@@ -106,7 +105,6 @@ else
             }
             else
             {
-                <p class="text-danger">Please add projects</p>
             }
 
         </div>
