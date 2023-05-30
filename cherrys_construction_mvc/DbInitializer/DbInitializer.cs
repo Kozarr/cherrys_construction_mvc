@@ -31,19 +31,19 @@ namespace cherrys_construction_mvc.DbInitializer
 
         public void Initialize()
         {
-            // apply migrations if they are not applied
-            try
-            {
-                //if this is true - we have some migrations that have not been applied to the database
-                if (_context.Database.GetPendingMigrations().Any())
-                {
-                    _context.Database.Migrate();
-                }
-            }
-            catch (Exception)
-            {             
-                throw;
-            }
+            //// apply migrations if they are not applied
+            //try
+            //{
+            //    //if this is true - we have some migrations that have not been applied to the database
+            //    if (_context.Database.GetPendingMigrations().Any())
+            //    {
+            //        _context.Database.Migrate();
+            //    }
+            //}
+            //catch (Exception)
+            //{             
+            //    throw;
+            //}
             // create roles if they are none
             // Creating Roles Here
             if (!_roleManager.RoleExistsAsync(StaticDetails.Role_Admin).GetAwaiter().GetResult())
