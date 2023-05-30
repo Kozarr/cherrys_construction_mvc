@@ -211,15 +211,9 @@ else { }
                     {
                         <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
                             <div class="service-item position-relative h-100">
-                                <div class="icon">
-                                    @if (service.Icon != null || service.Icon == "")
-                                    {
-                                        <i class="@service.Icon"></i>
-                                    }
-                                </div>
                                 <h3>@service.Title</h3>
                                 <p>@Html.Raw(service.Description)</p>
-                                <a asp-area="User" asp-controller="Service" asp-action="Details" asp-route-id="@service.Id" class="readmore stretched-link">Learn more <i class="bi bi-arrow-right"></i></a>
+                                <a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.UserServicesController" asp-action="Details" asp-route-id="@service.Id" class="readmore stretched-link">Learn more <i class="bi bi-arrow-right"></i></a>
                             </div>
                         </div>
                     }
@@ -254,14 +248,6 @@ else { }
                     @foreach (var item in Model.CompanyCertificates)
                     {
                         <div class="icon-box d-flex position-relative" data-aos="fade-up" data-aos-delay="100">
-                            @if (item.Icon != null || item.Icon == "")
-                            {
-                                <i class="@item.Icon flex-shrink-0"></i>
-                            }
-                            else
-                            {
-                                <i class="bi bi-check-square flex-shrink-0"></i>
-                            }
                             <div>
                                 <h4><a class="stretched-link">@item.Title</a></h4>
                                 <p>@Html.Raw(item.Description)</p>

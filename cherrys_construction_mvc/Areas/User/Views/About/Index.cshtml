@@ -93,7 +93,6 @@ else { }
                     @foreach (var item in Model.CompanyCertificates)
                     {
                         <div class="icon-box d-flex position-relative" data-aos="fade-up" data-aos-delay="100">
-                            <i class="@item.Icon flex-shrink-0"></i>
                             <div>
                                 <h4><a class="stretched-link">@item.Title</a></h4>
                                 <p>@Html.Raw(item.Description)</p>
@@ -127,7 +126,6 @@ else { }
                     {
 
                         <div class="icon-box d-flex position-relative" data-aos="fade-up" data-aos-delay="100">
-                            <i class="@item.Icon flex-shrink-0"></i>
                             <div>
                                 <h4><a href="" class="stretched-link">@item.Title</a></h4>
                                 <p>@Html.Raw(item.Description)</p>
