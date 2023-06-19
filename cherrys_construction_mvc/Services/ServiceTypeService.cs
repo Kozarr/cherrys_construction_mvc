@@ -45,7 +45,7 @@ namespace cherrys_construction_mvc.Services
 
             if(serviceType  != null)
             {
-                // Delete ServiceType and remove connections
+                // When deleting a ServiceType, we remove connections to service type in all projects
                 var projectsList = await _projectRepository.ListAsync();
 
                 foreach(var item in projectsList)
