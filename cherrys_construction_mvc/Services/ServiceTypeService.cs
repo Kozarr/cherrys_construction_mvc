@@ -53,6 +53,7 @@ namespace cherrys_construction_mvc.Services
                     if(item.Id == serviceTypeId)
                     {
                         item.Id = 0;
+                        await _projectRepository.UpdateAsync(item);
                         await _projectRepository.SaveChangesAsync();
                     }
                 }
