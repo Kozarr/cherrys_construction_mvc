@@ -74,7 +74,7 @@ namespace cherrys_construction_mvc.Services
         public async Task DeleteProjectAsync(int projectId)
         {
             var project = await _projectRepository.GetByIdAsync(projectId);
-            if(project != null)
+            if (project != null)
             {
                 var imagesForDelete = await _imageService.GetByProjectIdImage(projectId);
                 if (imagesForDelete.Any())
@@ -86,13 +86,13 @@ namespace cherrys_construction_mvc.Services
                         var fullPathForDelete = _webHostEnvironment.WebRootPath + image.PathImage;
                         Helper.Helper.DeleteImage(fullPathForDelete);
                     }
-                }              
+                }
             }
             else
             {
                 _logger.LogWarning("Could not find existing project in - Project Service");
             }
-            
+
         }
 
         public async Task<ProjectResponce> GetProjectByIdAsync(int projectId)
@@ -167,22 +167,24 @@ namespace cherrys_construction_mvc.Services
                         await _projectTagService.DeleteProjectTagAsync(tag.ProjectId, tag.TagId);
                     }
 
-                    if (request.SelectedDeletePhoto.Any())
+                    if (request.SelectedDeletePhoto != null)
                     {
-                        foreach (var id in request.SelectedDeletePhoto)
+                        if (request.SelectedDeletePhoto.Any())
                         {
-                            var imageForDelete = await _imageRepository.GetByIdAsync(id);
-                            if (imageForDelete == null)
+                            foreach (var id in request.SelectedDeletePhoto)
                             {
-                                _logger.LogWarning("Could not find existing image to delete in - Project Service");
+                                var imageForDelete = await _imageRepository.GetByIdAsync(id);
+                                if (imageForDelete == null)
+                                {
+                                    _logger.LogWarning("Could not find existing image to delete in - Project Service");
+                                }
+                                else
+                                {
+                                    var fullPathForDelete = _webHostEnvironment.WebRootPath + imageForDelete.PathImage;
+                                    Helper.Helper.DeleteImage(fullPathForDelete);
+                                    await _imageService.DeleteImageAsync(id);
+                                }
                             }
-                            else
-                            {
-                                var fullPathForDelete = _webHostEnvironment.WebRootPath + imageForDelete.PathImage;
-                                Helper.Helper.DeleteImage(fullPathForDelete);
-                                await _imageService.DeleteImageAsync(id);
-                            }
-
                         }
                     }
 

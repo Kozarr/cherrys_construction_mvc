@@ -5,6 +5,7 @@ using cherrys_construction_mvc.Models;
 using cherrys_construction_mvc.Utility;
 using cherrys_construction_mvc.ViewModels.Requests;
 using cherrys_construction_mvc.ViewModels.Responce;
+using Microsoft.IdentityModel.Logging;
 
 namespace cherrys_construction_mvc.Services
 {
@@ -43,29 +44,33 @@ namespace cherrys_construction_mvc.Services
         {
             var serviceType = await _serviceTypeRepository.GetByIdAsync(serviceTypeId);
 
-            if(serviceType  != null)
+            if(serviceType != null)
             {
-                // When deleting a ServiceType, we remove connections to service type in all projects
+               // When deleting a ServiceType, we remove connections to service type in all projects
                 var projectsList = await _projectRepository.ListAsync();
-
-                foreach(var item in projectsList)
+                // oooooooooooooooooooooooooooooooooo
+                foreach (var item in projectsList)
                 {
-                    if(item.Id == serviceTypeId)
+                    if (item.ServiceTypeId == serviceTypeId)
                     {
-                        item.Id = 0;
+                        item.ServiceType = null;
                         await _projectRepository.UpdateAsync(item);
                         await _projectRepository.SaveChangesAsync();
                     }
                 }
 
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
-                var oldImagePath = Path.Combine(wwwRootPath, serviceType.ImageLink.TrimStart('\\'));
-                if (File.Exists(oldImagePath))
+                if(serviceType.ImageLink != null)
                 {
-                    File.Delete(oldImagePath);
+                    var oldImagePath = Path.Combine(wwwRootPath, serviceType.ImageLink.TrimStart('\\'));
+                    if (File.Exists(oldImagePath))
+                    {
+                        File.Delete(oldImagePath);
+                    }                  
                 }
                 await _serviceTypeRepository.DeleteAsync(serviceType);
                 await _serviceTypeRepository.SaveChangesAsync();
+
             }
             else
             {

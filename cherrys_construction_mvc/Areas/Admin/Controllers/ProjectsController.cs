@@ -66,7 +66,7 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
             else
             {
                 TempData["error"] = "Please Add Tags";
-                return RedirectToAction(nameof(Index), "AdminProject", new {area = "Admin"});
+                return RedirectToAction(nameof(Index), Breadcrumb.ProjectsController, new {area = Breadcrumb.AdminArea});
             }
             
         }
