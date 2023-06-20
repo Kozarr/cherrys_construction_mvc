@@ -12,15 +12,18 @@ namespace cherrys_construction_mvc.Services
     {
         private readonly ILogger<ServiceTypeService> _logger;
         private readonly IEfRepository<ServiceType> _serviceTypeRepository;
+        private readonly IEfRepository<Project> _projectRepository;
         private readonly IMapper _mapper;
         private IWebHostEnvironment _webHostEnvironment;
 
         public ServiceTypeService(IEfRepository<ServiceType> serviceTypeRepository, 
+            IEfRepository<Project> projectRepository,
             IMapper mapper, 
             IWebHostEnvironment webHostEnvironment,
             ILogger<ServiceTypeService> logger)
         {
              _serviceTypeRepository = serviceTypeRepository;
+            _projectRepository = projectRepository;
             _mapper = mapper;
             _webHostEnvironment = webHostEnvironment;
             _logger = logger;
@@ -42,6 +45,19 @@ namespace cherrys_construction_mvc.Services
 
             if(serviceType  != null)
             {
+                // When deleting a ServiceType, we remove connections to service type in all projects
+                var projectsList = await _projectRepository.ListAsync();
+
+                foreach(var item in projectsList)
+                {
+                    if(item.Id == serviceTypeId)
+                    {
+                        item.Id = 0;
+                        await _projectRepository.UpdateAsync(item);
+                        await _projectRepository.SaveChangesAsync();
+                    }
+                }
+
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
                 var oldImagePath = Path.Combine(wwwRootPath, serviceType.ImageLink.TrimStart('\\'));
                 if (File.Exists(oldImagePath))
