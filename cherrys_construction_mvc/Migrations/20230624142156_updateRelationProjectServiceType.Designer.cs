@@ -12,8 +12,8 @@ using cherrys_construction_mvc.Data;
 namespace cherrys_construction_mvc.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230522204939_newInitial")]
-    partial class newInitial
+    [Migration("20230624142156_updateRelationProjectServiceType")]
+    partial class updateRelationProjectServiceType
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -356,7 +356,6 @@ namespace cherrys_construction_mvc.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CompanyPhoneNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FaceBookLink")
@@ -865,7 +864,7 @@ namespace cherrys_construction_mvc.Migrations
                     b.HasOne("cherrys_construction_mvc.Models.ServiceType", "ServiceType")
                         .WithMany("Projects")
                         .HasForeignKey("ServiceTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("ServiceType");

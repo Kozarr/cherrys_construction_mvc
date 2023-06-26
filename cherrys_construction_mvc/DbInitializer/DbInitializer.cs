@@ -46,43 +46,43 @@ namespace cherrys_construction_mvc.DbInitializer
             //}
             // create roles if they are none
             // Creating Roles Here
-            if (!_roleManager.RoleExistsAsync(StaticDetails.Role_Admin).GetAwaiter().GetResult())
-            {
-                _roleManager.CreateAsync(new IdentityRole(StaticDetails.Role_Admin)).GetAwaiter().GetResult();
-                _roleManager.CreateAsync(new IdentityRole(StaticDetails.Role_Employee)).GetAwaiter().GetResult();
+            //if (!_roleManager.RoleExistsAsync(StaticDetails.Role_Admin).GetAwaiter().GetResult())
+            //{
+            //    _roleManager.CreateAsync(new IdentityRole(StaticDetails.Role_Admin)).GetAwaiter().GetResult();
+            //    _roleManager.CreateAsync(new IdentityRole(StaticDetails.Role_Employee)).GetAwaiter().GetResult();
 
-                // if role are not created, then create admin user
+            //    // if role are not created, then create admin user
 
 
-                // 1.Creating The Admin User
-                _userManager.CreateAsync(new ApplicationUser
-                {
-                    UserName = "admin@web.com",
-                    Email = "admin@web.com",
-                    Name = "Admin Account",
-                    PhoneNumber = "1234567891",
-                    StreetAddress = "321 Admin St",
-                    PostalCode = "12345",
-                    City = "City",
-                    State = "TS",
-                    EmailConfirmed = true,
-                }, "Admin789*").GetAwaiter().GetResult();
+            //    // 1.Creating The Admin User
+            //    _userManager.CreateAsync(new ApplicationUser
+            //    {
+            //        UserName = "admin@web.com",
+            //        Email = "admin@web.com",
+            //        Name = "Admin Account",
+            //        PhoneNumber = "1234567891",
+            //        StreetAddress = "321 Admin St",
+            //        PostalCode = "12345",
+            //        City = "City",
+            //        State = "TS",
+            //        EmailConfirmed = true,
+            //    }, "Admin789*").GetAwaiter().GetResult();
 
-                // 2. Finding the user in Database
-                ApplicationUser user = _context.ApplicationUsers.FirstOrDefault(u => u.Email == "admin@web.com");
+            //    // 2. Finding the user in Database
+            //    ApplicationUser user = _context.ApplicationUsers.FirstOrDefault(u => u.Email == "admin@web.com");
 
-                if (user != null)
-                {
-                    // 3. Assiging the Admin Role - to the new Admin Account
-                    _userManager.AddToRoleAsync(user, StaticDetails.Role_Admin).GetAwaiter().GetResult();
-                }
-                else
-                {
-                    _logger.LogInformation("Could not find initialize user to give role privileges");
-                }
+            //    if (user != null)
+            //    {
+            //        // 3. Assiging the Admin Role - to the new Admin Account
+            //        _userManager.AddToRoleAsync(user, StaticDetails.Role_Admin).GetAwaiter().GetResult();
+            //    }
+            //    else
+            //    {
+            //        _logger.LogInformation("Could not find initialize user to give role privileges");
+            //    }
                
-            }
-            return;
+            //}
+            //return;
         }
     }
 }

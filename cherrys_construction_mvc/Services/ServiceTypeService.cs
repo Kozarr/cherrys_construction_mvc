@@ -5,7 +5,6 @@ using cherrys_construction_mvc.Models;
 using cherrys_construction_mvc.Utility;
 using cherrys_construction_mvc.ViewModels.Requests;
 using cherrys_construction_mvc.ViewModels.Responce;
-using Microsoft.IdentityModel.Logging;
 
 namespace cherrys_construction_mvc.Services
 {
@@ -47,17 +46,17 @@ namespace cherrys_construction_mvc.Services
             if(serviceType != null)
             {
                // When deleting a ServiceType, we remove connections to service type in all projects
-                var projectsList = await _projectRepository.ListAsync();
-                // oooooooooooooooooooooooooooooooooo
-                foreach (var item in projectsList)
-                {
-                    if (item.ServiceTypeId == serviceTypeId)
-                    {
-                        item.ServiceType = null;
-                        await _projectRepository.UpdateAsync(item);
-                        await _projectRepository.SaveChangesAsync();
-                    }
-                }
+                //var projectsList = await _projectRepository.ListAsync();
+                //// oooooooooooooooooooooooooooooooooo
+                //foreach (var item in projectsList)
+                //{
+                //    if (item.ServiceTypeId == serviceTypeId)
+                //    {
+                //        item.ServiceType = null;
+                //        await _projectRepository.UpdateAsync(item);
+                //        await _projectRepository.SaveChangesAsync();
+                //    }
+                //}
 
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
                 if(serviceType.ImageLink != null)
@@ -66,7 +65,7 @@ namespace cherrys_construction_mvc.Services
                     if (File.Exists(oldImagePath))
                     {
                         File.Delete(oldImagePath);
-                    }                  
+                    }
                 }
                 await _serviceTypeRepository.DeleteAsync(serviceType);
                 await _serviceTypeRepository.SaveChangesAsync();
@@ -98,12 +97,15 @@ namespace cherrys_construction_mvc.Services
             {
                 if (request.Image != null)
                 {
-                    string wwwRootPath = _webHostEnvironment.WebRootPath;
-                    var oldImagePath = Path.Combine(wwwRootPath, serviceType.ImageLink.TrimStart('\\'));
-                    if (System.IO.File.Exists(oldImagePath))
+                    if(request.ImageLink != null)
                     {
-                        System.IO.File.Delete(oldImagePath);
-                    }
+                        string wwwRootPath = _webHostEnvironment.WebRootPath;
+                        var oldImagePath = Path.Combine(wwwRootPath, serviceType.ImageLink.TrimStart('\\'));
+                        if (File.Exists(oldImagePath))
+                        {
+                            File.Delete(oldImagePath);
+                        }
+                    }            
                     request.ImageLink = await Helper.Helper.UploadImage(request.Image, _webHostEnvironment, StaticDetails.StandardImage);
                 }
                 else

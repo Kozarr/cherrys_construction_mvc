@@ -43,6 +43,16 @@ namespace cherrys_construction_mvc.Data
                 .HasOne(bc => bc.Tag)
                 .WithMany(c => c.ProjectTags)
                 .HasForeignKey(bc => bc.TagId);
+            //modelBuilder.Entity("cherrys_construction_mvc.Models.Project", b =>
+            //{
+            //    b.HasOne("cherrys_construction_mvc.Models.ServiceType", "ServiceType")
+            //        .WithMany("Projects")
+            //        .HasForeignKey("ServiceTypeId")
+            //        .OnDelete(DeleteBehavior.NoAction)
+            //        .IsRequired();
+            //    b.Navigation("ServiceType");
+            //});
+
         }
     }
 }
