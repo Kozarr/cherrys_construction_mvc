@@ -1,9 +1,7 @@
 ﻿using cherrys_construction_mvc.Interfaces;
 using cherrys_construction_mvc.Models;
-using cherrys_construction_mvc.Services;
 using cherrys_construction_mvc.Utility;
-using cherrys_construction_mvc.ViewModels.Contact;
-using cherrys_construction_mvc.ViewModels.Project;
+using cherrys_construction_mvc.ViewModels.Blog;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -23,36 +21,30 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
             _companyInfoService = companyInfoService;
         }
 
+        public BlogViewModel blogViewModel = new();
+
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            ContactViewModel contactViewModel = new();
-
             var companyInfo = await _companyInfoService.GetCompanyInfosAsync();
             if (companyInfo.Any())
             {
                 var info = companyInfo.First();
-                contactViewModel.CompanyInfo = info;
+                blogViewModel.CompanyInfo = info;
             }
-            else { }
 
-            return View(contactViewModel);
+            return View(blogViewModel);
         }
 
         [HttpGet]
         public async Task<IActionResult> Details()
         {
-            ContactViewModel contactViewModel = new();
-
-            var companyInfo = await _companyInfoService.GetCompanyInfosAsync();
-            if (companyInfo.Any())
+            BlogDetailsViewModel blogDetailsVM = new();
+            if(blogViewModel != null)
             {
-                var info = companyInfo.First();
-                contactViewModel.CompanyInfo = info;
+                blogDetailsVM.CompanyInfo = blogViewModel.CompanyInfo;
             }
-            else { }
-
-            return View(contactViewModel);
+            return View(blogDetailsVM);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

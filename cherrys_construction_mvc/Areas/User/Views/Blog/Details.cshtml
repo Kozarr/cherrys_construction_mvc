@@ -1,8 +1,8 @@
-﻿@*@{
+﻿@{
     ViewData["Title"] = Breadcrumb.UserBlogTitle;
-    if (Model.Blog != null)
+    if (Model.Post != null)
     {
-        ViewData["Title"] = Model.Blog.Title;
+        ViewData["Title"] = Model.Post.Title;
     }
 }
 
@@ -38,7 +38,7 @@ else
 
         </div>
     </div>
-}*@
+}
     
 <!-- ======= Blog Details Section ======= -->
 <section id="blog" class="blog">
