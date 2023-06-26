@@ -40,9 +40,19 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details()
         {
-            return View();
+            ContactViewModel contactViewModel = new();
+
+            var companyInfo = await _companyInfoService.GetCompanyInfosAsync();
+            if (companyInfo.Any())
+            {
+                var info = companyInfo.First();
+                contactViewModel.CompanyInfo = info;
+            }
+            else { }
+
+            return View(contactViewModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
