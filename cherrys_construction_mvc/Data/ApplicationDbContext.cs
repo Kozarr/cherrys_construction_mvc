@@ -28,6 +28,8 @@ namespace cherrys_construction_mvc.Data
         public DbSet<CompanyCertificateSetting> CompanyCertificateSettings { get; set; }
         public DbSet<CompanyQualitySetting> CompanyQualitySettings { get; set; }
         public DbSet<LegalDocument> LegalDocuments { get; set; }
+        public DbSet<BlogPost> BlogPosts { get; set; }
+        public DbSet<BlogCategory> BlogCategories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -43,6 +45,19 @@ namespace cherrys_construction_mvc.Data
                 .HasOne(bc => bc.Tag)
                 .WithMany(c => c.ProjectTags)
                 .HasForeignKey(bc => bc.TagId);
+
+            modelBuilder.Entity<BlogPostBlogCategory>()
+                .HasKey(bc => new { bc.BlogPostId, bc.BlogCategoryId });
+            modelBuilder.Entity<BlogPostBlogCategory>()
+                .HasOne(bc => bc.BlogPost)
+                .WithMany(b => b.BlogPostBlogCategories)
+                .HasForeignKey(bc => bc.BlogPostId);
+            modelBuilder.Entity<BlogPostBlogCategory>()
+                .HasOne(bc => bc.BlogCategory)
+                .WithMany(c => c.BlogPostBlogCategories)
+                .HasForeignKey(bc => bc.BlogCategoryId);
+
+
             //modelBuilder.Entity("cherrys_construction_mvc.Models.Project", b =>
             //{
             //    b.HasOne("cherrys_construction_mvc.Models.ServiceType", "ServiceType")

@@ -15,18 +15,19 @@
         <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
         <nav id="navbar" class="navbar">
             <ul>
-                <li><a asp-area="User" asp-controller="Home" asp-action="Index">Home</a></li>
-                <li><a asp-area="User" asp-controller="About" asp-action="Index">About</a></li>
-                <li><a asp-area="User" asp-controller="Service" asp-action="Index">Services</a></li>
-                <li><a asp-area="User" asp-controller="Project" asp-action="Index">Projects</a></li>
-                <li><a asp-area="User" asp-controller="Contact" asp-action="Index">Contact</a></li>
+                <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Index">@Breadcrumb.HomeTitle</a></li>
+                <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.UserAboutController" asp-action="Index">@Breadcrumb.UserAboutTitle</a></li>
+                <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.UserServicesController" asp-action="Index">@Breadcrumb.UserServicesTitle</a></li>
+                <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.UserProjectsController" asp-action="Index">@Breadcrumb.UserProjectsTitle</a></li>
+                <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.UserBlogController" asp-action="Index">@Breadcrumb.UserBlogTitle</a></li>
+                <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.UserContactController" asp-action="Index">@Breadcrumb.UserContactTitle</a></li>
                 @if (User.IsInRole(StaticDetails.Role_Admin))
                 {
-                    <li><a asp-area="Admin" asp-controller="AdminPanel" asp-action="Index">Admin Panel</a></li>
+                    <li><a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.AdminController" asp-action="Index">@Breadcrumb.AdminTitle</a></li>
                 }
                 @if (User.IsInRole(StaticDetails.Role_Employee))
                 {
-                        <li><a asp-area="Admin" asp-controller="AdminPanel" asp-action="Index">Admin Panel</a></li>
+                    <li><a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.AdminController" asp-action="Index">@Breadcrumb.AdminTitle</a></li>
                 }
 
                 <partial name="_LoginPartial" />

@@ -25,12 +25,14 @@
         public const string UserServiceDetailsTitle = "Service Details";
         public const string UserServicesController = "Services";
 
+        public const string UserBlogTitle = "Blog";
+        public const string UserBlogController = "Blog";
+
         // Admin
         public const string AdminTitle = "Admin Dashboard";
         public const string Admin = "Admin";
         public const string AdminArea = "Admin";
         public const string AdminController = "Dashboard";
-
 
         // Content
         public const string ProjectsDashboardTitle = "Projects Dashboard";
@@ -85,6 +87,8 @@
         public const string LegalDocumentsTitle = "Legal Documents";
         public const string LegalDocumentsController = "LegalDocuments";
 
+        public const string BlogTitle = "Blog";
+        public const string BlogController = "Blog";
 
         // CRUD Ops
         public const string Create = "Create";
