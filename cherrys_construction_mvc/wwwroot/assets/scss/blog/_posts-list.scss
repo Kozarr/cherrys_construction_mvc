@@ -2,87 +2,128 @@
 # Blog Posts List
 --------------------------------------------------------------*/
 .blog {
-  .posts-list {
 
-    .post-item {
-      box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.06);
-      transition: 0.3s;
-    }
-  
-    .post-img {
-      img {
-        transition: 0.5s;
-      }
-    }
+    .blog-flters {
+        padding: 0;
+        margin: 0 auto 20px auto;
+        list-style: none;
+        text-align: center;
 
-    .post-date {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      background-color: var(--color-primary);
-      color: #fff;
-      text-transform: uppercase;
-      font-size: 13px;
-      padding: 6px 12px;
-      font-weight: 500;
-    }
+        li {
+            cursor: pointer;
+            display: inline-block;
+            padding: 0;
+            font-size: 18px;
+            font-weight: 500;
+            margin: 0 10px;
+            line-height: 1;
+            margin-bottom: 5px;
+            transition: all 0.2s ease-in-out;
 
-    .post-content {
-      padding: 30px;
-    }
+            &:hover, &.filter-active {
+                color: darken($cherrys-yellow, 15);
+            }
 
-    .post-title {
-      font-size: 24px;
-      color: var(--color-secondary);
-      font-weight: 700;
-      transition: 0.3s;
-      margin-bottom: 15px;
-    }
+            &:first-child {
+                margin-left: 0;
+            }
 
-    .meta {
-      i {
-        font-size: 16px;
-        color: var(--color-primary);
-      }
-      span {
-        font-size: 15px;
-        color: lighten($secondary, 20);
-      }
+            &:last-child {
+                margin-right: 0;
+            }
+
+            @media (max-width: 575px) {
+                font-size: 14px;
+                margin: 0 5px;
+            }
+        }
     }
 
-     p {
-       margin-top: 20px;
-     }
+    .posts-list {
+
+        .post-item {
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .post-img {
+            img {
+                transition: 0.5s;
+            }
+
+            position: relative;
+        }
+
+        .post-date {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            background-color: var(--color-primary);
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 13px;
+            padding: 6px 12px;
+            font-weight: 500;
+        }
+
+        .post-content {
+            padding: 30px;
+            box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .post-title {
+            font-size: 24px;
+            color: var(--color-secondary);
+            font-weight: 700;
+            transition: 0.3s;
+            margin-bottom: 15px;
+        }
+
+        .meta {
+            i {
+                font-size: 16px;
+                color: var(--color-primary);
+            }
+
+            span {
+                font-size: 15px;
+                color: lighten($secondary, 20);
+            }
+        }
+
+        p {
+            margin-top: 20px;
+        }
 
 
-    hr {
-      color: #888;
-      margin-bottom: 20px;
+        hr {
+            color: #888;
+            margin-bottom: 20px;
+        }
+
+        .readmore {
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            line-height: 1;
+            transition: 0.3s;
+            color: lighten($secondary, 20);
+
+            i {
+                line-height: 0;
+                margin-left: 6px;
+                font-size: 16px;
+            }
+        }
+
+        .post-item:hover {
+            .post-title, .readmore {
+                color: var(--color-primary);
+            }
+
+            .post-img img {
+                transform: scale(1.1)
+            }
+        }
     }
-
-    .readmore {
-      display: flex;
-      align-items: center;
-      font-weight: 600;
-      line-height: 1;
-      transition: 0.3s;
-      color: lighten($secondary, 20);
-
-      i {
-        line-height: 0;
-        margin-left: 6px;
-        font-size: 16px;
-      }
-    }
-
-    .post-item:hover {
-      .post-title, .readmore  {
-        color: var(--color-primary);
-      }
-      .post-img img {
-        transform: scale(1.1)
-      }
-    }
-
-  }
 }

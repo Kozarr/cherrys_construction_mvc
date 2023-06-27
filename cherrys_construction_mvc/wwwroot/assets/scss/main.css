@@ -955,12 +955,10 @@ section {
   margin: 0 10px;
   line-height: 1;
   margin-bottom: 5px;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 .projects .portfolio-flters li:hover, .projects .portfolio-flters li.filter-active {
-  color: #0B2547;
-  transform: scale(1.1);
-  font-weight: 600;
+  color: #e68e00;
 }
 .projects .portfolio-flters li:first-child {
   margin-left: 0;
@@ -2111,9 +2109,44 @@ Template: Resi Pro
 /*--------------------------------------------------------------
 # Blog Posts List
 --------------------------------------------------------------*/
+.blog .blog-flters {
+  padding: 0;
+  margin: 0 auto 20px auto;
+  list-style: none;
+  text-align: center;
+}
+.blog .blog-flters li {
+  cursor: pointer;
+  display: inline-block;
+  padding: 0;
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0 10px;
+  line-height: 1;
+  margin-bottom: 5px;
+  transition: all 0.2s ease-in-out;
+}
+.blog .blog-flters li:hover, .blog .blog-flters li.filter-active {
+  color: #e68e00;
+}
+.blog .blog-flters li:first-child {
+  margin-left: 0;
+}
+.blog .blog-flters li:last-child {
+  margin-right: 0;
+}
+@media (max-width: 575px) {
+  .blog .blog-flters li {
+    font-size: 14px;
+    margin: 0 5px;
+  }
+}
 .blog .posts-list .post-item {
-  box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.06);
   transition: 0.3s;
+  position: relative;
+}
+.blog .posts-list .post-img {
+  position: relative;
 }
 .blog .posts-list .post-img img {
   transition: 0.5s;
@@ -2131,6 +2164,7 @@ Template: Resi Pro
 }
 .blog .posts-list .post-content {
   padding: 30px;
+  box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.06);
 }
 .blog .posts-list .post-title {
   font-size: 24px;

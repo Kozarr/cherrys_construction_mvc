@@ -4,7 +4,6 @@
 .projects {
 
     .portfolio-flters {
-
         list-style: none;
         text-align: center;
 
@@ -17,12 +16,10 @@
             margin: 0 10px;
             line-height: 1;
             margin-bottom: 5px;
-            transition: all 0.3s ease-in-out;
+            transition: all 0.2s ease-in-out;
 
             &:hover, &.filter-active {
-                color: $cherrys-blue;
-                transform: scale(1.1);
-                font-weight: 600;
+                color: darken($cherrys-yellow, 15);
             }
 
             &:first-child {
