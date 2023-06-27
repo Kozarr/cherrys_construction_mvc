@@ -2,8 +2,10 @@
 using cherrys_construction_mvc.Models;
 using cherrys_construction_mvc.Utility;
 using cherrys_construction_mvc.ViewModels.Blog;
+using cherrys_construction_mvc.ViewModels.Responce;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using X.PagedList;
 
 namespace cherrys_construction_mvc.Areas.User.Controllers
 {
@@ -24,8 +26,46 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
         public BlogViewModel blogViewModel = new();
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
+            // Testing Pagination Hookup
+            List<BlogPostResponce> PostsList = new();
+
+            for(int i = 0; i < 20; i++)
+            {
+                BlogPostResponce post = new()
+                {
+                    Title = "Title Post " + i.ToString(),
+                    Description = "This is a test description of a blog post. Many words can be here to use for blogs. " +
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. " +
+                    "Eu feugiat pretium nibh ipsum consequat nisl vel. Pellentesque id nibh tortor id aliquet lectus proin nibh nisl. " +
+                    "Massa eget egestas purus viverra accumsan in. Viverra adipiscing at in tellus integer feugiat scelerisque.",
+                    ImageLink = "/assets/img/blog/blog-1.jpg",
+                    Author = "Cherry's Construction",
+                    CreatedDate = DateTime.Now,
+                    UpdatedDate = DateTime.Now
+                };
+                PostsList.Add(post);
+            }
+            var pageNumber = page ?? 1;
+
+            // Sort by recent posts
+            PostsList = PostsList.OrderBy(x => x.CreatedDate).ToList();
+
+            // Reduce description size before sending to front
+            if (PostsList.Any())
+            {
+                foreach (var post in PostsList)
+                {
+                    post.Description = post.Description.Substring(0, 200);
+                    post.Description += ("...");
+                }
+            }
+            
+            var pageOfPosts = PostsList.ToPagedList(pageNumber, 6);
+
+            ViewBag.OnePageOfProducts = pageOfPosts;
+
             var companyInfo = await _companyInfoService.GetCompanyInfosAsync();
             if (companyInfo.Any())
             {
@@ -37,7 +77,7 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details()
+        public async Task<IActionResult> Details(int? id)
         {
             BlogDetailsViewModel blogDetailsVM = new();
             if(blogViewModel != null)

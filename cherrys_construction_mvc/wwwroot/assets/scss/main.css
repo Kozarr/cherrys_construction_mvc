@@ -2077,33 +2077,46 @@ Template: Resi Pro
 /*--------------------------------------------------------------
 # Blog
 --------------------------------------------------------------*/
-.blog .blog-pagination {
+.blog .pagination-container {
   margin-top: 30px;
-  color: #838893;
+  color: #19539f;
+  justify-items: center;
+  justify-self: center;
 }
-.blog .blog-pagination ul {
+.blog .pagination-container ul {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  justify-content: center;
+}
+.blog .pagination-container .pagination {
   display: flex;
   padding: 0;
   margin: 0;
   list-style: none;
 }
-.blog .blog-pagination li {
+.blog .pagination-container li {
   margin: 0 5px;
   transition: 0.3s;
 }
-.blog .blog-pagination li a {
-  color: var(--color-secondary);
-  padding: 7px 16px;
+.blog .pagination-container li a {
+  color: #0A0A0A;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 7px 16px;
 }
-.blog .blog-pagination li.active, .blog .blog-pagination li:hover {
-  background: var(--color-primary);
-  color: #fff;
+.blog .pagination-container li.active {
+  padding: 7px 16px;
+  background: #0B2547;
+  color: #ffffff;
 }
-.blog .blog-pagination li.active a, .blog .blog-pagination li:hover a {
-  color: var(--color-white);
+.blog .pagination-container li:hover {
+  background: #0B2547;
+}
+.blog .pagination-container li:hover a {
+  color: #ffffff;
 }
 
 /*--------------------------------------------------------------
