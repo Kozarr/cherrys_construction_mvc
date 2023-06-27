@@ -61,6 +61,14 @@ else
                 <li data-filter=".filter-siding">Siding</li>
             </ul><!-- End Blog Flters -->
 
+            @using (Html.BeginForm())
+            {
+                <p>
+                    @Html.TextBox("SearchString")
+                    <input type="submit" value="Search" />
+                </p>
+            }
+
             <div class="row gy-4 posts-list">
 
             @foreach (var post in ViewBag.OnePageOfProducts)

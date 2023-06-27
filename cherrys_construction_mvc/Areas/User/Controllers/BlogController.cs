@@ -23,30 +23,35 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
             _companyInfoService = companyInfoService;
         }
 
-        public BlogViewModel blogViewModel = new();
+        public static BlogViewModel blogViewModel = new();
+        
 
         [HttpGet]
         public async Task<IActionResult> Index(int? page)
         {
             // Testing Pagination Hookup
             List<BlogPostResponce> PostsList = new();
-
-            for(int i = 0; i < 20; i++)
+            
+            if(!PostsList.Any())
             {
-                BlogPostResponce post = new()
+                for (int i = 0; i < 20; i++)
                 {
-                    Title = "Title Post " + i.ToString(),
-                    Description = "This is a test description of a blog post. Many words can be here to use for blogs. " +
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. " +
-                    "Eu feugiat pretium nibh ipsum consequat nisl vel. Pellentesque id nibh tortor id aliquet lectus proin nibh nisl. " +
-                    "Massa eget egestas purus viverra accumsan in. Viverra adipiscing at in tellus integer feugiat scelerisque.",
-                    ImageLink = "/assets/img/blog/blog-1.jpg",
-                    Author = "Cherry's Construction",
-                    CreatedDate = DateTime.Now,
-                    UpdatedDate = DateTime.Now
-                };
-                PostsList.Add(post);
+                    BlogPostResponce post = new()
+                    {
+                        Title = "Title Post " + i.ToString(),
+                        Description = "This is a test description of a blog post. Many words can be here to use for blogs. " +
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. " +
+                        "Eu feugiat pretium nibh ipsum consequat nisl vel. Pellentesque id nibh tortor id aliquet lectus proin nibh nisl. " +
+                        "Massa eget egestas purus viverra accumsan in. Viverra adipiscing at in tellus integer feugiat scelerisque.",
+                        ImageLink = "/assets/img/blog/blog-1.jpg",
+                        Author = "Cherry's Construction",
+                        CreatedDate = DateTime.Now,
+                        UpdatedDate = DateTime.Now
+                    };
+                    PostsList.Add(post);
+                }
             }
+            
             var pageNumber = page ?? 1;
 
             // Sort by recent posts
@@ -73,6 +78,54 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
                 blogViewModel.CompanyInfo = info;
             }
 
+            return View(blogViewModel);
+        }
+
+        // Error, when searching for a word and on second page, results comin in for second page of that result list
+        // but when going to page 1 of new resulted list, program bumps to IActionResult and resets list.
+
+
+        public async Task<ViewResult> Index(int? page, string? searchString)
+        {
+            // Testing Pagination Hookup
+            List<BlogPostResponce> PostsList = new();
+
+            if (!PostsList.Any())
+            {
+                for (int i = 0; i < 20; i++)
+                {
+                    BlogPostResponce post = new()
+                    {
+                        Title = "Title Post " + i.ToString(),
+                        Description = "This is a test description of a blog post. Many words can be here to use for blogs. " +
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. " +
+                        "Eu feugiat pretium nibh ipsum consequat nisl vel. Pellentesque id nibh tortor id aliquet lectus proin nibh nisl. " +
+                        "Massa eget egestas purus viverra accumsan in. Viverra adipiscing at in tellus integer feugiat scelerisque.",
+                        ImageLink = "/assets/img/blog/blog-1.jpg",
+                        Author = "Cherry's Construction",
+                        CreatedDate = DateTime.Now,
+                        UpdatedDate = DateTime.Now
+                    };
+                    PostsList.Add(post);
+                }
+            }
+
+            var pageNumber = page ?? 1;
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                if (PostsList.Any())
+                {
+                    var newList = PostsList.Where(s => s.Title.ToLower().Contains(searchString.Trim().ToLower()) ||
+                                    s.Description.ToLower().Contains(searchString.Trim().ToLower())).ToList();
+                    var pageOfPosts = newList.ToPagedList(pageNumber, 6);
+                    ViewBag.OnePageOfProducts = pageOfPosts;
+                }                
+            }
+            else
+            {
+                var pageOfPosts = PostsList.ToPagedList(pageNumber, 6);
+                ViewBag.OnePageOfProducts = pageOfPosts;
+            }
             return View(blogViewModel);
         }
 
