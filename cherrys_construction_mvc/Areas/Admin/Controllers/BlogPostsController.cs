@@ -43,22 +43,22 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
             }
 
             TempData["error"] = "Blog Post Creation Failed";
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         // Edit
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
-            if(id != 0)
+            if(id > 0)
             {
                 // get post from db
                 BlogPostResponce blogPost = new();
                 return View(blogPost);
             }
             TempData["error"] = "Failed To Fing Blog Post";
-            _logger.LogError("Blog Post Edit-Get : passed Id=0 or failed to find existing Blog Post");
-            return RedirectToAction("Index");
+            _logger.LogError("BlogPostController Edit-Get : Passed Id=0 To Method");
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
@@ -69,10 +69,10 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
             {
                 // update method
                 TempData["success"] = "Blog Post Updated Successfully";
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
             TempData["error"] = "Blog Post Update Failed";
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
 
@@ -80,15 +80,15 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int? Id)
         {
-            if(Id != 0)
+            if(Id > 0)
             {
                 // Get post
                 BlogPostResponce blogPost = new();
                 return View(blogPost);
             }
             TempData["error"] = "Failed To Fing Blog Post";
-            _logger.LogError("Blog Post Delete-Get : passed Id=0 or failed to find existing Blog Post");
-            return RedirectToAction("Index");
+            _logger.LogError("BlogPostController Delete-Get : Passed Id=0 To Method");
+            return RedirectToAction(nameof(Index));
 
         }
 
@@ -96,15 +96,15 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeletePost(int? Id)
         {
-            if(Id != 0)
+            if(Id > 0)
             {
                 // delete method
                 TempData["success"] = "Blog Post Deleted Successfully";
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
             TempData["error"] = "Blog Post Deletion Failed";
-            _logger.LogError("Blog Post Delete-Get : passed Id=0 or failed to find existing Blog Post");
-            return RedirectToAction("Index");
+            _logger.LogError("BlogPostController Delete-Post : Passed Id=0 To Method");
+            return RedirectToAction(nameof(Index));
         }
     }
 }
