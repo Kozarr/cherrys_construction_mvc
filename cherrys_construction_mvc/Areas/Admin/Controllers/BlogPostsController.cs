@@ -8,16 +8,19 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
 {
     [Area(Breadcrumb.AdminArea)]
     [Authorize(Roles = StaticDetails.Role_Admin + "," + StaticDetails.Role_Employee)]
-    public class BlogPostController : Controller
+    public class BlogPostsController : Controller
     {
-        private readonly ILogger<BlogPostController> _logger;
+        private readonly ILogger<BlogPostsController> _logger;
 
-        public BlogPostController(ILogger<BlogPostController> logger)
+        public BlogPostsController(ILogger<BlogPostsController> logger)
         {
             _logger = logger;
         }
-        public IActionResult Index()
+
+
+        public async Task<IActionResult> Index()
         {
+            // get list and display, pagination, search
             return View();
         }
 
