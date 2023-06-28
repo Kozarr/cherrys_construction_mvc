@@ -181,6 +181,10 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
+.search-bar-container {
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
 
 
 .p-overflow {
@@ -192,8 +196,6 @@ h1, h2, h3, h4, h5, h6 {
 label {
     color: grey;
 }
-
-
 
 .account {
     .form-check-input {

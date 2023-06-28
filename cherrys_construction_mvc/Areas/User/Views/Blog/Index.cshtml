@@ -61,13 +61,15 @@ else
                 <li data-filter=".filter-siding">Siding</li>
             </ul><!-- End Blog Flters -->
 
-            @using (Html.BeginForm())
-            {
-                <p>
-                    @Html.TextBox("SearchString")
-                    <input type="submit" value="Search" />
-                </p>
-            }
+            <div class="col-lg-6 col-md-8 col-sm-12 search-bar-container">
+                @using (Html.BeginForm())
+                {
+                    <div class="input-group">
+                        @Html.TextBox("SearchString", null, new { @class="form-control"} )
+                        <input id="button-addon2" type="submit" value="Search" class="btn btn-outline-secondary" />
+                    </div>
+                }
+            </div>
 
             <div class="row gy-4 posts-list">
 

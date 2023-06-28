@@ -38,7 +38,7 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         // POST : CREATE
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([FromForm] MemberRequest request,IFormCollection collection)
+        public async Task<IActionResult> Create([FromForm] MemberRequest request)
         {    
             // for test 
             if (request.Name != null)
