@@ -1,6 +1,8 @@
-﻿namespace cherrys_construction_mvc.Models
+﻿using cherrys_construction_mvc.EfRepository.Interfaces;
+
+namespace cherrys_construction_mvc.Models
 {
-    public class BlogPost
+    public class BlogPost:IAggregateRoot
     {
         public int Id { get; set; }
         public string? Title { get; set; }

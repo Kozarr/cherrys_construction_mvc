@@ -55,6 +55,8 @@ builder.Services.AddScoped<ICallToActionSetting, CallToActionSettingService>();
 builder.Services.AddScoped<ICompanyCertificateSettingService, CompanyCertificateSettingService>();
 builder.Services.AddScoped<ICompanyQualitiySettingService, CompanyQualitiySettingService>();
 builder.Services.AddScoped<ILegalDocumentService, LegalDocumentService>();
+builder.Services.AddScoped<IBlogPostService, BlogPostService>();
+builder.Services.AddScoped<IBlogCategoryService, BlogCategoryService>();
 
 builder.Services.AddScoped(typeof(IEfRepository<>), typeof(EfRepository<>));
 builder.Services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));

@@ -212,6 +212,27 @@ namespace cherrys_construction_mvc.Mapper
             _ = CreateMap<LegalDocumentResponce, LegalDocument>();
 
             #endregion
+
+            #region BlogPost
+
+            _ = CreateMap<BlogPost, BlogPostRequest>();
+            _ = CreateMap<BlogPostRequest, BlogPost>();
+
+            _ = CreateMap<BlogPost, BlogPostResponce>();
+            _ = CreateMap<BlogPostResponce, BlogPost>();
+
+
+            #endregion
+
+            #region BlogCategory
+
+            _ = CreateMap<BlogCategory, BlogCategoryRequest>();
+            _ = CreateMap<BlogCategoryRequest, BlogCategory>();
+
+            _ = CreateMap<BlogCategory, BlogCategoryResponce>();
+            _ = CreateMap<BlogCategoryResponce, BlogCategory>();
+
+            #endregion
         }
     }
 }
