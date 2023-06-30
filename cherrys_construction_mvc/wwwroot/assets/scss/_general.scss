@@ -52,7 +52,7 @@ h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-primary);
     letter-spacing: 1px;
     border-radius: 4px;
-    color: $cherrys-yellow;
+    color: $white;
     background-color: $cherrys-blue;
     transition: all 0.3s ease-in-out;
     margin-bottom: 20px;
@@ -60,6 +60,11 @@ h1, h2, h3, h4, h5, h6 {
 
     &:hover {
         background-color: lighten($cherrys-blue,15);
+        color: $cherrys-yellow;
+    }
+
+    i {
+        padding-left: 6px;
     }
 }
 
@@ -99,6 +104,10 @@ h1, h2, h3, h4, h5, h6 {
         background-color: lighten($cherrys-red, 15);
         color: $cherrys-white;
     }
+
+    i {
+        padding-left: 6px;
+    }
 }
 
 .edit-btn {
@@ -116,6 +125,18 @@ h1, h2, h3, h4, h5, h6 {
 
     &:hover {
         background-color: lighten($cherrys-yellow,15);
+    }
+
+    i {
+        padding-left: 6px;
+    }
+}
+
+.edit-image {
+    img {
+        max-height: 400px;
+        clip-path: none;
+        margin-bottom: 16px;
     }
 }
 

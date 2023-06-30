@@ -63,7 +63,7 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
                 foreach (var post in PostsList)
                 {
                     post.Description = post.Description.Substring(0, 200);
-                    post.Description += ("...");
+                    post.Description += "...";
                 }
             }
             

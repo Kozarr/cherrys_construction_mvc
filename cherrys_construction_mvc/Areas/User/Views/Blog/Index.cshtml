@@ -95,15 +95,9 @@ else
                                 <i class="bi bi-folder"></i> <span class="ps-2">Politics</span>
                             </div>
                         </div>
-
-                        <p>
-                                @post.Description
-                        </p>
-
+                        <p>@post.Description</p>
                         <hr>
-
-                        <a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.UserBlogController" asp-action="Details" class="readmore stretched-link"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
-
+                            <a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.UserBlogController" asp-action="Details" asp-route-id="@post.Id" class="readmore stretched-link"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
                     </div>
 
                 </div><!-- End post list item -->

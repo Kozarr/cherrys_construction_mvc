@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = Breadcrumb.BlogDashboardTitle;
+}
+
+<!-- ======= Breadcrumbs ======= -->
+<div class="breadcrumbs d-flex align-items-center" style="background-image: url('/assets/img/breadcrumbs-bg.jpg');">
+    <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+
+        <h2>@Breadcrumb.BlogDashboardTitle</h2>
+        <ol>
+            <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Index">@Breadcrumb.HomeTitle</a></li>
+            <li><a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.AdminController" asp-action="Index">@Breadcrumb.AdminTitle</a></li>
+            <li>@Breadcrumb.BlogDashboardTitle</li>
+        </ol>
+
+    </div>
+</div><!-- End Breadcrumbs -->
+<!-- ======= Admin Panel ======= -->
+<section id="admin-panel" class="admin-panel">
+    <div class="container">
+        <div class="section-header">
+            <h2>@Breadcrumb.BlogDashboardTitle</h2>
+        </div>
+
+        <div class="row gy-4">
+
+            <div class="col-lg-6 col-md-6">
+                <a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.BlogPostsController" asp-action="Index">
+                    <div class="box">
+                        <i class="fa-solid fa-blog"></i>
+                        <h4>@Breadcrumb.BlogPostsTitle</h4>
+                        <p>
+                            You can manage Blogs that you want to showcase to users here.
+                        </p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.BlogCategoriesController" asp-action="Index">
+                    <div class="box">
+                        <i class="fa-solid fa-list"></i>
+                        <h4>@Breadcrumb.BlogCategoriesTitle</h4>
+                        <p>
+                            Categories for blogs can be sorted here.
+                        </p>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</section>

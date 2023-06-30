@@ -1,5 +1,115 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+
 @{
+    ViewData["Title"] = Breadcrumb.BlogPostsTitle;
 }
+
+<!-- ======= Breadcrumbs ======= -->
+<div class="breadcrumbs d-flex align-items-center" style="background-image: url('/assets/img/breadcrumbs-bg.jpg');">
+    <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+
+        <h2>@Breadcrumb.BlogPostsTitle</h2>
+        <ol>
+            <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Index">@Breadcrumb.HomeTitle</a></li>
+            <li><a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.AdminController" asp-action="Index">@Breadcrumb.AdminTitle</a></li>
+            <li><a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.AdminController" asp-action="Blogs">@Breadcrumb.BlogDashboardTitle</a></li>
+            <li>@Breadcrumb.BlogPostsTitle</li>
+        </ol>
+
+    </div>
+</div><!-- End Breadcrumbs -->
+<!-- ======= Blog Section ======= -->
+<section id="blog" class="blog">
+    <div class="container" data-aos="fade-up" data-aos-delay="100"> 
+        @if (ViewBag.OnePageOfBlogs != null)
+        {
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <a class="create-btn w-100 text-center" 
+                asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.BlogPostsController" 
+                asp-action="@Breadcrumb.Create">@Breadcrumb.Create Blog<i class="fa-solid fa-plus"></i></a>
+            </div>
+            <div class="blog-isotope" data-blog-filter="*" data-blog-layout="masonry" data-portfolio-sort="original-order">
+
+                <ul class="blog-flters" data-aos="fade-up" data-aos-delay="100">
+                    <li data-filter="*" class="filter-active">All</li>
+                    <li data-filter=".filter-concrete">Concrete</li>
+                    <li data-filter=".filter-sprayfoam">Spray Foam</li>
+                    <li data-filter=".filter-roofing">Roofing</li>
+                    <li data-filter=".filter-siding">Siding</li>
+                </ul><!-- End Blog Flters -->
+
+
+                <div class="col-12 search-bar-container">
+                    @using (Html.BeginForm())
+                    {
+                        <div class="input-group">
+                            @Html.TextBox("SearchString", null, new { @class="form-control"} )
+                            <input id="button-addon2" type="submit" value="Search" class="btn btn-outline-secondary" />
+                        </div>
+                    }
+                </div>
+
+                <div class="row gy-4 posts-list">
+
+                    @foreach (var post in ViewBag.OnePageOfBlogs)
+                    {
+                        <div class="col-lg-4 col-md-6 post-item filter-concrete">
+                            
+                            <div class="post-img overflow-hidden">
+                                @if(post.ImageLink != null)
+                                {
+                                    <img src="@post.ImageLink" class="img-fluid" alt="">
+                                }                               
+                                @if (post.CreatedDate != null)
+                                {
+                                    <span class="post-date">@post.CreatedDate.ToString("MMMM dd, yyyy")</span>
+                                }
+                            </div>
+                                                      
+                            <div class="post-content d-flex flex-column">
+                                <h3 class="post-title">@post.Title</h3>
+                                <div class="meta d-flex align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-person"></i> <span class="ps-2">@post.Author</span>
+                                    </div>
+                                    <span class="px-3 text-black-50">/</span>
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-folder"></i> <span class="ps-2">Politics</span>
+                                    </div>
+                                    
+                                </div>
+                                @if (post.UpdatedDate != null)
+                                {
+                                    <div class="meta d-flex align-items-center">
+                                        <i class="bi bi-arrow-repeat"></i> <span class="ps-2">Updated : @post.UpdatedDate.ToString("MMMM dd, yyyy")</span>
+                                    </div>
+                                }
+                                @Html.Raw(post.Description)
+                                <hr>                                               
+                                    <a class="edit-btn m-1 text-center" asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.BlogPostsController" 
+                                    asp-action="@Breadcrumb.Edit" asp-route-id="@post.Id" class="readmore stretched-link"><span>@Breadcrumb.Edit</span><i class="fa-regular fa-pen-to-square"></i></a>                                                                        
+                                    <a class="delete-btn m-1 text-center" asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.BlogPostsController" 
+                                    asp-action="@Breadcrumb.Delete" asp-route-id="@post.Id" class="readmore stretched-link"><span>@Breadcrumb.Delete</span><i class="fa-regular fa-trash-can"></i></a>                                          
+                            </div>
+
+                        </div>
+                        <!-- End post list item -->
+                    }                  
+
+                </div><!-- End blog posts list -->
+
+            </div>
+
+            @*  Pagination  *@
+            @Html.PagedListPager( (IPagedList)ViewBag.OnePageOfBlogs, page => Url.Action("Index", new { page }) )
+            <!-- End blog pagination -->
+        }
+        else
+        {
+            <div class="col-12 add-btn-container text-center" data-aos="fade-up" data-aos-delay="100">
+                <a class="add-button" asp-area="@Breadcrumb.AdminArea" asp-action="@Breadcrumb.Create"><i class="bi bi-plus"></i></a>
+            </div>
+        }
+    </div>
+</section><!-- End Blog Section -->

@@ -1,4 +1,6 @@
 ﻿using cherrys_construction_mvc.Models;
+using cherrys_construction_mvc.ViewModels.Responce;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 
 namespace cherrys_construction_mvc.ViewModels.Requests
@@ -16,7 +18,10 @@ namespace cherrys_construction_mvc.ViewModels.Requests
         public DateTime? UpdatedDate { get; set; }
 
         public IFormFile? Image { get; set; }
+            
+        public int? BlogCategoryId { get; set; }
+        [ValidateNever]
+        public List<BlogCategoryResponce>? BlogCategories { get; set; }
 
-        public virtual ICollection<BlogPostBlogCategory>? BlogPostBlogCategories { get; set; }
     }
 }

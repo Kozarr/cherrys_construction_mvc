@@ -87,8 +87,12 @@
         public const string LegalDocumentsTitle = "Legal Documents";
         public const string LegalDocumentsController = "LegalDocuments";
 
-        public const string BlogTitle = "Blog";
-        public const string BlogController = "Blog";
+        public const string BlogDashboardTitle = "Blog Dashboard";
+        public const string BlogPostsTitle = "Blogs";
+        public const string BlogPostsController = "BlogPosts";
+
+        public const string BlogCategoriesTitle = "Blog Categories";
+        public const string BlogCategoriesController = "BlogCategories";
 
         // CRUD Ops
         public const string Create = "Create";

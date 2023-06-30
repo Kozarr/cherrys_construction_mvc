@@ -1,5 +1,71 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<BlogCategoryResponce>
+
 @{
+    ViewData["Title"] = Breadcrumb.BlogCategoriesTitle;
 }
+
+<!-- ======= Breadcrumbs ======= -->
+<div class="breadcrumbs d-flex align-items-center" style="background-image: url('/assets/img/breadcrumbs-bg.jpg');">
+    <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+
+        <h2>@Breadcrumb.BlogCategoriesTitle</h2>
+        <ol>
+            <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Index">@Breadcrumb.HomeTitle</a></li>
+            <li><a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.AdminController" asp-action="Index">@Breadcrumb.AdminTitle</a></li>
+            <li><a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.AdminController" asp-action="Blogs">@Breadcrumb.BlogDashboardTitle</a></li>
+            <li>@Breadcrumb.BlogCategoriesTitle</li>
+        </ol>
+
+    </div>
+</div><!-- End Breadcrumbs -->
+
+
+<section id="list" class="list">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-header">
+            <h2>@Breadcrumb.BlogCategoriesTitle</h2>
+        </div>
+
+        @if (Model.Any())
+        {
+            <div class="text-center">
+                <div class="container" data-aos="fade-up">
+
+                    @foreach (var item in Model)
+                    {
+                        <div class="row gy-4 list-item featured mt-4 " data-aos="fade-up" data-aos-delay="200">
+                           
+                            <div class="col-lg-8 col-md-8 col-sm-12 d-flex align-items-center justify-content-center">
+                                <h3>@item.Name</h3>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-12 d-flex row align-items-center justify-content-center">
+                                <div class="col-6 align-items-center justify-content-center d-flex">
+                                    <a class="edit-btn m-2" style="width:130px;"
+                                       asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.BlogCategoriesController" asp-action="@Breadcrumb.Edit" asp-route-id="@item.Id">@Breadcrumb.Edit</a>
+                                </div>
+                                <div class="col-6">
+                                    <a class="delete-btn m-2" style="width:130px;"
+                                       asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.BlogCategoriesController" asp-action="@Breadcrumb.Delete" asp-route-id="@item.Id">@Breadcrumb.Delete</a>
+                                </div>
+                            </div>
+
+                        </div>
+                       
+                    }
+                </div>
+                <div class="col-12 add-btn-container text-center" data-aos="fade-up" data-aos-delay="100">
+                    <a class="add-button" asp-area="@Breadcrumb.AdminArea" asp-action="Create"><i class="bi bi-plus"></i></a>
+                </div>
+
+            </div>
+        }
+        else
+        {
+            <div class="col-12 add-btn-container text-center" data-aos="fade-up" data-aos-delay="100">
+                <a class="add-button" asp-area="@Breadcrumb.AdminArea" asp-action="@Breadcrumb.Create"><i class="bi bi-plus"></i></a>
+            </div>
+        }
+    </div>
+</section>
+

@@ -46,16 +46,16 @@
                             <div class="col-lg-2 d-flex align-items-center justify-content-center">
                                 <div>
                                     <div class="text-center"><a class="edit-btn m-2" style="width:130px;" 
-                                        asp-area="@Breadcrumb.AdminArea" asp-action="Edit" asp-route-id="@item.Id">@Breadcrumb.Edit</a></div>
+                                        asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.ServiceCategoriesController" asp-action="Edit" asp-route-id="@item.Id">@Breadcrumb.Edit</a></div>
                                     <div class="text-center"><a class="delete-btn m-2" style="width:130px;" 
-                                        asp-area="@Breadcrumb.AdminArea" asp-action="Delete" asp-route-id="@item.Id">@Breadcrumb.Delete</a></div>
+                                        asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.ServiceCategoriesController" asp-action="Delete" asp-route-id="@item.Id">@Breadcrumb.Delete</a></div>
                                 </div>
                             </div>
 
                         </div>
                 }
                 </div>
-                <div class="col-12 add-btn-container" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-12 add-btn-container text-center" data-aos="fade-up" data-aos-delay="100">
                     <a class="add-button" asp-area="@Breadcrumb.AdminArea" asp-action="Create"><i class="bi bi-plus"></i></a>
                 </div>
 

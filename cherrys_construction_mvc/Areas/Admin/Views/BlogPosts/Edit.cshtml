@@ -1,5 +1,92 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model BlogPostRequest
+
 @{
+    ViewData["Title"] = Breadcrumb.BlogPostsTitle;
+}
+
+<!-- ======= Breadcrumbs ======= -->
+<div class="breadcrumbs d-flex align-items-center" style="background-image: url('/assets/img/breadcrumbs-bg.jpg');">
+    <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+
+        <h2>@Breadcrumb.BlogPostsTitle</h2>
+        <ol>
+            <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Index">@Breadcrumb.HomeTitle</a></li>
+            <li><a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.AdminController" asp-action="Index">@Breadcrumb.AdminTitle</a></li>
+            <li><a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.AdminController" asp-action="Blogs">@Breadcrumb.BlogDashboardTitle</a></li>
+            <li><a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.BlogPostsController" asp-action="Index">@Breadcrumb.BlogPostsTitle</a></li>
+            <li>@Breadcrumb.Edit</li>
+        </ol>
+
+    </div>
+</div><!-- End Breadcrumbs -->
+
+<section id="list" class="list">
+    <div class="row">
+        <div class="col-lg-6" style="margin-left: auto; margin-right:auto;">
+            <!-- Multi Columns Form -->
+            <form enctype="multipart/form-data" method="post">
+                <div class="card">
+                    <div class="card-body row">
+                        @if(Model.ImageLink != null)
+                        {
+                            <div class="edit-image text-center">
+                                <img src="@Model.ImageLink" class="img-fluid" alt="Blog Post Image" />
+                            </div>
+                        }                      
+                        <div class="col-12 mb-3">
+                            <div class="form-floating">
+                                <input id="obj18621" asp-for="Title" class="form-control" placeholder="Enter Blog Title" />
+                                <label for="obj13421" asp-for="Title">Enter Blog Title</label>
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                            </div>
+                        </div>
+                        @if(Model.BlogCategories != null)
+                        {
+                            @if (Model.BlogCategories.Any())
+                            {
+                                <div class="col-lg-4 col-md-4 col-sm-12 mb-3 align-items-center">
+                                    <label asp-for="BlogCategoryId" />
+                                    <select asp-for="BlogCategoryId" class="form-select">
+                                        @foreach (var item in @Model.BlogCategories)
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
+                                    </select>
+                                    <span asp-validation-for="BlogCategoryId" class="text-danger"></span>
+                                </div>
+                            }
+                        }
+                        
+                        <div class="col-lg-8 col-md-8 col-sm-12">
+                            @*<label asp-for="Image">Image</label>*@
+                            <input asp-for="Image" type="file" class="form-control" />
+                            <span asp-validation-for="Image" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <label asp-for="Description">Description</label>
+                            <textarea asp-for="Description" class="form-control"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="mt-3 col-sm-12">
+                            <a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.BlogPostsController" asp-action="Index" class="back-btn">@Breadcrumb.Back</a>
+                            <button type="submit" class="edit-btn">@Breadcrumb.Save</button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </form><!-- End Multi Columns Form -->
+
+        </div>
+    </div>
+</section>
+
+
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
 }

@@ -11,7 +11,6 @@ namespace cherrys_construction_mvc.Services
 {
     public class BlogCategoryService : IBlogCategoryService
     {
-        private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IEfRepository<BlogCategory> _blogCategoryRepository;
         private readonly IMapper _mapper;
 
@@ -19,11 +18,9 @@ namespace cherrys_construction_mvc.Services
         {
             _blogCategoryRepository = blogCategory;
             _mapper = mapper;   
-            _webHostEnvironment = webHostEnvironment;
         }
         public async Task CreateBlogCategoryAsync(BlogCategoryRequest request)
-        {
-           
+        {   
             var blogCategory = _mapper.Map<BlogCategory>(request);
             await _blogCategoryRepository.AddAsync(blogCategory);
             await _blogCategoryRepository.SaveChangesAsync();

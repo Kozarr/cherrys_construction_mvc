@@ -1,5 +1,55 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model BlogCategoryRequest
+
 @{
+    ViewData["Title"] = Breadcrumb.BlogCategoriesTitle;
+}
+
+<!-- ======= Breadcrumbs ======= -->
+<div class="breadcrumbs d-flex align-items-center" style="background-image: url('/assets/img/breadcrumbs-bg.jpg');">
+    <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+
+        <h2>@Breadcrumb.BlogCategoriesTitle</h2>
+        <ol>
+            <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Index">@Breadcrumb.HomeTitle</a></li>
+            <li><a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.AdminController" asp-action="Index">@Breadcrumb.AdminTitle</a></li>
+            <li><a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.AdminController" asp-action="Blogs">@Breadcrumb.BlogDashboardTitle</a></li>
+            <li><a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.BlogCategoriesController" asp-action="Index">@Breadcrumb.BlogCategoriesTitle</a></li>
+            <li>@Breadcrumb.Create</li>
+        </ol>
+
+    </div>
+</div><!-- End Breadcrumbs -->
+
+<section class="list">
+    <div class="row">
+        <div class="col-lg-6" style="margin-left: auto; margin-right:auto;">
+
+            <!-- Multi Columns Form -->
+            <form enctype="multipart/form-data" method="post">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-md-12">
+                            <div class="form-floating">
+                                <input id="obj4783" asp-for="Name" class="form-control" placeholder="Enter Name" />
+                                <label for="obj4783" asp-for="Name">Enter Name</label>
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.BlogCategoriesController" asp-action="Index" class="back-btn">@Breadcrumb.Back</a>
+                            <button type="submit" class="create-btn">@Breadcrumb.Create</button>
+                        </div>
+
+                    </div>
+                </div>
+            </form><!-- End Multi Columns Form -->
+
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
 }

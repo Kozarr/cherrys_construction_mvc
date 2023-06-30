@@ -12,6 +12,5 @@ namespace cherrys_construction_mvc.ViewModels.Responce
         public DateTime? CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
 
-        public virtual ICollection<BlogPostBlogCategory>? BlogPostBlogCategories { get; set; }
-    }
+     }
 }

@@ -52,7 +52,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-primary);
   letter-spacing: 1px;
   border-radius: 4px;
-  color: #FFB133;
+  color: #ffffff;
   background-color: #0B2547;
   transition: all 0.3s ease-in-out;
   margin-bottom: 20px;
@@ -60,6 +60,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 .create-btn:hover {
   background-color: #154889;
+  color: #FFB133;
+}
+.create-btn i {
+  padding-left: 6px;
 }
 
 .back-btn {
@@ -97,6 +101,9 @@ h1, h2, h3, h4, h5, h6 {
   background-color: #f70101;
   color: #F4F4F6;
 }
+.delete-btn i {
+  padding-left: 6px;
+}
 
 .edit-btn {
   display: inline-block;
@@ -113,6 +120,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 .edit-btn:hover {
   background-color: #ffce80;
+}
+.edit-btn i {
+  padding-left: 6px;
+}
+
+.edit-image img {
+  max-height: 400px;
+  clip-path: none;
+  margin-bottom: 16px;
 }
 
 .add-btn-container {
@@ -1642,13 +1658,12 @@ Template: Logis Pricing Section
 }
 .list .list-item {
   box-shadow: 0 3px 20px -2px rgba(108, 117, 125, 0.15);
-  padding-bottom: 30px;
   background: #fff;
   height: 100%;
   position: relative;
   min-height: 100px;
 }
-.list img {
+.list .img-circle {
   clip-path: circle();
 }
 .list .img-square {
@@ -1660,7 +1675,6 @@ Template: Logis Pricing Section
 }
 .list h3 {
   font-weight: 700;
-  margin-bottom: 0;
   font-size: 1.5rem;
   color: #fff;
 }
@@ -2193,7 +2207,7 @@ Template: Resi Pro
 }
 .blog .posts-list .meta i {
   font-size: 16px;
-  color: var(--color-primary);
+  color: gray;
 }
 .blog .posts-list .meta span {
   font-size: 15px;

@@ -15,6 +15,33 @@
     </div>
 </div><!-- End Breadcrumbs -->
 
+
+<!-- ======= Blog Area ======= -->
+<section id="admin-panel" class="admin-panel">
+    <div class="container">
+        <div class="section-header">
+            <h2>Blogs</h2>
+        </div>
+
+        <div class="row gy-4">
+
+            <div class="col-lg-6 col-md-12">
+                <a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.AdminController" asp-action="Blogs">
+                    <div class="box">
+                        <i class="fa-solid fa-blog"></i>
+                        <h4>@Breadcrumb.BlogDashboardTitle</h4>
+                        <p>
+                            Manage the categories and blogs posts here.
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
 <!-- ======= Admin Panel ======= -->
 <section id="admin-panel" class="admin-panel">
     <div class="container">
@@ -141,7 +168,7 @@
     <section id="admin-panel" class="admin-panel">
         <div class="container">
             <div class="section-header">
-                <h2>Website</h2>
+                <h2>Settings</h2>
             </div>
             <div class="row gy-4">
 

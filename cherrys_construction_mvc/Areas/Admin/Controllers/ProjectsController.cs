@@ -74,13 +74,10 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([FromForm] ProjectRequest request, IFormCollection collection)
-        {
-
-
-            
+        {  
             var selectedTagsIds = collection["skill"].ToList();
             List<int> TagIds = new List<int>();
-            if (selectedTagsIds.Count > 0)
+            if (selectedTagsIds.Count() > 0)
             {
                 foreach (var item in selectedTagsIds)
                 {

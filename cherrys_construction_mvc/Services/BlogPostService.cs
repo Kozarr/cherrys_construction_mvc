@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using AutoMapper.Execution;
 using cherrys_construction_mvc.EfRepository.Interfaces;
 using cherrys_construction_mvc.Interfaces;
 using cherrys_construction_mvc.Models;
@@ -17,7 +16,10 @@ namespace cherrys_construction_mvc.Services
         private readonly ILogger<BlogPost> _logger;
 
 
-        public BlogPostService(IWebHostEnvironment webHostEnvironment, IEfRepository<BlogPost> blogPost, IMapper mapper, ILogger<BlogPost> logger)
+        public BlogPostService(IWebHostEnvironment webHostEnvironment, 
+            IEfRepository<BlogPost> blogPost, 
+            IMapper mapper, 
+            ILogger<BlogPost> logger)
         {
             _blogPostRepository = blogPost;
             _mapper = mapper;
@@ -91,8 +93,15 @@ namespace cherrys_construction_mvc.Services
                 }
                 else
                 {
-                    request.ImageLink = post.ImageLink;
+                    request.ImageLink = post.ImageLink;                 
                 }
+                request.CreatedDate = post.CreatedDate;
+
+                if(request.Author == null)
+                {
+                    request.Author = post.Author;
+                }                
+
                 _mapper.Map(request, post);
                 await _blogPostRepository.UpdateAsync(post);
                 await _blogPostRepository.SaveChangesAsync();
