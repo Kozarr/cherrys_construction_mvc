@@ -7,6 +7,8 @@ using cherrys_construction_mvc.ViewModels.Responce;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using MimeKit;
+using System.Globalization;
 using X.PagedList;
 
 namespace cherrys_construction_mvc.Areas.Admin.Controllers
@@ -33,7 +35,8 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
             _compInfo = compInfo;
             _mapper = mapper;
         }
-
+        public static List<BlogPostResponce> mainList = new();
+        public static string ConstSearchString = "";
         [HttpGet]
         public async Task<IActionResult> Index(int? page)
         {
@@ -41,20 +44,27 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
             var blogList = await _postService.GetBlogPostsAsync();
             if (blogList.Any())
             {
+                mainList = blogList.ToList();
                 // Reduce blog description on preview View
-                foreach(var post in blogList)
+                foreach (var post in mainList)
                 {
                     if (!post.Description.IsNullOrEmpty())
                     {
-                        post.Description = post.Description.Substring(0, 200);
-                        post.Description += "...";
+                        post.ShortDescription = post.Description.Substring(0, 200);
+                        post.ShortDescription += "...";
+                        post.CreatedDateString = post.CreatedDate.ToString("MMMM dd, yyyy");
+                        if (post.UpdatedDate != null)
+                        {
+                            var upDate = post.UpdatedDate.Value;
+                            post.UpdatedDateString = upDate.ToString("MMMM dd, yyyy");
+                        }
                     }               
                 }
 
                 // Sort to recent
-                blogList = blogList.OrderBy(o => o.CreatedDate).ToList();
+                mainList = mainList.OrderByDescending(o => o.CreatedDate).ToList();
 
-                var pageofPosts = blogList.ToPagedList(pageNumber, 6);
+                var pageofPosts = mainList.ToPagedList(pageNumber, 6);
                 ViewBag.OnePageOfBlogs = pageofPosts;
             }
             return View();
@@ -67,33 +77,49 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
             var blogList = await _postService.GetBlogPostsAsync();
             if (blogList.Any())
             {
-                foreach (var post in blogList)
+                mainList = blogList.ToList();
+                // Shorten Description for front view
+                foreach (var post in mainList)
                 {
                     if (!post.Description.IsNullOrEmpty())
                     {
-                        post.Description = post.Description.Substring(0, 200);
-                        post.Description += "...";
+
+                        post.ShortDescription = post.Description.Substring(0, 200);
+                        post.ShortDescription += "...";
+                        post.CreatedDateString = post.CreatedDate.ToString("MMMM dd, yyyy");
+                        if(post.UpdatedDate != null)
+                        {
+                            var upDate = post.UpdatedDate.Value;
+                            post.UpdatedDateString = upDate.ToString("MMMM dd, yyyy");
+                        }
+                        
                     }
                 }
-                // Sort to recent
-                blogList = blogList.OrderBy(o => o.CreatedDate).ToList();
 
-                // !!!!!!!!!!!!!!!!!!!!!!!
-                // Searches only small version of description !!!!!!
-                if (!string.IsNullOrEmpty(searchString))
+                // search title and description
+                if (!string.IsNullOrWhiteSpace(searchString))
                 {
+                    ConstSearchString = searchString;
                     pageNumber = 1;
-                    var newList = blogList.Where(s => s.Title.ToLower().Contains(searchString.Trim().ToLower()) ||
-                                    s.Description.ToLower().Contains(searchString.Trim().ToLower())).ToList();
-                    newList = newList.OrderBy(o => o.CreatedDate).ToList();
-                    var pageOfPosts = newList.ToPagedList(pageNumber, 6);
-                    ViewBag.OnePageOfBlogs = pageOfPosts;
+                    var newList = mainList.Where(s => s.Title.ToLower().Contains(searchString.Trim().ToLower()) ||
+                                    s.Description.ToLower().Contains(searchString.Trim().ToLower()) || 
+                                    s.CreatedDateString.ToLower().Contains(searchString.Trim().ToLower())).ToList();
+                    newList = newList.OrderByDescending(o => o.CreatedDate).ToList();
+                    mainList = newList;
                 }
                 else
                 {
-                    var pageOfPosts = blogList.ToPagedList(pageNumber, 6);
-                    ViewBag.OnePageOfBlogs = pageOfPosts;
+                    // !!!!!! TODO: need to fix pagination and searching
+                    // search and be able to go to second page of search not reset list.
+                    mainList = blogList.ToList();
                 }
+                
+                // Sort to recent
+                mainList = mainList.OrderByDescending(o => o.CreatedDate).ToList();
+
+                var pageOfPosts = mainList.ToPagedList(pageNumber, 6);
+                ViewBag.OnePageOfBlogs = pageOfPosts;
+            
             }
             return View();
         }
@@ -168,10 +194,10 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
             if(ModelState.IsValid)
             {
 
-                var dateChecker = DateTime.Now;
-                dateChecker = dateChecker.AddDays(-1);
+                var updatedDate = DateTime.Now;
+                updatedDate = updatedDate.AddDays(-1);
                 
-                if(dateChecker >= blogPost.CreatedDate)
+                if(updatedDate >= blogPost.CreatedDate)
                 {
                     blogPost.UpdatedDate = DateTime.Now;
                 }

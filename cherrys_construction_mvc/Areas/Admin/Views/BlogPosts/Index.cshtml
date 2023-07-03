@@ -63,7 +63,7 @@
                                 }                               
                                 @if (post.CreatedDate != null)
                                 {
-                                    <span class="post-date">@post.CreatedDate.ToString("MMMM dd, yyyy")</span>
+                                    <span class="post-date">@post.CreatedDateString</span>
                                 }
                             </div>
                                                       
@@ -79,13 +79,13 @@
                                     </div>
                                     
                                 </div>
-                                @if (post.UpdatedDate != null)
+                                @if (post.UpdatedDateString != null)
                                 {
                                     <div class="meta d-flex align-items-center">
-                                        <i class="bi bi-arrow-repeat"></i> <span class="ps-2">Updated : @post.UpdatedDate.ToString("MMMM dd, yyyy")</span>
+                                        <i class="bi bi-arrow-repeat"></i> <span class="ps-2">Updated : @post.UpdatedDateString</span>
                                     </div>
                                 }
-                                @Html.Raw(post.Description)
+                                @Html.Raw(post.ShortDescription)
                                 <hr>                                               
                                     <a class="edit-btn m-1 text-center" asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.BlogPostsController" 
                                     asp-action="@Breadcrumb.Edit" asp-route-id="@post.Id" class="readmore stretched-link"><span>@Breadcrumb.Edit</span><i class="fa-regular fa-pen-to-square"></i></a>                                                                        

@@ -25,6 +25,10 @@
         <div class="col-lg-6" style="margin-left: auto; margin-right:auto;">
             <!-- Multi Columns Form -->
             <form enctype="multipart/form-data" method="post">
+                @Html.HiddenFor(model=>model.CreatedDate)
+                @Html.HiddenFor(model=>model.UpdatedDate)
+                @Html.HiddenFor(model=>model.ImageLink)
+                @Html.HiddenFor(model=>model.Author)
                 <div class="card">
                     <div class="card-body row">
                         @if(Model.ImageLink != null)
