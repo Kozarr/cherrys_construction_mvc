@@ -1,7 +1,14 @@
-﻿@using X.PagedList.Mvc.Core;
-@using X.PagedList;
+﻿@using cherrys_construction_mvc.Helper;
+@using cherrys_construction_mvc.ViewModels.Blog;
+@using cherrys_construction_mvc.ViewModels.Responce;
+@model BlogViewModel
+
 @{
     ViewData["Title"] = Breadcrumb.UserBlogTitle;
+}
+@{
+    var prevDisabled = !Model.Posts.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Posts.HasNextPage ? "disabled" : "";
 }
 
 <link href="/Content/PagedList.css" rel="stylesheet" type="text/css" />
@@ -50,67 +57,93 @@ else
 <!-- ======= Blog Section ======= -->
 <section id="blog" class="blog">
     <div class="container" data-aos="fade-up" data-aos-delay="100">
+    @if (Model.Posts.Any())
+        {
+            <div class="blog-isotope" data-blog-filter="*" data-blog-layout="masonry" data-portfolio-sort="original-order">
 
-        <div class="blog-isotope" data-blog-filter="*" data-blog-layout="masonry" data-portfolio-sort="original-order">
+                <ul class="blog-flters" data-aos="fade-up" data-aos-delay="100">
+                    <li>
+                        @Html.ActionLink("Date", "Index", new { sortOrder = ViewBag.DateSortParam })
+                    </li>
+                </ul><!-- End Blog Flters -->
 
-            <ul class="blog-flters" data-aos="fade-up" data-aos-delay="100">
-                <li data-filter="*" class="filter-active">All</li>
-                <li data-filter=".filter-concrete">Concrete</li>
-                <li data-filter=".filter-sprayfoam">Spray Foam</li>
-                <li data-filter=".filter-roofing">Roofing</li>
-                <li data-filter=".filter-siding">Siding</li>
-            </ul><!-- End Blog Flters -->
-
-            <div class="col-lg-6 col-md-8 col-sm-12 search-bar-container">
-                @using (Html.BeginForm())
-                {
-                    <div class="input-group">
-                        @Html.TextBox("SearchString", null, new { @class="form-control"} )
-                        <input id="button-addon2" type="submit" value="Search" class="btn btn-outline-secondary" />
+                <form asp-action="Index" method="get">
+                    <div class="form-actions no-color">
+                        <p>
+                            Search: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+                            <input type="submit" value="Search" class="btn btn-default" /> |
+                            <a asp-action="Index">Back to Full List</a>
+                        </p>
                     </div>
-                }
+                </form>
+
+                <div class="row gy-4 posts-list">
+
+                    @foreach (var post in Model.Posts)
+                    {
+                        <div class="col-lg-4 col-md-6 post-item filter-concrete">
+
+                            <div class="post-img">
+                                @if (post.ImageLink != null)
+                                {
+                                    <img src="@post.ImageLink" class="img-fluid" alt="">
+                                }
+                                @if (post.CreatedDate != null)
+                                {
+                                    <span class="post-date">@post.CreatedDateString</span>
+                                }
+                            </div>
+
+                            <div class="post-content d-flex flex-column">
+                                <h3 class="post-title">@post.Title</h3>
+                                <div class="meta d-flex align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-person"></i> <span class="ps-2">@post.Author</span>
+                                    </div>
+                                    <span class="px-3 text-black-50">/</span>
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-folder"></i> <span class="ps-2">Politics</span>
+                                    </div>
+
+                                </div>
+                                @if (post.UpdatedDateString != null)
+                                {
+                                    <div class="meta d-flex align-items-center">
+                                        <i class="bi bi-arrow-repeat"></i> <span class="ps-2">Updated : @post.UpdatedDateString</span>
+                                    </div>
+                                }
+                                @Html.Raw(post.ShortDescription)
+                                <hr>
+                                <a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.UserBlogController" asp-action="Details" asp-route-id="@post.Id" class="readmore stretched-link"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
+                            </div>
+
+                        </div><!-- End post list item -->
+                    }
+
+
+                </div><!-- End blog posts list -->
+
             </div>
 
-            <div class="row gy-4 posts-list">
-
-            @foreach (var post in ViewBag.OnePageOfProducts)
-            {         
-                <div class="col-lg-4 col-md-6 post-item filter-concrete">
-
-                    <div class="post-img overflow-hidden">
-                        <img src="@post.ImageLink" class="img-fluid" alt="">
-                        <span class="post-date">@post.CreatedDate.ToString("MMMM dd, yyyy")</span>
-                    </div>
-
-                    <div class="post-content d-flex flex-column">
-
-                        <h3 class="post-title">@post.Title</h3>
-
-                        <div class="meta d-flex align-items-center">
-                            <div class="d-flex align-items-center">
-                                <i class="bi bi-person"></i> <span class="ps-2">@post.Author</span>
-                            </div>
-                            <span class="px-3 text-black-50">/</span>
-                            <div class="d-flex align-items-center">
-                                <i class="bi bi-folder"></i> <span class="ps-2">Politics</span>
-                            </div>
-                        </div>
-                        <p>@post.Description</p>
-                        <hr>
-                            <a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.UserBlogController" asp-action="Details" asp-route-id="@post.Id" class="readmore stretched-link"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
-                    </div>
-
-                </div><!-- End post list item -->
-            }
-
-
-            </div><!-- End blog posts list -->
-
-        </div>
-
-        @*  Pagination  *@
-        @Html.PagedListPager( (IPagedList)ViewBag.OnePageOfProducts, page => Url.Action("Index", new { page }) )
-        <!-- End blog pagination -->
-
+            @*  Pagination  *@
+            <a asp-action="Index"
+               asp-route-sortOrder="@ViewData["CurrentSort"]"
+               asp-route-pageNumber="@(Model.Posts.PageIndex - 1)"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               class="btn btn-default @prevDisabled">
+                Previous
+            </a>
+            <a asp-action="Index"
+               asp-route-sortOrder="@ViewData["CurrentSort"]"
+               asp-route-pageNumber="@(Model.Posts.PageIndex + 1)"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               class="btn btn-default @nextDisabled">
+                Next
+            </a>
+        }
+        else
+        {
+            
+        }
     </div>
 </section><!-- End Blog Section -->

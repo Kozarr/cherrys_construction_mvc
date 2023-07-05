@@ -2141,6 +2141,9 @@ Template: Resi Pro
 /*--------------------------------------------------------------
 # Blog Posts List
 --------------------------------------------------------------*/
+.blog {
+  display: flex;
+}
 .blog .blog-flters {
   padding: 0;
   margin: 0 auto 20px auto;
@@ -2173,15 +2176,25 @@ Template: Resi Pro
     margin: 0 5px;
   }
 }
+.blog .posts-list {
+  display: flex;
+}
 .blog .posts-list .post-item {
   transition: 0.3s;
   position: relative;
+  box-sizing: border-box;
+  flex-basis: 100%;
 }
 .blog .posts-list .post-img {
+  overflow: hidden;
+  max-height: 250px;
+  max-width: auto;
   position: relative;
+  position: center;
 }
 .blog .posts-list .post-img img {
   transition: 0.5s;
+  position: center;
 }
 .blog .posts-list .post-date {
   position: absolute;

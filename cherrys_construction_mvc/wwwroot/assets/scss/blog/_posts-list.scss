@@ -2,7 +2,7 @@
 # Blog Posts List
 --------------------------------------------------------------*/
 .blog {
-
+    display: flex;
     .blog-flters {
         padding: 0;
         margin: 0 auto 20px auto;
@@ -40,18 +40,27 @@
     }
 
     .posts-list {
+        display: flex;
+
 
         .post-item {
             transition: 0.3s;
             position: relative;
+            box-sizing: border-box;
+            flex-basis: 100%;
         }
 
         .post-img {
+            overflow: hidden;
+            max-height: 250px;
+            max-width: auto;
+            position: relative;
+            position: center;
+
             img {
                 transition: 0.5s;
+                position: center;
             }
-
-            position: relative;
         }
 
         .post-date {

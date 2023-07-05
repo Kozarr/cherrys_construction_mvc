@@ -2,17 +2,12 @@
 using cherrys_construction_mvc.Helper;
 using cherrys_construction_mvc.Interfaces;
 using cherrys_construction_mvc.Utility;
-using cherrys_construction_mvc.ViewModels.Blog;
 using cherrys_construction_mvc.ViewModels.Requests;
 using cherrys_construction_mvc.ViewModels.Responce;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using MimeKit;
 using System.Data;
-using System.Globalization;
-using X.PagedList;
 
 namespace cherrys_construction_mvc.Areas.Admin.Controllers
 {
