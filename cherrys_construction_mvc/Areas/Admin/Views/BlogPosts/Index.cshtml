@@ -1,10 +1,13 @@
-﻿@using X.PagedList.Mvc.Core;
-@using X.PagedList;
+﻿@using cherrys_construction_mvc.Helper;
+@model PaginatedList<BlogPostResponce>
 
 @{
     ViewData["Title"] = Breadcrumb.BlogPostsTitle;
 }
-
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
 <!-- ======= Breadcrumbs ======= -->
 <div class="breadcrumbs d-flex align-items-center" style="background-image: url('/assets/img/breadcrumbs-bg.jpg');">
     <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
@@ -22,7 +25,7 @@
 <!-- ======= Blog Section ======= -->
 <section id="blog" class="blog">
     <div class="container" data-aos="fade-up" data-aos-delay="100"> 
-        @if (ViewBag.OnePageOfBlogs != null)
+        @if (Model.Any())
         {
             <div class="col-lg-4 col-md-6 col-sm-12">
                 <a class="create-btn w-100 text-center" 
@@ -32,27 +35,36 @@
             <div class="blog-isotope" data-blog-filter="*" data-blog-layout="masonry" data-portfolio-sort="original-order">
 
                 <ul class="blog-flters" data-aos="fade-up" data-aos-delay="100">
-                    <li data-filter="*" class="filter-active">All</li>
-                    <li data-filter=".filter-concrete">Concrete</li>
-                    <li data-filter=".filter-sprayfoam">Spray Foam</li>
-                    <li data-filter=".filter-roofing">Roofing</li>
-                    <li data-filter=".filter-siding">Siding</li>
+                    <li>
+                        @Html.ActionLink("Date", "Index", new { sortOrder = ViewBag.DateSortParam })
+                    </li>
                 </ul><!-- End Blog Flters -->
 
 
                 <div class="col-12 search-bar-container">
-                    @using (Html.BeginForm())
+                    @*@using (Html.BeginForm())
                     {
                         <div class="input-group">
                             @Html.TextBox("SearchString", null, new { @class="form-control"} )
                             <input id="button-addon2" type="submit" value="Search" class="btn btn-outline-secondary" />
                         </div>
-                    }
+                    }*@
                 </div>
 
-                <div class="row gy-4 posts-list">
+                <form asp-action="Index" method="get">
+                    <div class="form-actions no-color">
+                        <p>
+                            Search: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+                            <input type="submit" value="Search" class="btn btn-default" /> |
+                            <a asp-action="Index">Back to Full List</a>
+                        </p>
+                    </div>
+                </form>
 
-                    @foreach (var post in ViewBag.OnePageOfBlogs)
+                <div class="row gy-4 posts-list">
+                    
+                        
+                    @foreach (var post in Model)
                     {
                         <div class="col-lg-4 col-md-6 post-item filter-concrete">
                             
@@ -102,8 +114,25 @@
             </div>
 
             @*  Pagination  *@
-            @Html.PagedListPager( (IPagedList)ViewBag.OnePageOfBlogs, page => Url.Action("Index", new { page }) )
+            //@Html.PagedListPager( (IPagedList)ViewBag.OnePageOfBlogs, page => Url.Action("Index", new { page }) )
             <!-- End blog pagination -->
+
+            
+
+            <a asp-action="Index"
+               asp-route-sortOrder="@ViewData["CurrentSort"]"
+               asp-route-pageNumber="@(Model.PageIndex - 1)"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               class="btn btn-default @prevDisabled">
+                Previous
+            </a>
+            <a asp-action="Index"
+               asp-route-sortOrder="@ViewData["CurrentSort"]"
+               asp-route-pageNumber="@(Model.PageIndex + 1)"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               class="btn btn-default @nextDisabled">
+                Next
+            </a>
         }
         else
         {

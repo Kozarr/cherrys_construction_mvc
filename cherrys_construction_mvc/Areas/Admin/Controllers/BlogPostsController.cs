@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using cherrys_construction_mvc.Helper;
 using cherrys_construction_mvc.Interfaces;
 using cherrys_construction_mvc.Utility;
 using cherrys_construction_mvc.ViewModels.Blog;
@@ -6,8 +7,10 @@ using cherrys_construction_mvc.ViewModels.Requests;
 using cherrys_construction_mvc.ViewModels.Responce;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MimeKit;
+using System.Data;
 using System.Globalization;
 using X.PagedList;
 
@@ -35,18 +38,28 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
             _compInfo = compInfo;
             _mapper = mapper;
         }
-        public static List<BlogPostResponce> mainList = new();
-        public static string ConstSearchString = "";
+        
         [HttpGet]
-        public async Task<IActionResult> Index(int? page)
+        public async Task<IActionResult> Index(string sortOrder, string currentFilter, 
+            string searchString, int? pageNumber)
         {
-            var pageNumber = page ?? 1;
-            var blogList = await _postService.GetBlogPostsAsync();
-            if (blogList.Any())
+            ViewData["DateSortParam"] = string.IsNullOrEmpty(sortOrder) ? "Oldest" : "";
+            ViewData["CurrentSort"] = sortOrder;
+
+            if (searchString != null)
             {
-                mainList = blogList.ToList();
-                // Reduce blog description on preview View
-                foreach (var post in mainList)
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewData["CurrentFilter"] = searchString;
+
+            var blogPosts = await _postService.GetBlogPostsAsync();
+            if (blogPosts.Any())
+            {
+                foreach (var post in blogPosts)
                 {
                     if (!post.Description.IsNullOrEmpty())
                     {
@@ -58,71 +71,31 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
                             var upDate = post.UpdatedDate.Value;
                             post.UpdatedDateString = upDate.ToString("MMMM dd, yyyy");
                         }
-                    }               
-                }
-
-                // Sort to recent
-                mainList = mainList.OrderByDescending(o => o.CreatedDate).ToList();
-
-                var pageofPosts = mainList.ToPagedList(pageNumber, 6);
-                ViewBag.OnePageOfBlogs = pageofPosts;
-            }
-            return View();
-        }
-
-
-        public async Task<ViewResult> Index(int? page, string? searchString)
-        {
-            var pageNumber = page ?? 1;
-            var blogList = await _postService.GetBlogPostsAsync();
-            if (blogList.Any())
-            {
-                mainList = blogList.ToList();
-                // Shorten Description for front view
-                foreach (var post in mainList)
-                {
-                    if (!post.Description.IsNullOrEmpty())
-                    {
-
-                        post.ShortDescription = post.Description.Substring(0, 200);
-                        post.ShortDescription += "...";
-                        post.CreatedDateString = post.CreatedDate.ToString("MMMM dd, yyyy");
-                        if(post.UpdatedDate != null)
-                        {
-                            var upDate = post.UpdatedDate.Value;
-                            post.UpdatedDateString = upDate.ToString("MMMM dd, yyyy");
-                        }
-                        
                     }
                 }
 
-                // search title and description
+
                 if (!string.IsNullOrWhiteSpace(searchString))
                 {
-                    ConstSearchString = searchString;
-                    pageNumber = 1;
-                    var newList = mainList.Where(s => s.Title.ToLower().Contains(searchString.Trim().ToLower()) ||
-                                    s.Description.ToLower().Contains(searchString.Trim().ToLower()) || 
-                                    s.CreatedDateString.ToLower().Contains(searchString.Trim().ToLower())).ToList();
-                    newList = newList.OrderByDescending(o => o.CreatedDate).ToList();
-                    mainList = newList;
+                    blogPosts = blogPosts.Where(s => s.Title.ToLower().Contains(searchString.ToLower())
+                                            || s.Description.ToLower().Contains(searchString.ToLower())
+                                            || s.CreatedDateString.ToString().ToLower().Contains(searchString.ToLower()));
                 }
-                else
-                {
-                    // !!!!!! TODO: need to fix pagination and searching
-                    // search and be able to go to second page of search not reset list.
-                    mainList = blogList.ToList();
-                }
-                
-                // Sort to recent
-                mainList = mainList.OrderByDescending(o => o.CreatedDate).ToList();
 
-                var pageOfPosts = mainList.ToPagedList(pageNumber, 6);
-                ViewBag.OnePageOfBlogs = pageOfPosts;
-            
+
+                blogPosts = sortOrder switch
+                {
+                    "Oldest" => blogPosts.OrderBy(p => p.CreatedDate),
+                    _ => blogPosts.OrderByDescending(p => p.CreatedDate),
+                };
+
+
+                int pageSize = 6;
+                return View(await PaginatedList<BlogPostResponce>.CreateAsync(blogPosts.ToList(), pageNumber ?? 1, pageSize));
             }
             return View();
         }
+    
 
 
         //Create
