@@ -25,7 +25,7 @@
         public const string UserServiceDetailsTitle = "Service Details";
         public const string UserServicesController = "Services";
 
-        public const string UserBlogTitle = "Blog";
+        public const string UserBlogTitle = "Blogs";
         public const string UserBlogController = "Blog";
 
         // Admin

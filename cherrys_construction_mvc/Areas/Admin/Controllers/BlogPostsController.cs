@@ -6,6 +6,7 @@ using cherrys_construction_mvc.ViewModels.Requests;
 using cherrys_construction_mvc.ViewModels.Responce;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System.Data;
 
@@ -58,8 +59,16 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
                 {
                     if (!post.Description.IsNullOrEmpty())
                     {
-                        post.ShortDescription = post.Description.Substring(0, 200);
-                        post.ShortDescription += "...";
+                        if (post.Description.Length > 200)
+                        {
+                            post.ShortDescription = post.Description.Substring(0, 200);
+                            post.ShortDescription += "...";
+                        }
+                        else
+                        {
+                            post.ShortDescription = post.Description.Substring(0, post.Description.Length);
+                            post.ShortDescription += "...";
+                        }
                         post.CreatedDateString = post.CreatedDate.ToString("MMMM dd, yyyy");
                         if (post.UpdatedDate != null)
                         {
@@ -187,13 +196,21 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int? Id)
         {
-            if(Id > 0)
+            if (Id > 0)
             {
-                // Get post
-                BlogPostResponce blogPost = new();
-                return View(blogPost);
+                var blogPost = await _postService.GetBlogPostByIdAsync(Id.Value);
+                if (blogPost != null)
+                {
+                    return View(blogPost);
+                }
+                else
+                {
+                    TempData["error"] = "Failed To Fing Blog Post";
+                    _logger.LogError("BlogPostController Delete-Get : Failed to find blog post");
+                    return RedirectToAction(nameof(Index));
+                }
             }
-            TempData["error"] = "Failed To Fing Blog Post";
+            TempData["error"] = "Failed To get Necessary Information";
             _logger.LogError("BlogPostController Delete-Get : Passed Id=0 To Method");
             return RedirectToAction(nameof(Index));
 
@@ -203,15 +220,17 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeletePost(int? Id)
         {
-            if(Id > 0)
+            if (Id > 0)
             {
-                // delete method
+                await _postService.DeleteBlogPostAsync(Id.Value);               
                 TempData["success"] = "Blog Post Deleted Successfully";
                 return RedirectToAction(nameof(Index));
+              
             }
             TempData["error"] = "Blog Post Deletion Failed";
             _logger.LogError("BlogPostController Delete-Post : Passed Id=0 To Method");
             return RedirectToAction(nameof(Index));
         }
+
     }
 }

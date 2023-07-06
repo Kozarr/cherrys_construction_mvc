@@ -5,6 +5,7 @@ using cherrys_construction_mvc.Models;
 using cherrys_construction_mvc.Utility;
 using cherrys_construction_mvc.ViewModels.Requests;
 using cherrys_construction_mvc.ViewModels.Responce;
+using Microsoft.IdentityModel.Tokens;
 
 namespace cherrys_construction_mvc.Services
 {
@@ -83,11 +84,14 @@ namespace cherrys_construction_mvc.Services
             {
                 if (request.Image != null)
                 {
-                    string wwwRootPath = _webHostEnvironment.WebRootPath;
-                    var oldImagePath = Path.Combine(wwwRootPath, post.ImageLink.TrimStart('\\'));
-                    if (File.Exists(oldImagePath))
+                    if (!request.ImageLink.IsNullOrEmpty())
                     {
-                        File.Delete(oldImagePath);
+                        string wwwRootPath = _webHostEnvironment.WebRootPath;
+                        var oldImagePath = Path.Combine(wwwRootPath, post.ImageLink.TrimStart('\\'));
+                        if (File.Exists(oldImagePath))
+                        {
+                            File.Delete(oldImagePath);
+                        }                   
                     }
                     request.ImageLink = await Helper.Helper.UploadImage(request.Image, _webHostEnvironment, StaticDetails.SquareImage);
                 }

@@ -3,6 +3,52 @@
 --------------------------------------------------------------*/
 .blog {
 
+    .blog-create-container{
+        width: 200px;
+        .create-btn{
+            width: 100%;
+        }
+        @media screen and (max-width: $laptop-min){
+            width: 100%;
+        }
+    }
+
+    .blog-flters {
+        padding: 0;
+        margin: 0 auto 20px auto;
+        list-style: none;
+        text-align: center;
+
+        li {
+            cursor: pointer;
+            display: inline-block;
+            padding: 0;
+            font-size: 18px;
+            font-weight: 500;
+            margin: 0 10px;
+            line-height: 1;
+            margin-bottom: 5px;
+            transition: all 0.2s ease-in-out;
+
+            &:hover, &.filter-active {
+                color: darken($cherrys-yellow, 15);
+            }
+
+            &:first-child {
+                margin-left: 0;
+            }
+
+            &:last-child {
+                margin-right: 0;
+            }
+
+            @media (max-width: 575px) {
+                font-size: 14px;
+                margin: 0 5px;
+            }
+        }
+    }
+
     .pagination-container {
         margin-top: 30px;
         color: lighten($cherrys-blue, 20);
@@ -34,6 +80,10 @@
                 align-items: center;
                 justify-content: center;
                 padding: 7px 16px;
+                border: none;
+                font-weight: 700;
+                font-size: 1rem;
+                text-transform: uppercase;
             }
 
             &.active {
@@ -44,6 +94,7 @@
 
             &:hover {
                 background: $cherrys-blue;
+
                 a {
                     color: $white;
                 }

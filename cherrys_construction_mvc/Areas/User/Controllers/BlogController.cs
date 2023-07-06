@@ -32,7 +32,7 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
 
         [HttpGet]
         public async Task<IActionResult> Index(string sortOrder, string currentFilter,
-    string searchString, int? pageNumber)
+                                                 string searchString, int? pageNumber)
         {
             ViewData["DateSortParam"] = string.IsNullOrEmpty(sortOrder) ? "Oldest" : "";
             ViewData["CurrentSort"] = sortOrder;
@@ -54,8 +54,16 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
                 {
                     if (!post.Description.IsNullOrEmpty())
                     {
-                        post.ShortDescription = post.Description.Substring(0, 200);
-                        post.ShortDescription += "...";
+                        if(post.Description.Length > 200)
+                        {
+                            post.ShortDescription = post.Description.Substring(0, 200);
+                            post.ShortDescription += "...";
+                        }
+                        else
+                        {
+                            post.ShortDescription = post.Description.Substring(0, post.Description.Length);
+                            post.ShortDescription += "...";
+                        }
                         post.CreatedDateString = post.CreatedDate.ToString("MMMM dd, yyyy");
                         if (post.UpdatedDate != null)
                         {
@@ -96,8 +104,27 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
             BlogDetailsViewModel blogDetailsVM = new();
             if(blogViewModel != null)
             {
+                var compInfo = await _companyInfoService.GetCompanyInfosAsync();
+                blogViewModel.CompanyInfo = compInfo.First();
                 blogDetailsVM.CompanyInfo = blogViewModel.CompanyInfo;
+            }           
+            var blogList = await _postService.GetBlogPostsAsync();
+            if (blogList.Any())
+            {
+                var mainBlog = blogList.Where(b => b.Id == id).FirstOrDefault();
+                blogDetailsVM.Post = mainBlog;
+                foreach(var post in  blogList)
+                {
+                    post.CreatedDateString = post.CreatedDate.ToString("MMMM dd, yyyy");
+                    if (post.UpdatedDate != null)
+                    {
+                        var upDate = post.UpdatedDate.Value;
+                        post.UpdatedDateString = upDate.ToString("MMMM dd, yyyy");
+                    }
+                    blogDetailsVM.BlogList = blogList.Take(6).ToList();
+                }
             }
+            
             return View(blogDetailsVM);
         }
 

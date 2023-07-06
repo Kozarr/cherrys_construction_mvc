@@ -24,104 +24,120 @@
 </div><!-- End Breadcrumbs -->
 <!-- ======= Blog Section ======= -->
 <section id="blog" class="blog">
-    <div class="container" data-aos="fade-up" data-aos-delay="100"> 
-        @if (Model.Any())
-        {
-            <div class="col-lg-4 col-md-6 col-sm-12">
-                <a class="create-btn w-100 text-center" 
-                asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.BlogPostsController" 
-                asp-action="@Breadcrumb.Create">@Breadcrumb.Create Blog<i class="fa-solid fa-plus"></i></a>
-            </div>
-            <div class="blog-isotope" data-blog-filter="*" data-blog-layout="masonry" data-portfolio-sort="original-order">
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="blog-create-container">
+            <a class="create-btn text-center"
+               asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.BlogPostsController"
+               asp-action="@Breadcrumb.Create">@Breadcrumb.Create Blog<i class="fa-solid fa-plus"></i></a>
+        </div>
+        <div class="blog-isotope" data-blog-filter="*" data-blog-layout="masonry" data-portfolio-sort="original-order">
 
-                <ul class="blog-flters" data-aos="fade-up" data-aos-delay="100">
-                    <li>
-                        @Html.ActionLink("Date", "Index", new { sortOrder = ViewBag.DateSortParam })
-                    </li>
-                </ul><!-- End Blog Flters -->
+            <ul class="blog-flters" data-aos="fade-up" data-aos-delay="100">
+                <li>
+                    @Html.ActionLink("Date", "Index", new { sortOrder = ViewBag.DateSortParam })
+                </li>
+            </ul><!-- End Blog Flters -->
 
-                <form asp-action="Index" method="get">
-                    <div class="form-actions no-color">
-                        <p>
-                            Search: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
-                            <input type="submit" value="Search" class="btn btn-default" /> |
-                            <a asp-action="Index">Back to Full List</a>
-                        </p>
-                    </div>
-                </form>
+            <form asp-action="Index" method="get">
+                <div class="form-actions no-color search-form">
 
-                <div class="row gy-4 posts-list">
-                    
-                        
+                    <input class="form-control" type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+                    <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+
+                    <a class="btn search-btn" asp-action="Index">Clear</a>
+
+                </div>
+            </form>
+
+            @if (Model.Any())
+            {
+                <div class="posts-list">
                     @foreach (var post in Model)
                     {
-                        <div class="col-lg-4 col-md-6 post-item">
-                            
-                            <div class="post-img">
-                                @if(post.ImageLink != null)
-                                {
-                                    <img src="@post.ImageLink" class="img-fluid" alt="">
-                                }                               
-                                @if (post.CreatedDate != null)
-                                {
-                                    <span class="post-date">@post.CreatedDateString</span>
-                                }
-                            </div>
-                                                      
-                            <div class="post-content d-flex flex-column">
-                                <h3 class="post-title">@post.Title</h3>
-                                <div class="meta d-flex align-items-center">
-                                    <div class="d-flex align-items-center">
-                                        <i class="bi bi-person"></i> <span class="ps-2">@post.Author</span>
+                        <div class="post-item">
+                                <div class="post-img">
+                                    @if (post.ImageLink != null)
+                                    {
+                                        <img src="@post.ImageLink" class="img-fluid" alt="">
+                                    }
+                                    @if (post.CreatedDate != null)
+                                    {
+                                        <span class="post-date">@post.CreatedDateString</span>
+                                    }
+                                </div>
+
+                                <div class="post-content">
+                                    <h3 class="post-title">@post.Title</h3>
+                                    <div class="meta">
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-person"></i> <span class="ps-2">@post.Author</span>
+                                        </div>
+                                        <span class="px-3 text-black-50">/</span>
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-folder"></i> <span class="ps-2">Politics</span>
+                                        </div>
+
                                     </div>
-                                    <span class="px-3 text-black-50">/</span>
-                                    <div class="d-flex align-items-center">
-                                        <i class="bi bi-folder"></i> <span class="ps-2">Politics</span>
-                                    </div>
+                                    @if (post.UpdatedDateString != null)
+                                    {
+                                        <div class="meta d-flex align-items-center">
+                                            <i class="bi bi-arrow-repeat"></i> <span class="ps-2">Updated : @post.UpdatedDateString</span>
+                                        </div>
+                                    }
+                                    @Html.Raw(post.ShortDescription)
+                                    <hr>
                                     
                                 </div>
-                                @if (post.UpdatedDateString != null)
-                                {
-                                    <div class="meta d-flex align-items-center">
-                                        <i class="bi bi-arrow-repeat"></i> <span class="ps-2">Updated : @post.UpdatedDateString</span>
-                                    </div>
-                                }             
-                                @Html.Raw(post.ShortDescription)
-                                <hr>                                               
-                                    <a class="edit-btn m-1 text-center" asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.BlogPostsController" 
-                                    asp-action="@Breadcrumb.Edit" asp-route-id="@post.Id" class="readmore stretched-link"><span>@Breadcrumb.Edit</span><i class="fa-regular fa-pen-to-square"></i></a>                                                                        
-                                    <a class="delete-btn m-1 text-center" asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.BlogPostsController" 
-                                    asp-action="@Breadcrumb.Delete" asp-route-id="@post.Id" class="readmore stretched-link"><span>@Breadcrumb.Delete</span><i class="fa-regular fa-trash-can"></i></a>                                          
+                            <div class="flex-btn-container">
+                                <a class="flex-btn edit-btn text-center" asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.BlogPostsController"
+                                   asp-action="@Breadcrumb.Edit" asp-route-id="@post.Id" class="readmore stretched-link">
+                                    <span>@Breadcrumb.Edit</span><i class="fa-regular fa-pen-to-square"></i>
+                                </a>
+                                <a class="flex-btn delete-btn text-center" asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.BlogPostsController"
+                                   asp-action="@Breadcrumb.Delete" asp-route-id="@post.Id" class="readmore stretched-link">
+                                    <span>@Breadcrumb.Delete</span><i class="fa-regular fa-trash-can"></i>
+                                </a>
+                                <br>
                             </div>
-
                         </div>
                         <!-- End post list item -->
-                    }                  
+                    }
 
-                </div><!-- End blog posts list -->
+                </div>
 
-            </div>          
+                <!-- End blog posts list -->
 
-            <a asp-action="Index"
-               asp-route-sortOrder="@ViewData["CurrentSort"]"
-               asp-route-pageNumber="@(Model.PageIndex - 1)"
-               asp-route-currentFilter="@ViewData["CurrentFilter"]"
-               class="btn btn-default @prevDisabled">
-                Previous
-            </a>
-            <a asp-action="Index"
-               asp-route-sortOrder="@ViewData["CurrentSort"]"
-               asp-route-pageNumber="@(Model.PageIndex + 1)"
-               asp-route-currentFilter="@ViewData["CurrentFilter"]"
-               class="btn btn-default @nextDisabled">
-                Next
-            </a>
-        }
-        else
-        {
-            <div class="col-12 add-btn-container text-center" data-aos="fade-up" data-aos-delay="100">
-                <a class="add-button" asp-area="@Breadcrumb.AdminArea" asp-action="@Breadcrumb.Create"><i class="bi bi-plus"></i></a>
-            </div>
-        }
+                <div class="pagination-container text-center">
+                    @*  Pagination  *@
+                    <ul>
+                        <li>
+                            <a asp-action="Index"
+                               asp-route-sortOrder="@ViewData["CurrentSort"]"
+                               asp-route-pageNumber="@(Model.PageIndex - 1)"
+                               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                               class="btn @prevDisabled">
+                                PREVIOUS
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-action="Index"
+                               asp-route-sortOrder="@ViewData["CurrentSort"]"
+                               asp-route-pageNumber="@(Model.PageIndex + 1)"
+                               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                               class="btn @nextDisabled">
+                                NEXT
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+            }
+            else
+            {
+            }
+        </div>
     </div>
-</section><!-- End Blog Section -->
+</section>
+
+<!-- End Blog Section -->

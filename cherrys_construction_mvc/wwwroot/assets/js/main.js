@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-    });
+    });    
 
     /**
      * Toggle mobile nav dropdowns
@@ -83,7 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     });
 
-
     /**
      * Scroll top button
      */
@@ -99,6 +98,20 @@ document.addEventListener('DOMContentLoaded', () => {
             behavior: 'smooth'
         }));
     }
+    $(document).ready(function () {
+        $('#exampleModalCenter').on('shown.bs.modal', function () {
+            $('#modelButton').trigger('focus')
+        })
+    });
+    //$(document).ready(function () {
+    //    $("#modelButton").click(function () {
+    //        $("#exampleModalCenter").modal('show');
+    //    });
+
+    //    $("#modelButton").click(function () {
+    //        $("#exampleModalCenter").modal('hide');
+    //    });
+    //});
 
     /**
      * Initiate glightbox
@@ -144,42 +157,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
-    /**
-     * Blog isotope and filter
-     */
-    let blogIsotope = document.querySelector('.blog-isotope');
+    ///**
+    // * Blog isotope and filter
+    // */
+    //let blogIsotope = document.querySelector('.blog-isotope');
 
-    if (blogIsotope) {
+    //if (blogIsotope) {
 
-        let blogFilter = blogIsotope.getAttribute('data-blog-filter') ? blogIsotope.getAttribute('data-blog-filter') : '*';
-        let blogLayout = blogIsotope.getAttribute('data-blog-layout') ? blogIsotope.getAttribute('data-blog-layout') : 'masonry';
-        let blogSort = blogIsotope.getAttribute('data-blog-sort') ? blogIsotope.getAttribute('data-blog-sort') : 'original-order';
+    //    let blogLayout = blogIsotope.getAttribute('data-blog-layout') ? blogIsotope.getAttribute('data-blog-layout') : 'masonry';
+    //    let blogSort = blogIsotope.getAttribute('data-blog-sort') ? blogIsotope.getAttribute('data-blog-sort') : 'original-order';
 
-        window.addEventListener('load', () => {
-            let blogIsotope = new Isotope(document.querySelector('.posts-list'), {
-                itemSelector: '.post-item',
-                layoutMode: blogLayout,
-                filter: blogFilter,
-                sortBy: blogSort
-            });
+    //    window.addEventListener('load', () => {
+    //        let blogIsotope = new Isotope(document.querySelector('.posts-list'), {
+    //            itemSelector: '.post-item',
+    //            layoutMode: blogLayout,
+    //            sortBy: blogSort
+    //        });
 
-            let menuFilters = document.querySelectorAll('.blog-isotope .blog-flters li');
-            menuFilters.forEach(function (el) {
-                el.addEventListener('click', function () {
-                    document.querySelector('.blog-isotope .blog-flters .filter-active').classList.remove('filter-active');
-                    this.classList.add('filter-active');
-                    blogIsotope.arrange({
-                        filter: this.getAttribute('data-filter')
-                    });
-                    if (typeof aos_init === 'function') {
-                        aos_init();
-                    }
-                }, false);
-            });
+    //    });
 
-        });
-
-    }
+    //}
 
     /**
      * Init swiper slider with 1 slide at once in desktop view
