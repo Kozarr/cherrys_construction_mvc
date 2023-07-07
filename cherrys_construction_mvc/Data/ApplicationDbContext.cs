@@ -8,6 +8,7 @@ namespace cherrys_construction_mvc.Data
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
         // Database Tables(Sets)
+        public DbSet<CompanyInfo> CompanyInfos { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Testimony> Testimonies { get; set; }
         public DbSet<ImageModel> Images { get; set; }
@@ -24,7 +25,6 @@ namespace cherrys_construction_mvc.Data
         public DbSet<Tag> Tags { get; set; }
         public DbSet<CallToActionSetting> callToActionSettings { get; set; }
         public DbSet<CallToActionMessage> CallToActionMessages { get; set; }
-        public DbSet<CompanyInfo> CompanyInfos { get; set; }
         public DbSet<CompanyCertificateSetting> CompanyCertificateSettings { get; set; }
         public DbSet<CompanyQualitySetting> CompanyQualitySettings { get; set; }
         public DbSet<LegalDocument> LegalDocuments { get; set; }

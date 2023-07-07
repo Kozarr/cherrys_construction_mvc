@@ -12,15 +12,15 @@ using cherrys_construction_mvc.Data;
 namespace cherrys_construction_mvc.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230626195405_addBlogPostBlogCategoryAndRelationshipToDb")]
-    partial class addBlogPostBlogCategoryAndRelationshipToDb
+    [Migration("20230707213122_InitialDbMigration")]
+    partial class InitialDbMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.5")
+                .HasAnnotation("ProductVersion", "7.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
