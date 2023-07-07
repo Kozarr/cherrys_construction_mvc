@@ -4,5 +4,15 @@
     ViewData["Title"] = "Confirm email change";
 }
 
-<h1>@ViewData["Title"]</h1>
-<partial name="_StatusMessage" model="Model.StatusMessage" />
+<div class="breadcrumbs d-flex align-items-center" style="background-image: url('/assets/img/breadcrumbs-bg.jpg');">
+    <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+
+        <h2>@ViewData["Title"]</h2>
+
+    </div>
+</div>
+
+<!-- End Breadcrumbs -->
+<div class="container account-form">
+    <partial name="_StatusMessage" model="Model.StatusMessage" />
+</div>

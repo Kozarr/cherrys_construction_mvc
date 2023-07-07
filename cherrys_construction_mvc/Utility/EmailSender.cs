@@ -1,39 +1,62 @@
-﻿using Microsoft.AspNetCore.Identity.UI.Services;
-using MimeKit;
-using MailKit.Net.Smtp;
-using cherrys_construction_mvc.Models;
+﻿using cherrys_construction_mvc.Interfaces;
+using cherrys_construction_mvc.ViewModels.Responce;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.Options;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace cherrys_construction_mvc.Utility
 {
     public class EmailSender : IEmailSender
     {
-         public Task SendEmailAsync(string email, string subject, string htmlMessage)
-         {
-            try
-            {
-                // Building Email Contents
-                var emailToSend = new MimeMessage();
-                emailToSend.From.Add(MailboxAddress.Parse("xurnet.test@outlook.com"));
-                emailToSend.To.Add(MailboxAddress.Parse(email));
-                emailToSend.Subject = subject;
-                emailToSend.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = htmlMessage };
+        private readonly ILogger _logger;
+        private readonly ICompanyInfoService _companyInfo;
 
-                // Send Email
-                using (var emailClient = new SmtpClient())
-                {
-                    // configurating the connection to gmail server 
-                    emailClient.Connect("smtp.office365.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
-                    emailClient.Authenticate("xurnet.test@outlook.com", "%123Test$789*Email!@");
-                    emailClient.Send(emailToSend);
-                    emailClient.Disconnect(true);
-                }
+        public EmailSender(IOptions<AuthMessageSenderOptions> optionsAccessor,
+                           ILogger<EmailSender> logger,
+                           ICompanyInfoService companyInfo)
+        {
+            Options = optionsAccessor.Value;
+            _logger = logger;
+            _companyInfo = companyInfo;
+        }
 
-                return Task.CompletedTask;
-            }
-            catch (Exception)
+        public AuthMessageSenderOptions Options { get; } //Set with Secret Manager.
+
+        public async Task SendEmailAsync(string toEmail, string subject, string message)
+        {
+            if (string.IsNullOrEmpty(StaticDetails.SendGridKey))
             {
-                throw;
+                throw new Exception("Null SendGridKey");
             }
-         }
+            await Execute(StaticDetails.SendGridKey, subject, message, toEmail);
+        }
+
+        public async Task Execute(string apiKey, string subject, string message, string toEmail)
+        {
+            var webInfo = await _companyInfo.GetCompanyInfosAsync();
+            CompanyInfoResponce info = new();
+            if (webInfo.Any())
+            {
+                info = webInfo.First();   
+            }
+            var client = new SendGridClient(apiKey);
+            var msg = new SendGridMessage()
+            {
+                From = new EmailAddress(info.CompanyEmail, info.CompanyName),
+                Subject = subject,
+                PlainTextContent = message,
+                HtmlContent = message
+            };
+            msg.AddTo(new EmailAddress(toEmail));
+
+            // Disable click tracking.
+            // See https://sendgrid.com/docs/User_Guide/Settings/tracking.html
+            msg.SetClickTracking(false, false);
+            var response = await client.SendEmailAsync(msg);
+            _logger.LogInformation(response.IsSuccessStatusCode
+                                   ? $"Email to {toEmail} queued successfully!"
+                                   : $"Failure Email to {toEmail}");
+        }
     }
 }

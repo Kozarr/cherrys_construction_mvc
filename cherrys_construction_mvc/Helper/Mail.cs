@@ -1,9 +1,6 @@
 ﻿using cherrys_construction_mvc.Interfaces;
-using cherrys_construction_mvc.Models;
 using cherrys_construction_mvc.Utility;
 using cherrys_construction_mvc.ViewModels.Responce;
-using MailKit.Net.Smtp;
-using MimeKit;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 

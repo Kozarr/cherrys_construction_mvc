@@ -2382,8 +2382,18 @@ Template: Resi Pro
   padding: 30px;
 }
 .blog .blog-details .post-img {
-  margin: -30px -30px 20px -30px;
   overflow: hidden;
+}
+.blog .blog-details .post-img img {
+  max-height: 70vh;
+}
+@media screen and (max-width: 480px) {
+  .blog .blog-details .post-img {
+    margin: -30px -30px 20px -30px;
+  }
+  .blog .blog-details .post-img img {
+    max-width: 100%;
+  }
 }
 .blog .blog-details .title {
   font-size: 28px;

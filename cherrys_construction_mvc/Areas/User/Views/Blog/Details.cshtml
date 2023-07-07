@@ -53,7 +53,7 @@ else
 
                 <article class="blog-details">
 
-                    <div class="post-img">
+                    <div class="post-img text-center">
                         @if(!string.IsNullOrWhiteSpace(Model.Post.ImageLink)){
                             <img src="@Model.Post.ImageLink" alt="Blog Post Image" class="img-fluid">
                         }                      
@@ -70,10 +70,10 @@ else
                                     <li class="d-flex align-items-center"><i class="bi bi-person"></i>@Model.CompanyInfo.CompanyName</li>
                                 }
                             }
-                            <li class="d-flex align-items-center"><i class="bi bi-clock"></i>@Model.Post.CreatedDateString</li>
+                            <li class="d-flex align-items-center"><i class="bi bi-clock"></i>Published: @Model.Post.CreatedDateString</li>
                             @if (!string.IsNullOrWhiteSpace(Model.Post.UpdatedDateString))
                             {
-                                <li class="d-flex align-items-center"><i class="bi bi-arrow-repeat"></i>@Model.Post.UpdatedDateString</li>
+                                <li class="d-flex align-items-center"><i class="bi bi-arrow-repeat"></i>Updated: @Model.Post.UpdatedDateString</li>
                             }
 
                         </ul>
