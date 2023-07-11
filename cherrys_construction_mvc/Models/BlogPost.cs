@@ -1,4 +1,5 @@
 ﻿using cherrys_construction_mvc.EfRepository.Interfaces;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace cherrys_construction_mvc.Models
 {
@@ -12,7 +13,7 @@ namespace cherrys_construction_mvc.Models
         public DateTime? CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
 
-        public virtual ICollection<BlogPostBlogCategory>? BlogPostBlogCategories { get; set; }
-
+        public int? BlogCategoryId { get; set; }
+       
     }
 }

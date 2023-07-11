@@ -18,21 +18,24 @@
     form {
         input {
             border-radius: 0;
-            /*border: 2px solid $cherrys-blue;*/
             border: none;
             background-color: $cherrys-white;
             font-size: 1rem;
+        }
+
+        input:checked {
+            background-color: $cherrys-blue;
         }
 
         .btn-primary {
             background-color: $cherrys-blue;
             border: none;
             border-radius: 0;
-            transition: all 0.3s ease-in-out;
+            transition: all 0.2s ease-in-out;
 
             &:hover {
                 background-color: lighten($cherrys-blue, 8);
-                box-shadow: 2px 4px 8px 4px rgba($cherrys-black, 0.2);
+                box-shadow: 2px 4px 8px 4px rgba($cherrys-black, 0.1);
                 transform: scale(1.02);
             }
         }
@@ -48,6 +51,14 @@
         #forgot-password, #resend-confirmation {
             font-size: 0.9rem;
             font-weight: 600;
+            color: $cherrys-gray;
+            transition: all 0.2s ease-in-out;
+
+            &:hover {
+                color: $cherrys-blue;
+            }
+
+            
         }
     }
 }

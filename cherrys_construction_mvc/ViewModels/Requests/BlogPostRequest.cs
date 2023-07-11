@@ -2,6 +2,7 @@
 using cherrys_construction_mvc.ViewModels.Responce;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace cherrys_construction_mvc.ViewModels.Requests
 {
@@ -20,8 +21,10 @@ namespace cherrys_construction_mvc.ViewModels.Requests
         public IFormFile? Image { get; set; }
             
         public int? BlogCategoryId { get; set; }
-        [ValidateNever]
-        public List<BlogCategoryResponce>? BlogCategories { get; set; }
+        [ForeignKey(nameof(BlogCategoryId))]
+        public BlogCategoryRequest? BlogCategory { get; set; }
+
+        public IEnumerable<BlogCategoryResponce>? blogCategoriesList { get; set; }
 
     }
 }

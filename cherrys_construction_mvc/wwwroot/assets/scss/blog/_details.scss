@@ -137,6 +137,13 @@
                 li {
                     display: inline-block;
                 }
+
+                a{
+                    color: $cherrys-gray;
+                    &:hover{
+                        color: $cherrys-blue;
+                    }
+                }
             }
 
             .tags {

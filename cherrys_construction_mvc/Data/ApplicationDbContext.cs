@@ -46,16 +46,16 @@ namespace cherrys_construction_mvc.Data
                 .WithMany(c => c.ProjectTags)
                 .HasForeignKey(bc => bc.TagId);
 
-            modelBuilder.Entity<BlogPostBlogCategory>()
-                .HasKey(bc => new { bc.BlogPostId, bc.BlogCategoryId });
-            modelBuilder.Entity<BlogPostBlogCategory>()
-                .HasOne(bc => bc.BlogPost)
-                .WithMany(b => b.BlogPostBlogCategories)
-                .HasForeignKey(bc => bc.BlogPostId);
-            modelBuilder.Entity<BlogPostBlogCategory>()
-                .HasOne(bc => bc.BlogCategory)
-                .WithMany(c => c.BlogPostBlogCategories)
-                .HasForeignKey(bc => bc.BlogCategoryId);
+            //modelBuilder.Entity<BlogPostBlogCategory>()
+            //    .HasKey(bc => new { bc.BlogPostId, bc.BlogCategoryId });
+            //modelBuilder.Entity<BlogPostBlogCategory>()
+            //    .HasOne(bc => bc.BlogPost)
+            //    .WithMany(b => b.BlogPostBlogCategories)
+            //    .HasForeignKey(bc => bc.BlogPostId);
+            //modelBuilder.Entity<BlogPostBlogCategory>()
+            //    .HasOne(bc => bc.BlogCategory)
+            //    .WithMany(c => c.BlogPostBlogCategories)
+            //    .HasForeignKey(bc => bc.BlogCategoryId);
 
 
             //modelBuilder.Entity("cherrys_construction_mvc.Models.Project", b =>

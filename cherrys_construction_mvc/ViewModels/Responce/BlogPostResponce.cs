@@ -1,4 +1,5 @@
 ﻿using cherrys_construction_mvc.Models;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace cherrys_construction_mvc.ViewModels.Responce
 {
@@ -14,6 +15,9 @@ namespace cherrys_construction_mvc.ViewModels.Responce
         public string? CreatedDateString { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public string? UpdatedDateString { get; set; }
+        public int? BlogCategoryId { get; set; }
+        [ForeignKey(nameof(BlogCategoryId))]
+        public BlogCategoryResponce? BlogCategory { get; set; }
 
-     }
+    }
 }

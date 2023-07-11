@@ -22,7 +22,7 @@
 
 <section id="list" class="list">
     <div class="row">
-        <div class="col-lg-6" style="margin-left: auto; margin-right:auto;">
+        <div class="list-container">
             <!-- Multi Columns Form -->
             <form enctype="multipart/form-data" method="post">
                 <div class="card">
@@ -34,18 +34,29 @@
                                 <span asp-validation-for="Title" class="text-danger"></span>
                             </div>
                         </div>
-                        @if (Model.BlogCategories.Any())
+                        @if(Model.blogCategoriesList != null)
                         {
-                            <div class="col-lg-4 col-md-4 col-sm-12 mb-3 align-items-center">
-                                <label asp-for="BlogCategoryId" />
-                                <select asp-for="BlogCategoryId" class="form-select">
-                                    @foreach (var item in @Model.BlogCategories)
-                                    {
-                                        <option value="@item.Id">@item.Name</option>
-                                    }
-                                </select>
-                                <span asp-validation-for="BlogCategoryId" class="text-danger"></span>
-                            </div>
+                            @if (Model.blogCategoriesList.Any())
+                            {
+                                <div class="col-lg-4 col-md-4 col-sm-12 mb-3 align-items-center">
+                                    <label asp-for="BlogCategoryId" />
+                                    <select asp-for="BlogCategoryId" class="form-select">
+                                        @foreach (var item in @Model.blogCategoriesList)
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
+                                    </select>
+                                    <span asp-validation-for="BlogCategoryId" class="text-danger"></span>
+                                </div>
+                            }
+                            else
+                            {
+                                <p class="text-info">Please add blog categories to categorize your blog post.</p>
+                            }
+                        }
+                        else
+                        {
+                            <p class="text-info">Please add blog categories to categorize your blog post.</p>
                         }
                         <div class="col-lg-8 col-md-8 col-sm-12">
                             @*<label asp-for="Image">Image</label>*@

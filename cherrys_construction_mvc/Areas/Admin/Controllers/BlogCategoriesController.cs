@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using cherrys_construction_mvc.Interfaces;
 using cherrys_construction_mvc.Models;
+using cherrys_construction_mvc.Services;
 using cherrys_construction_mvc.Utility;
 using cherrys_construction_mvc.ViewModels.Requests;
 using cherrys_construction_mvc.ViewModels.Responce;
@@ -16,12 +17,18 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
     {
         private readonly ILogger<BlogCategoriesController> _logger;
         private readonly IBlogCategoryService _blogCategoryService;
+        private readonly IMapper _mapper;
+        private readonly IBlogPostService _blogPostService;
 
         public BlogCategoriesController(ILogger<BlogCategoriesController> logger, 
-            IBlogCategoryService blogCategoryService)
+            IBlogCategoryService blogCategoryService,
+            IBlogPostService blogPostService,
+            IMapper mapper)
         {
             _logger = logger;
             _blogCategoryService = blogCategoryService;
+            _blogPostService = blogPostService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -116,7 +123,22 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         {
             if (Id > 0)
             {
+                var posts = await _blogPostService.GetBlogPostsAsync();
+                if (posts.Any())
+                {
+                    foreach (var post in posts)
+                    {
+                        if (post.BlogCategoryId == Id)
+                        {
+                            post.BlogCategoryId = null;
+                            post.BlogCategory = null;
+                            var postRequest = _mapper.Map<BlogPostRequest>(post);
+                            await _blogPostService.UpdateBlogPostAsync(postRequest.Id, postRequest);
 
+                        }
+                    }
+                    await _blogPostService.SaveChangesAsync();
+                }
                 await _blogCategoryService.DeleteBlogCategoryAsync(Id);
                 TempData["success"] = "Blog Category Deleted Successfully";
                 return RedirectToAction(nameof(Index));

@@ -221,6 +221,8 @@ namespace cherrys_construction_mvc.Mapper
             _ = CreateMap<BlogPost, BlogPostResponce>();
             _ = CreateMap<BlogPostResponce, BlogPost>();
 
+            _ = CreateMap<BlogPostRequest, BlogPostResponce>().ReverseMap();
+
 
             #endregion
 
@@ -230,7 +232,7 @@ namespace cherrys_construction_mvc.Mapper
 
             _ = CreateMap<BlogCategory, BlogCategoryResponce>().ReverseMap();
 
-            _ = CreateMap<BlogPostRequest, BlogPostResponce>().ReverseMap();
+            _ = CreateMap<BlogCategoryRequest, BlogCategoryResponce>().ReverseMap();
 
             #endregion
         }

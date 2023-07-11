@@ -12,7 +12,7 @@ namespace cherrys_construction_mvc.Services
     public class BlogPostService : IBlogPostService
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly IEfRepository<BlogPost> _blogPostRepository;
+        private readonly IEfRepository<BlogPost> _blogPostRepository;    
         private readonly IMapper _mapper;
         private readonly ILogger<BlogPost> _logger;
 
@@ -38,7 +38,6 @@ namespace cherrys_construction_mvc.Services
             var post = _mapper.Map<BlogPost>(request);
 
             await _blogPostRepository.AddAsync(post);
-            await _blogPostRepository.SaveChangesAsync();
         }
 
 
@@ -61,13 +60,12 @@ namespace cherrys_construction_mvc.Services
                     }
                 }
                 await _blogPostRepository.DeleteAsync(post);
-                await _blogPostRepository.SaveChangesAsync();
             }
         }
 
         public async Task<BlogPostResponce> GetBlogPostByIdAsync(int id)
         {
-            var post = await _blogPostRepository.GetByIdAsync(id);
+            var post = await _blogPostRepository.GetByIdAsync(id); 
             return _mapper.Map<BlogPostResponce>(post);
         }
 
@@ -76,6 +74,12 @@ namespace cherrys_construction_mvc.Services
             var posts = await _blogPostRepository.ListAsync();
             return _mapper.Map<IEnumerable<BlogPostResponce>>(posts);
         }
+
+        public async Task SaveChangesAsync()
+        {
+            await _blogPostRepository.SaveChangesAsync();
+        }
+
         public async Task UpdateBlogPostAsync(int id, BlogPostRequest request)
         {
 
@@ -107,8 +111,7 @@ namespace cherrys_construction_mvc.Services
                 }                
 
                 _mapper.Map(request, post);
-                await _blogPostRepository.UpdateAsync(post);
-                await _blogPostRepository.SaveChangesAsync();
+                await _blogPostRepository.UpdateAsync(post);        
             }
             else
             {

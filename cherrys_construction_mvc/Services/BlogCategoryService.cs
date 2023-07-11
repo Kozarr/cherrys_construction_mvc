@@ -2,10 +2,8 @@
 using cherrys_construction_mvc.EfRepository.Interfaces;
 using cherrys_construction_mvc.Interfaces;
 using cherrys_construction_mvc.Models;
-using cherrys_construction_mvc.Utility;
 using cherrys_construction_mvc.ViewModels.Requests;
 using cherrys_construction_mvc.ViewModels.Responce;
-using System.Collections.Generic;
 
 namespace cherrys_construction_mvc.Services
 {
@@ -14,7 +12,8 @@ namespace cherrys_construction_mvc.Services
         private readonly IEfRepository<BlogCategory> _blogCategoryRepository;
         private readonly IMapper _mapper;
 
-        public BlogCategoryService(IEfRepository<BlogCategory> blogCategory,IMapper mapper,IWebHostEnvironment webHostEnvironment)
+        public BlogCategoryService(IEfRepository<BlogCategory> blogCategory,
+            IMapper mapper)
         {
             _blogCategoryRepository = blogCategory;
             _mapper = mapper;   
@@ -30,7 +29,7 @@ namespace cherrys_construction_mvc.Services
         {
             var blogCategory = await _blogCategoryRepository.GetByIdAsync(id);
             if (blogCategory != null)
-            {
+            {               
                 await _blogCategoryRepository.DeleteAsync(blogCategory);
                 await _blogCategoryRepository.SaveChangesAsync();
             }

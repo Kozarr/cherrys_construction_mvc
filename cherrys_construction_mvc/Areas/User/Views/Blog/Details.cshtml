@@ -82,20 +82,23 @@ else
                     <div class="content">                     
                         @Html.Raw(Model.Post.Description)    
                     </div><!-- End post content -->
+                    @if(Model.Post.BlogCategory != null)
+                    {
+                        @if (!string.IsNullOrWhiteSpace(Model.Post.BlogCategory.Name))
+                        {
+                            <div class="meta-bottom">
+                                <i class="bi bi-folder"></i>
+                                <ul class="cats">                  
+                                    <li>
+                                        <a asp-action="Index" asp-route-currentFilter="@Model.Post.BlogCategory.Name">@Model.Post.BlogCategory.Name</a>
+                                    </li>
+                                </ul>
 
-                    <div class="meta-bottom">
-                        <i class="bi bi-folder"></i>
-                        <ul class="cats">
-                            <li><a href="#">Business</a></li>
-                        </ul>
-
-                        <i class="bi bi-tags"></i>
-                        <ul class="tags">
-                            <li><a href="#">Creative</a></li>
-                            <li><a href="#">Tips</a></li>
-                            <li><a href="#">Marketing</a></li>
-                        </ul>
-                    </div><!-- End meta bottom -->
+                            </div>
+                        }
+                    }
+                    
+                    
 
                 </article><!-- End blog post -->
                 @if(Model.CompanyInfo != null)
