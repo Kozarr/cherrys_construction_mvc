@@ -2875,9 +2875,21 @@ Template: Resi Pro
     font-size: 36px;
   }
 }
+@media screen and (max-width: 400px) {
+  .hero .info h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+  }
+}
 .hero .info p {
   color: rgba(255, 255, 255, 0.8);
   font-size: 18px;
+}
+@media screen and (max-width: 400px) {
+  .hero .info p {
+    font-size: 0.9rem;
+  }
 }
 .hero .info .btn-get-started {
   font-family: var(--font-primary);
@@ -2894,6 +2906,12 @@ Template: Resi Pro
 }
 .hero .info .btn-get-started:hover {
   background: #0B2547;
+}
+@media screen and (max-width: 400px) {
+  .hero .info .btn-get-started {
+    padding: 8px 30px;
+    margin: 5px;
+  }
 }
 .hero .carousel-control-prev {
   justify-content: start;
