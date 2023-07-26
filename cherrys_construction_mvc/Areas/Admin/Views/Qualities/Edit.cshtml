@@ -27,22 +27,11 @@
             <form method="post" asp-action="Edit">
                 <div class="card">
                     <div class="card-body">
-                        @if (Model.Icon != null || Model.Icon != "")
-                        {
-                            <div class="icon text-center"><i class="@Model.Icon"></i></div>
-                        }
                         <div class="col-md-12">
                             <div class="form-floating mb-3">
                                 <input id="obje1" asp-for="Title" class="form-control" placeholder="Quality Name or Title" />
                                 <label for="obje1" asp-for="Title">Quality Name or Title</label>
                                 <span asp-validation-for="Title" class="text-danger"></span>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-floating mb-3">
-                                <input id="obje1" asp-for="Icon" class="form-control" placeholder="Icon Code" />
-                                <label for="obje1" asp-for="Icon">Icon Code</label>
-                                <span asp-validation-for="Icon" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-12">
