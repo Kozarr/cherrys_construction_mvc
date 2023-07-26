@@ -6,7 +6,7 @@ namespace cherrys_construction_mvc.ViewModels.Requests
     public class ServiceTypeRequest
     {
         [Required]
-        public string Title { get; set; }
+        public string? Title { get; set; }
         [ValidateNever]
         public string? Description { get; set; }
         [ValidateNever]

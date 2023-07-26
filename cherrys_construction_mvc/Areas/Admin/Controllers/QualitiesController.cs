@@ -72,7 +72,6 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
             var editRequest = new CompanyQualityRequest()
             {
                 Description = companyQuality.Description,
-                Icon = companyQuality.Icon,
                 Title = companyQuality.Title
             };
             return View(editRequest);

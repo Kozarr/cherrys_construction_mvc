@@ -15,7 +15,6 @@ namespace cherrys_construction_mvc.Mapper
             _ = CreateMap<Project, ProjectResponce>()
                 .ForPath(a => a.ProjectServiceType.Title, t => t.MapFrom(t => t.ServiceType.Title))
                 .ForPath(a => a.ProjectServiceType.Id, t => t.MapFrom(t => t.ServiceType.Id))
-                .ForPath(a => a.ProjectServiceType.IconImage, t => t.MapFrom(t => t.ServiceType.IconImage))
                 .ForPath(a => a.ProjectServiceType.Description, t => t.MapFrom(t => t.ServiceType.Description))
                 .ForPath(a => a.ProjectServiceType.PageDescription, t => t.MapFrom(t => t.ServiceType.PageDescription))
                 .ForPath(a => a.ProjectServiceType.PageTitle, t => t.MapFrom(t => t.ServiceType.PageTitle))
