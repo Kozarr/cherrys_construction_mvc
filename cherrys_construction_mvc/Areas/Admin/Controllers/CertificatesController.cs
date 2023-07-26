@@ -51,7 +51,6 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
             var editRequest = new CompanyCertificateRequest()
             {
                Description = companyCertificate.Description,    
-               Icon = companyCertificate.Icon,
                Title = companyCertificate.Title,
             };
 
