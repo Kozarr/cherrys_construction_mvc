@@ -32,39 +32,42 @@
                 @foreach (var member in Model)
                 {
                         <div class="row gy-4 member-item featured mt-4" data-aos="fade-up" data-aos-delay="200">
-                            <div class="col-lg-2 d-flex align-items-center justify-content-center">
+                            <div class="col-lg-4 d-flex align-items-center justify-content-center">
                                 <div>
                                     <h3>@member.Name</h3>
                                     <h5>@member.Role</h5>
                                 </div>
                                         
                             </div>
-                            <div class="col-lg-3 d-flex align-items-center justify-content-center">
+                            <div class="col-lg-4 d-flex align-items-center justify-content-center">
                                 <p>@Html.Raw(@member.Description)</p>
                             </div>
-                            <div class="col-lg-3 align-content-center justify-content-center mb-4">
+                            <div class="col-lg-4 align-content-center justify-content-center mb-4">
                                 <img src="@member.ImageLink" />
                             </div>
-                            <div class="col-lg-4 d-flex flex-row justify-content-around align-items-center mb-3">
-                                <div class="text-center"><a class="edit-btn" asp-area="@Breadcrumb.AdminArea" asp-action="Edit" asp-route-id="@member.Id">@Breadcrumb.Edit</a></div>
-                                <div class="text-center"><a class="delete-btn" asp-area="@Breadcrumb.AdminArea" asp-action="Delete" asp-route-id="@member.Id">@Breadcrumb.Delete</a></div>
+                            <div class="flex-btn-container-row">
+                                <a class="flex-btn-row edit-btn text-center" asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.MembersController"
+                                   asp-action="@Breadcrumb.Edit" asp-route-id="@member.Id" class="readmore stretched-link">
+                                    <span>@Breadcrumb.Edit</span><i class="fa-regular fa-pen-to-square"></i>
+                                </a>
+                                <a class="flex-btn-row delete-btn text-center" asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.MembersController"
+                                   asp-action="@Breadcrumb.Delete" asp-route-id="@member.Id" class="readmore stretched-link">
+                                    <span>@Breadcrumb.Delete</span><i class="fa-regular fa-trash-can"></i>
+                                </a>
+                                <br>
                             </div>
 
                         </div><!-- End Members Item -->
                 }
                 </div>
-                <div class="col-12 add-btn-container text-center" data-aos="fade-up" data-aos-delay="100">
-                    <a class="add-button" asp-area="@Breadcrumb.AdminArea" asp-action="Create"><i class="bi bi-plus"></i></a>
-                </div>
 
             </div>
         }
-        else
-        {
-            <div class="col-12 add-btn-container text-center" data-aos="fade-up" data-aos-delay="100">
-                <a class="add-button" asp-area="@Breadcrumb.AdminArea" asp-action="Create"><i class="bi bi-plus"></i></a>
-            </div>
-        }
+
+        <div class="col-12 add-btn-container text-center" data-aos="fade-up" data-aos-delay="100">
+            <a class="add-button" asp-area="@Breadcrumb.AdminArea" asp-action="Create"><i class="bi bi-plus"></i></a>
+        </div>
+        
 
     </div>
 </section>
