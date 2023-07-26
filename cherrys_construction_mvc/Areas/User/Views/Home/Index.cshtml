@@ -153,28 +153,40 @@ else { }
             <div class="row gy-4">
                 @foreach (var item in Model.ServiceTypes)
                 {
-                    @if(item != null)
-                    {                                                                 
+                    @if (item != null)
+                    {
                         <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
                             <div class="card-item h-100">
                                 <div class="row">
-                                    <div class="col-xl-5">
-                                        @if(item.ImageLink != null){
-                                            string imageLink = item.ImageLink.Remove(0, 8);
-                                            string image = ("~/images/" + imageLink);
+                                    @if (item.ImageLink != null)
+                                    {
+                                        string imageLink = item.ImageLink.Remove(0, 8);
+                                        string image = ("~/images/" + imageLink);
+                                        <div class="col-xl-5">
                                             <div class="card-bg" style="background-image: url('@Url.Content(image)');"></div>
-                                         } 
-                                    </div>
-                                    <div class="col-xl-7 d-flex align-items-center">
-                                        <div class="card-body">
-                                            <h4 class="card-title">@item.Title</h4>
-                                            <p>@Html.Raw(item.Description)</p>
+
                                         </div>
-                                    </div>
+                                        <div class="col-xl-7 d-flex align-items-center">
+                                            <div class="card-body">
+                                                <h4 class="card-title">@item.Title</h4>
+                                                <p>@Html.Raw(item.Description)</p>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-xl-12 d-flex align-items-center">
+                                            <div class="card-body">
+                                                <h4 class="card-title">@item.Title</h4>
+                                                <p>@Html.Raw(item.Description)</p>
+                                            </div>
+                                        </div>
+                                    }
+
                                 </div>
                             </div>
                         </div>
-                          
+
                     }
                     else
                     {
@@ -230,36 +242,63 @@ else { }
 <!-- ======= Company Certificates Section ======= -->
 <section id="alt-services" class="alt-services">
     <div class="container" data-aos="fade-up">
-        @if (Model.CompanyCertificates != null)
+        @if (Model != null)
         {
-            <div class="row justify-content-around gy-4">
-                @if (Model.CertSettings != null)
-                {
-                    string imageLink = Model.CertSettings.ImageLink.Remove(0, 8);
-                    string image = ("~/images/" + imageLink);
-                    <div class="col-lg-6 img-bg" style="background-image: url('@Url.Content(image)');" data-aos="zoom-in" data-aos-delay="100"></div>
-                }
-                <div class="col-lg-5 d-flex flex-column justify-content-center">
+            @if (Model.CompanyCertificates != null)
+            {
+                <div class="row justify-content-around gy-4">
                     @if (Model.CertSettings != null)
                     {
-                        <h3>@Model.CertSettings.Title</h3>
-                        @Html.Raw(Model.CertSettings.Description)
-                    }               
-                    @foreach (var item in Model.CompanyCertificates)
-                    {
-                        <div class="icon-box d-flex position-relative" data-aos="fade-up" data-aos-delay="100">
-                            <div>
-                                <h4><a class="stretched-link">@item.Title</a></h4>
-                                <p>@Html.Raw(item.Description)</p>
+                        @if (!string.IsNullOrWhiteSpace(Model.CertSettings.ImageLink))
+                        {
+                            string imageLink = Model.CertSettings.ImageLink.Remove(0, 8);
+                            string image = ("~/images/" + imageLink);
+                            <div class="col-lg-6 img-bg" style="background-image: url('@Url.Content(image)');" data-aos="zoom-in" data-aos-delay="100"></div>
+                            <div class="col-lg-5 d-flex flex-column justify-content-center">
+                                @if (Model.CertSettings != null)
+                                {
+                                    <h3>@Model.CertSettings.Title</h3>
+                                    @Html.Raw(Model.CertSettings.Description)
+                                }
+                                @if (Model.CompanyCertificates.Any())
+                                {
+                                    @foreach (var item in Model.CompanyCertificates)
+                                    {
+                                        <div class="icon-box d-flex position-relative" data-aos="fade-up" data-aos-delay="100">
+                                            <div>
+                                                <h4><a class="stretched-link">@item.Title</a></h4>
+                                                <p>@Html.Raw(item.Description)</p>
+                                            </div>
+                                        </div>
+                                    }
+                                }
                             </div>
-                        </div>
+                        }
+                        else
+                        {
+                            <div class="col-lg-12 d-flex flex-column justify-content-center">
+                                @if (Model.CertSettings != null)
+                                {
+                                    <h3>@Model.CertSettings.Title</h3>
+                                    @Html.Raw(Model.CertSettings.Description)
+                                }
+                                @if (Model.CompanyCertificates.Any())
+                                {
+                                    @foreach (var item in Model.CompanyCertificates)
+                                    {
+                                        <div class="icon-box d-flex position-relative" data-aos="fade-up" data-aos-delay="100">
+                                            <div>
+                                                <h4><a class="stretched-link">@item.Title</a></h4>
+                                                <p>@Html.Raw(item.Description)</p>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        }
                     }
-
                 </div>
-            </div>
-        }
-        else
-        {
+            }
         }
     </div>
 </section>
@@ -267,72 +306,97 @@ else { }
 <!-- ======= Company Values Features Section ======= -->
 <section id="features" class="features section">
     <div class="container" data-aos="fade-up" data-aos-delay="150">
-        @if (Model.CompanyValues != null)
+        @if (Model != null)
         {
-            int tabItem = 1;
-            int tabContentItem = 1;
-            int dataAosDelay = 100;
-            <ul class="nav nav-tabs row g-2 d-flex">
-                @foreach (var item in Model.CompanyValues)
-                {
-                    @if (tabItem == 1)
+            @if (Model.CompanyValues != null)
+            {
+                int tabItem = 1;
+                int tabContentItem = 1;
+                <ul class="nav nav-tabs row g-2 d-flex">
+                    @foreach (var item in Model.CompanyValues)
                     {
-                        <li class="nav-item col-3">
-                            <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#tab-@tabItem">
-                                <h4>@item.Title</h4>
-                            </a>
-                        </li>
+                        @if (tabItem == 1)
+                        {
+                            <li class="nav-item col-3">
+                                <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#tab-@tabItem">
+                                    <h4>@item.Title</h4>
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item col-3">
+                                <a class="nav-link show" data-bs-toggle="tab" data-bs-target="#tab-@tabItem">
+                                    <h4>@item.Title</h4>
+                                </a>
+                            </li>
+                        }
+                        tabItem += 1;
                     }
-                    else
+                </ul>
+                <div class="tab-content">
+                    @foreach (var item in Model.CompanyValues)
                     {
-                        <li class="nav-item col-3">
-                            <a class="nav-link show" data-bs-toggle="tab" data-bs-target="#tab-@tabItem">
-                                <h4>@item.Title</h4>
-                            </a>
-                        </li>
+                        @if (tabContentItem == 1)
+                        {
+                            @if (!string.IsNullOrWhiteSpace(item.ImageLink))
+                            {
+                                <div class="tab-pane active show" id="tab-@tabContentItem">
+                                    <div class="row">
+                                        <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="100">
+                                            <h3>@item.Title</h3>
+                                            <p class="fst-italic">@Html.Raw(item.Description)</p>
+                                        </div>
+                                        <div class="col-lg-6 order-1 order-lg-2 text-center" data-aos="fade-up" data-aos-delay="100">
+                                            <img src="@item.ImageLink" alt="" class="img-fluid">
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="tab-pane active show" id="tab-@tabContentItem">
+                                    <div class="row">
+                                        <div class="col-lg-12 order-2 order-lg-1 mt-3 mt-lg-0 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="100">
+                                            <h3>@item.Title</h3>
+                                            <p class="fst-italic">@Html.Raw(item.Description)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            @if (!string.IsNullOrWhiteSpace(item.ImageLink))
+                            {
+                                <div class="tab-pane show" id="tab-@tabContentItem">
+                                    <div class="row">
+                                        <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="100">
+                                            <h3>@item.Title</h3>
+                                            <p class="fst-italic">@Html.Raw(item.Description)</p>
+                                        </div>
+                                        <div class="col-lg-6 order-1 order-lg-2 text-center" data-aos="fade-up" data-aos-delay="100">
+                                            <img src="@item.ImageLink" alt="" class="img-fluid">
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="tab-pane show" id="tab-@tabContentItem">
+                                    <div class="row">
+                                        <div class="col-lg-12 order-2 order-lg-1 mt-3 mt-lg-0 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="100">
+                                            <h3>@item.Title</h3>
+                                            <p class="fst-italic">@Html.Raw(item.Description)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        tabContentItem += 1;
                     }
-                    tabItem += 1;
-                }
-            </ul>
-            <div class="tab-content">
-                @foreach (var item in Model.CompanyValues)
-                {
-                    @if (tabContentItem == 1)
-                    {
-                        <div class="tab-pane active show" id="tab-@tabContentItem">
-                            <div class="row">
-                                <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="@dataAosDelay">
-                                    <h3>@item.Title</h3>
-                                    <p class="fst-italic">@Html.Raw(item.Description)</p>
-                                </div>
-                                <div class="col-lg-6 order-1 order-lg-2 text-center" data-aos="fade-up" data-aos-delay="@dataAosDelay">
-                                    <img src="@item.ImageLink" alt="" class="img-fluid">
-                                </div>
-                            </div>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="tab-pane show" id="tab-@tabContentItem">
-                            <div class="row">
-                                <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="@dataAosDelay">
-                                    <h3>@item.Title</h3>
-                                    <p class="fst-italic">@Html.Raw(item.Description)</p>
-                                </div>
-                                <div class="col-lg-6 order-1 order-lg-2 text-center" data-aos="fade-up" data-aos-delay="@dataAosDelay">
-                                    <img src="@item.ImageLink" alt="" class="img-fluid">
-                                </div>
-                            </div>
-                        </div>
-                    }
-                    tabContentItem += 1;
-                    dataAosDelay += 100;
-                }
-
-            </div>
-        }
-        else
-        {
+                </div>
+            }
         }
     </div>
 </section>
@@ -376,9 +440,6 @@ else { }
                 </div>
                 <div class="swiper-pagination"></div>
             </div>
-        }
-        else
-        {
         }
     </div>
 </section>

@@ -16,13 +16,13 @@ namespace cherrys_construction_mvc.Services
         private readonly IMapper _mapper;
         private IWebHostEnvironment _webHostEnvironment;
 
-        public ServiceTypeService(IEfRepository<ServiceType> serviceTypeRepository, 
+        public ServiceTypeService(IEfRepository<ServiceType> serviceTypeRepository,
             IEfRepository<Project> projectRepository,
-            IMapper mapper, 
+            IMapper mapper,
             IWebHostEnvironment webHostEnvironment,
             ILogger<ServiceTypeService> logger)
         {
-             _serviceTypeRepository = serviceTypeRepository;
+            _serviceTypeRepository = serviceTypeRepository;
             _projectRepository = projectRepository;
             _mapper = mapper;
             _webHostEnvironment = webHostEnvironment;
@@ -43,9 +43,10 @@ namespace cherrys_construction_mvc.Services
         {
             var serviceType = await _serviceTypeRepository.GetByIdAsync(serviceTypeId);
 
-            if(serviceType != null)
+            if (serviceType != null)
             {
-               // When deleting a ServiceType, we remove connections to service type in all projects
+                //TODOx : Investigate
+                // When deleting a ServiceType, we remove connections to service type in all projects
                 //var projectsList = await _projectRepository.ListAsync();
                 //// oooooooooooooooooooooooooooooooooo
                 //foreach (var item in projectsList)
@@ -59,7 +60,7 @@ namespace cherrys_construction_mvc.Services
                 //}
 
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
-                if(serviceType.ImageLink != null)
+                if (serviceType.ImageLink != null)
                 {
                     var oldImagePath = Path.Combine(wwwRootPath, serviceType.ImageLink.TrimStart('\\'));
                     if (File.Exists(oldImagePath))
@@ -75,7 +76,7 @@ namespace cherrys_construction_mvc.Services
             {
                 _logger.LogWarning("Could not find existing service type in - ServiceType Service");
             }
-            
+
         }
 
         public async Task<ServiceTypeResponce> GetServiceTypeByIdAsync(int serviceTypeId)
@@ -97,7 +98,7 @@ namespace cherrys_construction_mvc.Services
             {
                 if (request.Image != null)
                 {
-                    if(request.ImageLink != null)
+                    if (request.ImageLink != null)
                     {
                         string wwwRootPath = _webHostEnvironment.WebRootPath;
                         var oldImagePath = Path.Combine(wwwRootPath, serviceType.ImageLink.TrimStart('\\'));
@@ -105,7 +106,7 @@ namespace cherrys_construction_mvc.Services
                         {
                             File.Delete(oldImagePath);
                         }
-                    }            
+                    }
                     request.ImageLink = await Helper.Helper.UploadImage(request.Image, _webHostEnvironment, StaticDetails.StandardImage);
                 }
                 else

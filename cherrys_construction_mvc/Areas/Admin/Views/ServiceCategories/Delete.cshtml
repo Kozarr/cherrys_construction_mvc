@@ -28,16 +28,23 @@
             <form enctype="multipart/form-data" method="post" asp-action="Delete">
                 <div class="card">
                     <div class="card-body row">
-                        @*<div class="p-5 w-50" style="background: url(@Model.ImageLink)">
-
-                        </div>*@
-                        <h2 class="card-title text-center">@Model.Title</h2>
-                        <div class="col-lg-6 text-center">
-                            <img class="img-square img-fluid" src="@Model.ImageLink" />
-                        </div>
-                        <div class="col-lg-6">
-                            <textarea id="readonly" asp-for="@Model.Description" class="form-control"></textarea>
-                        </div>
+                        @if (!string.IsNullOrWhiteSpace(Model.ImageLink))
+                        {
+                            <h2 class="card-title text-center">@Model.Title</h2>
+                            <div class="col-lg-6 text-center">
+                                <img class="img-square img-fluid" src="@Model.ImageLink" />
+                            </div>
+                            <div class="col-lg-6">
+                                <textarea id="readonly" asp-for="@Model.Description" class="form-control"></textarea>
+                            </div>
+                        }
+                        else
+                        {
+                            <h2 class="card-title text-center">@Model.Title</h2>
+                            <div class="col-lg-12">
+                                <textarea id="readonly" asp-for="@Model.Description" class="form-control"></textarea>
+                            </div>
+                        }
                         <div class="mt-3 text-center">
                             <a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.ServiceCategoriesController" asp-action="Index" class="back-btn">@Breadcrumb.Back</a>
                             <button type="submit" class="delete-btn">@Breadcrumb.Delete</button>
