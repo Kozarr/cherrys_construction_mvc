@@ -34,22 +34,38 @@
                 @foreach (var item in Model)
                 {
                         <div class="row gy-4 list-item featured mt-4 justify-content-center" data-aos="fade-up" data-aos-delay="200">
-                            <div class="col-lg-4 d-flex align-items-center">
-                                 <img class="img-square img-fluid" src="@item.ImageLink" />
-                            </div>
-                            <div class="col-lg-6 d-flex align-items-center justify-content-center">
-                                <div>
-                                    <h3 class="mb-2">@item.Title</h3>
-                                    <p>@Html.Raw(@item.Description)</p>
+                            @if (!string.IsNullOrWhiteSpace(item.ImageLink))
+                            {
+                                <div class="col-lg-4 d-flex align-items-center">
+                                    <img class="img-square img-fluid" src="@item.ImageLink" />
                                 </div>
-                            </div>
-                            <div class="col-lg-2 d-flex align-items-center justify-content-center">
-                                <div>
-                                    <div class="text-center"><a class="edit-btn m-2" style="width:130px;" 
-                                        asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.ServiceCategoriesController" asp-action="Edit" asp-route-id="@item.Id">@Breadcrumb.Edit</a></div>
-                                    <div class="text-center"><a class="delete-btn m-2" style="width:130px;" 
-                                        asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.ServiceCategoriesController" asp-action="Delete" asp-route-id="@item.Id">@Breadcrumb.Delete</a></div>
+                                <div class="col-lg-6 d-flex align-items-center justify-content-center">
+                                    <div>
+                                        <h3 class="mb-2">@item.Title</h3>
+                                        <p>@Html.Raw(@item.Description)</p>
+                                    </div>
                                 </div>
+                            }
+                            else
+                            {
+                                <div class="col-lg-10 d-flex align-items-center justify-content-center">
+                                    <div>
+                                        <h3 class="mb-2">@item.Title</h3>
+                                        <p>@Html.Raw(@item.Description)</p>
+                                    </div>
+                                </div>
+                            }
+
+                            <div class="flex-btn-container-row">
+                                <a class="flex-btn-row edit-btn text-center" asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.ServiceCategoriesController"
+                                   asp-action="@Breadcrumb.Edit" asp-route-id="@item.Id" class="readmore stretched-link">
+                                    <span>@Breadcrumb.Edit</span><i class="fa-regular fa-pen-to-square"></i>
+                                </a>
+                                <a class="flex-btn-row delete-btn text-center" asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.ServiceCategoriesController"
+                                   asp-action="@Breadcrumb.Delete" asp-route-id="@item.Id" class="readmore stretched-link">
+                                    <span>@Breadcrumb.Delete</span><i class="fa-regular fa-trash-can"></i>
+                                </a>
+                                <br>
                             </div>
 
                         </div>
