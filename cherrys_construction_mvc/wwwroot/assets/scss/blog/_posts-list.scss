@@ -16,12 +16,14 @@
             width: 32%;
             box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.06);
 
-            @media screen and (max-width: $laptop-min){
+            @media screen and (max-width: $laptop-min) {
                 width: 49%;
             }
-            @media screen and (max-width: $tablet-min){
+
+            @media screen and (max-width: $tablet-min) {
                 width: 100%;
             }
+
             .flex-btn-container {
 
                 .edit-btn {
@@ -52,23 +54,28 @@
                 width: auto;
                 position: relative;
 
-
                 img {
                     transition: 0.5s;
                     position: center;
-                }
+                }      
+                   
             }
 
             .post-date {
                 position: absolute;
                 right: 0;
                 bottom: 0;
-                background-color: var(--color-primary);
-                color: #fff;
+                background-color: $cherrys-blue;
+                color: $white;
                 text-transform: uppercase;
                 font-size: 13px;
                 padding: 6px 12px;
                 font-weight: 500;
+                transition: all 0.1s ease-in-out;
+                &:hover{
+                    background-color: lighten($cherrys-blue, 15);
+                    font-size: 14px;
+                }
             }
 
             .post-content {
@@ -92,9 +99,21 @@
                 flex-wrap: wrap;
 
                 i {
-                    font-size: 16px;
+                    font-size: 1rem;
                     color: gray;
                 }
+
+                a {
+                    transition: all 0.2s ease-in-out;
+                    font-size: 1rem;
+                    color: gray;
+
+                    &:hover {
+                        color: $cherrys-blue;
+                    }
+                }
+
+
 
                 span {
                     font-size: 15px;

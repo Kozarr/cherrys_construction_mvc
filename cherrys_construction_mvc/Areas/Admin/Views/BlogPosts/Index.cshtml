@@ -1,13 +1,11 @@
 ﻿@using cherrys_construction_mvc.Helper;
-@model PaginatedList<BlogPostResponce>
+@using cherrys_construction_mvc.ViewModels.Blog;
+@model BlogVM
 
 @{
     ViewData["Title"] = Breadcrumb.BlogPostsTitle;
 }
-@{
-    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-}
+
 <!-- ======= Breadcrumbs ======= -->
 <div class="breadcrumbs d-flex align-items-center" style="background-image: url('/assets/img/breadcrumbs-bg.jpg');">
     <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
@@ -33,6 +31,18 @@
         <div class="blog-isotope" data-blog-filter="*" data-blog-layout="masonry" data-portfolio-sort="original-order">
 
             <ul class="blog-flters" data-aos="fade-up" data-aos-delay="100">
+                @if(Model.Categories != null)
+                {
+                    @if (Model.Categories.Any())
+                    {
+                        @foreach (var category in Model.Categories)
+                        {
+                            <li>
+                                <a asp-action="Index" asp-route-currentFilter="@category.Name">@category.Name</a>
+                            </li>
+                        }
+                    }
+                }
                 <li>
                     @Html.ActionLink("Date", "Index", new { sortOrder = ViewBag.DateSortParam })
                 </li>
@@ -48,35 +58,47 @@
 
                 </div>
             </form>
-
-            @if (Model.Any())
+            @if (Model.Posts != null)
             {
-                <div class="posts-list">
-                    @foreach (var post in Model)
-                    {
-                        <div class="post-item">
+
+                @if (Model.Posts.Any())
+                {
+                    <div class="posts-list">
+                        @foreach (var post in Model.Posts)
+                        {
+                            <div class="post-item">
                                 <div class="post-img">
                                     @if (post.ImageLink != null)
                                     {
-                                        <img src="@post.ImageLink" class="img-fluid" alt="">
+                                        <a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.BlogPostsController" 
+                                        asp-action="@Breadcrumb.Edit" asp-route-id="@post.Id">
+                                            <img src="@post.ImageLink" class="img-fluid" alt="Blog Image">
+                                        </a>
                                     }
                                     @if (post.CreatedDate != null)
                                     {
-                                        <span class="post-date">@post.CreatedDateString</span>
-                                    }
+                                        <a class="date-display" asp-action="Index" asp-route-currentFilter="@post.CreatedDateString">
+                                            <span class="post-date">@post.CreatedDateString</span>
+                                        </a>
+                                    }   
                                 </div>
 
                                 <div class="post-content">
-                                    <h3 class="post-title">@post.Title</h3>
+                                    <a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.BlogPostsController" 
+                                        asp-action="@Breadcrumb.Edit" asp-route-id="@post.Id">
+                                        <h3 class="post-title">@post.Title</h3>
+                                    </a>
                                     <div class="meta">
                                         <div class="d-flex align-items-center">
                                             <i class="bi bi-person"></i> <span class="ps-2">@post.Author</span>
                                         </div>
-                                        <span class="px-3 text-black-50">/</span>
-                                        <div class="d-flex align-items-center">
-                                            <i class="bi bi-folder"></i> <span class="ps-2">Politics</span>
-                                        </div>
-
+                                        @if (post.BlogCategory != null)
+                                        {
+                                            <span class="px-3 text-black-50">/</span>
+                                            <div class="d-flex align-items-center">
+                                                <i class="bi bi-folder"></i> <span class="ps-2"><a asp-action="Index" asp-route-currentFilter="@post.BlogCategory.Name">@post.BlogCategory.Name</a></span>
+                                            </div>
+                                        }
                                     </div>
                                     @if (post.UpdatedDateString != null)
                                     {
@@ -86,58 +108,58 @@
                                     }
                                     @Html.Raw(post.ShortDescription)
                                     <hr>
-                                    
+
                                 </div>
-                            <div class="flex-btn-container">
-                                <a class="flex-btn edit-btn text-center" asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.BlogPostsController"
-                                   asp-action="@Breadcrumb.Edit" asp-route-id="@post.Id" class="readmore stretched-link">
-                                    <span>@Breadcrumb.Edit</span><i class="fa-regular fa-pen-to-square"></i>
-                                </a>
-                                <a class="flex-btn delete-btn text-center" asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.BlogPostsController"
-                                   asp-action="@Breadcrumb.Delete" asp-route-id="@post.Id" class="readmore stretched-link">
-                                    <span>@Breadcrumb.Delete</span><i class="fa-regular fa-trash-can"></i>
-                                </a>
-                                <br>
+                                <div class="flex-btn-container">
+                                    <a class="flex-btn edit-btn text-center" asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.BlogPostsController"
+                                    asp-action="@Breadcrumb.Edit" asp-route-id="@post.Id" class="readmore stretched-link">
+                                        <span>@Breadcrumb.Edit</span><i class="fa-regular fa-pen-to-square"></i>
+                                    </a>
+                                    <a class="flex-btn delete-btn text-center" asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.BlogPostsController"
+                                    asp-action="@Breadcrumb.Delete" asp-route-id="@post.Id" class="readmore stretched-link">
+                                        <span>@Breadcrumb.Delete</span><i class="fa-regular fa-trash-can"></i>
+                                    </a>
+                                    <br>
+                                </div>
                             </div>
-                        </div>
-                        <!-- End post list item -->
-                    }
+                            <!-- End post list item -->
+                        }
+                    </div>
 
-                </div>
+                    <!-- End blog posts list -->
+                    var prevDisabled = !Model.Posts.HasPreviousPage ? "disabled" : "";
+                    var nextDisabled = !Model.Posts.HasNextPage ? "disabled" : "";
 
-                <!-- End blog posts list -->
+                    <div class="pagination-container text-center">
+                        @*  Pagination  *@
+                        <ul>
+                            <li>
+                                <a asp-action="Index"
+                                asp-route-sortOrder="@ViewData["CurrentSort"]"
+                                asp-route-pageNumber="@(Model.Posts.PageIndex - 1)"
+                                asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                                class="btn @prevDisabled">
+                                    PREVIOUS
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-action="Index"
+                                asp-route-sortOrder="@ViewData["CurrentSort"]"
+                                asp-route-pageNumber="@(Model.Posts.PageIndex + 1)"
+                                asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                                class="btn @nextDisabled">
+                                    NEXT
+                                </a>
+                            </li>
 
-                <div class="pagination-container text-center">
-                    @*  Pagination  *@
-                    <ul>
-                        <li>
-                            <a asp-action="Index"
-                               asp-route-sortOrder="@ViewData["CurrentSort"]"
-                               asp-route-pageNumber="@(Model.PageIndex - 1)"
-                               asp-route-currentFilter="@ViewData["CurrentFilter"]"
-                               class="btn @prevDisabled">
-                                PREVIOUS
-                            </a>
-                        </li>
-                        <li>
-                            <a asp-action="Index"
-                               asp-route-sortOrder="@ViewData["CurrentSort"]"
-                               asp-route-pageNumber="@(Model.PageIndex + 1)"
-                               asp-route-currentFilter="@ViewData["CurrentFilter"]"
-                               class="btn @nextDisabled">
-                                NEXT
-                            </a>
-                        </li>
+                        </ul>
 
-                    </ul>
-
-                </div>
+                    </div>
+                }
             }
-            else
-            {
-            }
+
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- End Blog Section -->
+    <!-- End Blog Section -->

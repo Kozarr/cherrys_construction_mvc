@@ -255,6 +255,9 @@ namespace cherrys_construction_mvc.Migrations
                     b.Property<string>("Author")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("BlogCategoryId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -273,26 +276,6 @@ namespace cherrys_construction_mvc.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BlogPosts");
-                });
-
-            modelBuilder.Entity("cherrys_construction_mvc.Models.BlogPostBlogCategory", b =>
-                {
-                    b.Property<int>("BlogPostId")
-                        .HasColumnType("int")
-                        .HasColumnOrder(1);
-
-                    b.Property<int>("BlogCategoryId")
-                        .HasColumnType("int")
-                        .HasColumnOrder(0);
-
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.HasKey("BlogPostId", "BlogCategoryId");
-
-                    b.HasIndex("BlogCategoryId");
-
-                    b.ToTable("BlogPostBlogCategory");
                 });
 
             modelBuilder.Entity("cherrys_construction_mvc.Models.CallToActionMessage", b =>
@@ -901,25 +884,6 @@ namespace cherrys_construction_mvc.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("cherrys_construction_mvc.Models.BlogPostBlogCategory", b =>
-                {
-                    b.HasOne("cherrys_construction_mvc.Models.BlogCategory", "BlogCategory")
-                        .WithMany("BlogPostBlogCategories")
-                        .HasForeignKey("BlogCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("cherrys_construction_mvc.Models.BlogPost", "BlogPost")
-                        .WithMany("BlogPostBlogCategories")
-                        .HasForeignKey("BlogPostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("BlogCategory");
-
-                    b.Navigation("BlogPost");
-                });
-
             modelBuilder.Entity("cherrys_construction_mvc.Models.HeroSliderImage", b =>
                 {
                     b.HasOne("cherrys_construction_mvc.Models.HeroSlider", "HeroSlider")
@@ -981,16 +945,6 @@ namespace cherrys_construction_mvc.Migrations
                         .IsRequired();
 
                     b.Navigation("Project");
-                });
-
-            modelBuilder.Entity("cherrys_construction_mvc.Models.BlogCategory", b =>
-                {
-                    b.Navigation("BlogPostBlogCategories");
-                });
-
-            modelBuilder.Entity("cherrys_construction_mvc.Models.BlogPost", b =>
-                {
-                    b.Navigation("BlogPostBlogCategories");
                 });
 
             modelBuilder.Entity("cherrys_construction_mvc.Models.HeroSlider", b =>

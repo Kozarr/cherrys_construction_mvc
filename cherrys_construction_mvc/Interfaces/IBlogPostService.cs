@@ -10,6 +10,7 @@ namespace cherrys_construction_mvc.Interfaces
         Task CreateBlogPostAsync(BlogPostRequest request);
         Task UpdateBlogPostAsync(int id, BlogPostRequest request);
         Task DeleteBlogPostAsync(int id);
+        Task SaveChangesAsync();
 
     }
 }

@@ -2,6 +2,7 @@
 using cherrys_construction_mvc.Helper;
 using cherrys_construction_mvc.Interfaces;
 using cherrys_construction_mvc.Utility;
+using cherrys_construction_mvc.ViewModels.Blog;
 using cherrys_construction_mvc.ViewModels.Requests;
 using cherrys_construction_mvc.ViewModels.Responce;
 using Microsoft.AspNetCore.Authorization;
@@ -18,19 +19,19 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
     {
         private readonly ILogger<BlogPostsController> _logger;
         private readonly IBlogPostService _postService;
-        private readonly IBlogCategoryService _blogCategoryService;
+        private readonly IBlogCategoryService _categoryService;
         private readonly ICompanyInfoService _compInfo;
         private readonly IMapper _mapper;
 
         public BlogPostsController(ILogger<BlogPostsController> logger,
             IBlogPostService postService,
-            IBlogCategoryService blogCategoryService,
+            IBlogCategoryService categoryService,
             ICompanyInfoService compInfo,
             IMapper mapper)
         {
             _logger = logger;
             _postService = postService;
-            _blogCategoryService = blogCategoryService;
+            _categoryService = categoryService;
             _compInfo = compInfo;
             _mapper = mapper;
         }
@@ -51,6 +52,8 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
                 searchString = currentFilter;
             }
             ViewData["CurrentFilter"] = searchString;
+
+            BlogVM blogViewModel = new();
 
             var blogPosts = await _postService.GetBlogPostsAsync();
             if (blogPosts.Any())
@@ -75,17 +78,21 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
                             var upDate = post.UpdatedDate.Value;
                             post.UpdatedDateString = upDate.ToString("MMMM dd, yyyy");
                         }
+                        if(post.BlogCategoryId > 0)
+                        {
+                            post.BlogCategory = await _categoryService.GetBlogCategoryByIdAsync(post.BlogCategoryId.Value);
+                        }
                     }
+                    
                 }
-
 
                 if (!string.IsNullOrWhiteSpace(searchString))
                 {
                     blogPosts = blogPosts.Where(s => s.Title.ToLower().Contains(searchString.ToLower())
                                             || s.Description.ToLower().Contains(searchString.ToLower())
-                                            || s.CreatedDateString.ToString().ToLower().Contains(searchString.ToLower()));
+                                            || s.CreatedDateString.ToString().ToLower().Contains(searchString.ToLower())
+                                            || s.BlogCategory.Name.ToLower().Contains(searchString.ToLower()));
                 }
-
 
                 blogPosts = sortOrder switch
                 {
@@ -93,9 +100,14 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
                     _ => blogPosts.OrderByDescending(p => p.CreatedDate),
                 };
 
-
                 int pageSize = 6;
-                return View(await PaginatedList<BlogPostResponce>.CreateAsync(blogPosts.ToList(), pageNumber ?? 1, pageSize));
+                blogViewModel.Posts = await PaginatedList<BlogPostResponce>.CreateAsync(blogPosts.ToList(), pageNumber ?? 1, pageSize);
+                var categories = await _categoryService.GetBlogCategoriesAsync();
+                if (categories.Any())
+                {
+                    blogViewModel.Categories = categories;
+                }
+                return View(blogViewModel);
             }
             return View();
         }
@@ -107,10 +119,10 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         public async Task<IActionResult> Create()
         {
             BlogPostRequest request = new();
-            var categories = await _blogCategoryService.GetBlogCategoriesAsync();
+            var categories = await _categoryService.GetBlogCategoriesAsync();
             if (categories.Any())
             {
-                request.BlogCategories = categories.ToList();
+                request.blogCategoriesList = categories;
             }
             return View(request);
         }
@@ -130,6 +142,7 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
                 }
                 
                 await _postService.CreateBlogPostAsync(blogPost);
+                await _postService.SaveChangesAsync();
                 TempData["success"] = "Blog Post Created Successfully";
                 return RedirectToAction("Index");
             }
@@ -148,10 +161,10 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
                 if(responce != null)
                 {
                     var request = _mapper.Map<BlogPostRequest>(responce);
-                    var catList = await _blogCategoryService.GetBlogCategoriesAsync();
+                    var catList = await _categoryService.GetBlogCategoriesAsync();
                     if (catList.Any())
                     {
-                        request.BlogCategories = catList.ToList();
+                        request.blogCategoriesList = catList.ToList();
                     }
                     return View(request);
                 }
@@ -170,6 +183,11 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         {
             if(ModelState.IsValid)
             {
+                if (string.IsNullOrWhiteSpace(blogPost.Author))
+                {
+                    var complist = await _compInfo.GetCompanyInfosAsync();
+                    blogPost.Author = complist.ToList().First().CompanyName;
+                }
 
                 var updatedDate = DateTime.Now;
                 updatedDate = updatedDate.AddDays(-1);
@@ -184,6 +202,7 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
                 }
                 
                 await _postService.UpdateBlogPostAsync(blogPost.Id, blogPost);
+                await _postService.SaveChangesAsync();
                 TempData["success"] = "Blog Post Updated Successfully";
                 return RedirectToAction(nameof(Index));
             }
@@ -222,7 +241,8 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         {
             if (Id > 0)
             {
-                await _postService.DeleteBlogPostAsync(Id.Value);               
+                await _postService.DeleteBlogPostAsync(Id.Value);
+                await _postService.SaveChangesAsync();
                 TempData["success"] = "Blog Post Deleted Successfully";
                 return RedirectToAction(nameof(Index));
               
