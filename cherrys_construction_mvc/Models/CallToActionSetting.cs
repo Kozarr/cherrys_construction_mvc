@@ -7,9 +7,11 @@ namespace cherrys_construction_mvc.Models
     {
         [Key]
         public int Id { get; set; }
+        [Required]
         [Display(Name = "Section Title")]
         public string? Title { get; set; }
         [Display(Name = "Section Description")]
+        [Required]
         public string? Description { get; set; }
         [Display(Name = "Form Title")]
         public string? FormTitle { get; set; }
