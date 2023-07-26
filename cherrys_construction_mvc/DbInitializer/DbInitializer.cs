@@ -29,7 +29,7 @@ namespace cherrys_construction_mvc.DbInitializer
             _logger = logger;
         }
 
-        public void Initialize()
+        public async void Initialize()
         {
             // apply migrations if they are not applied
             try
