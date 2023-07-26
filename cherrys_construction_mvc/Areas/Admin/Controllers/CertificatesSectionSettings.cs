@@ -1,6 +1,7 @@
 ﻿using cherrys_construction_mvc.Interfaces;
 using cherrys_construction_mvc.Utility;
 using cherrys_construction_mvc.ViewModels.Requests;
+using cherrys_construction_mvc.ViewModels.Responce;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Runtime.CompilerServices;
@@ -20,8 +21,18 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var item = await _certSettings.GetCompanyCertificateSettingsAsync();
-            return View(item);
+            var itemList = await _certSettings.GetCompanyCertificateSettingsAsync();
+            
+            if (itemList.Any())
+            {
+                CompanyCertificateSettingResponce setting = itemList.First();
+                return View(setting);
+            }
+            else
+            {
+                return View();
+            }
+            
         }
 
         [HttpGet]
