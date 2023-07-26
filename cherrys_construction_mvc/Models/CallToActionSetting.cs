@@ -10,6 +10,7 @@ namespace cherrys_construction_mvc.Models
         [Required]
         [Display(Name = "Section Title")]
         public string? Title { get; set; }
+        [Required]
         [Display(Name = "Section Description")]
         [Required]
         public string? Description { get; set; }
