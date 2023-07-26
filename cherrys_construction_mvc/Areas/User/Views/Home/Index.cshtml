@@ -158,19 +158,30 @@ else { }
                         <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
                             <div class="card-item h-100">
                                 <div class="row">
-                                    <div class="col-xl-5">
-                                        @if(item.ImageLink != null){
-                                            string imageLink = item.ImageLink.Remove(0, 8);
-                                            string image = ("~/images/" + imageLink);
+                                    @if(item.ImageLink != null){
+                                        string imageLink = item.ImageLink.Remove(0, 8);
+                                        string image = ("~/images/" + imageLink);
+                                        <div class="col-xl-5">                                      
                                             <div class="card-bg" style="background-image: url('@Url.Content(image)');"></div>
-                                         } 
-                                    </div>
-                                    <div class="col-xl-7 d-flex align-items-center">
-                                        <div class="card-body">
-                                            <h4 class="card-title">@item.Title</h4>
-                                            <p>@Html.Raw(item.Description)</p>
+                                         
                                         </div>
-                                    </div>
+                                        <div class="col-xl-7 d-flex align-items-center">
+                                            <div class="card-body">
+                                                <h4 class="card-title">@item.Title</h4>
+                                                <p>@Html.Raw(item.Description)</p>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {                                       
+                                        <div class="col-xl-12 d-flex align-items-center">
+                                            <div class="card-body">
+                                                <h4 class="card-title">@item.Title</h4>
+                                                <p>@Html.Raw(item.Description)</p>
+                                            </div>
+                                        </div>
+                                    }
+                                    
                                 </div>
                             </div>
                         </div>
