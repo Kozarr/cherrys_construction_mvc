@@ -11,7 +11,6 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
     public class OurStoryController : Controller
     {
         private readonly ICompanyStoryService _companyStoryService;
-       // private readonly IProjectTagService _projectTagService;
         public OurStoryController(ICompanyStoryService companyStoryService)
         {
             _companyStoryService = companyStoryService;
@@ -20,21 +19,23 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         // GET: CompanyStoryController
         public async Task<ActionResult> Index()
         {
-            //var data = new ProjectTagRequest()
-            //{
-            //    TagId = 2,
-            //    ProjectId = 2,
-            //};
-            //await _projectTagService.CreateProjectTagAsync(data);
             var companyStories = await _companyStoryService.GetCompanyStoriesAsync();
-            return View(companyStories);
+            if (companyStories.Any())
+            {
+                return View(companyStories);
+            }
+            return View();
         }
 
         // GET: CompanyStoryController/Details/5
         public async Task<ActionResult> Details(int id)
         {
             var companyStory = await _companyStoryService.GetCompanyStoryByIdAsync(id);
-            return View(companyStory);
+            if(companyStory != null)
+            {
+                return View(companyStory);
+            }
+            return RedirectToAction(nameof(Index));    
         }
 
         // GET: CompanyStoryController/Create
@@ -53,6 +54,22 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
                 var checker = await _companyStoryService.GetCompanyStoriesAsync();
                 if (!checker.Any())
                 {
+                    if (!string.IsNullOrWhiteSpace(request.Title))
+                    {
+                        request.Title = request.Title.Trim();
+                    }
+                    if (!string.IsNullOrWhiteSpace(request.ArticleTitle))
+                    {
+                        request.ArticleTitle = request.ArticleTitle.Trim();
+                    }
+                    if (!string.IsNullOrWhiteSpace(request.ArticleDescription))
+                    {
+                        request.ArticleDescription = request.ArticleDescription.Trim();
+                    }
+                    if (!string.IsNullOrWhiteSpace(request.ArticleSmallText))
+                    {
+                        request.ArticleSmallText = request.ArticleSmallText.Trim();
+                    }
                     await _companyStoryService.CreateCompanyStoryAsync(request);
                     TempData["success"] = "Story Added Successfully";
                 }
@@ -90,7 +107,23 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         public async Task<ActionResult> Edit([FromForm]CompanyStoryRequest request,int id)
         {
             if (ModelState.IsValid) 
-            { 
+            {
+                if (!string.IsNullOrWhiteSpace(request.Title))
+                {
+                    request.Title = request.Title.Trim();
+                }
+                if (!string.IsNullOrWhiteSpace(request.ArticleTitle))
+                {
+                    request.ArticleTitle = request.ArticleTitle.Trim();
+                }
+                if (!string.IsNullOrWhiteSpace(request.ArticleDescription))
+                {
+                    request.ArticleDescription = request.ArticleDescription.Trim();
+                }
+                if (!string.IsNullOrWhiteSpace(request.ArticleSmallText))
+                {
+                    request.ArticleSmallText = request.ArticleSmallText.Trim();
+                }
                 await _companyStoryService.UpdateCompanyStoryAsync(id,request);
                 TempData["success"] = "Story Updated Successfully";
                 return RedirectToAction(nameof(Index));

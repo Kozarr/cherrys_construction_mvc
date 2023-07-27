@@ -1,4 +1,5 @@
 ﻿using cherrys_construction_mvc.Interfaces;
+using cherrys_construction_mvc.Models;
 using cherrys_construction_mvc.Utility;
 using cherrys_construction_mvc.ViewModels.Requests;
 using Microsoft.AspNetCore.Authorization;
@@ -33,6 +34,12 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (!string.IsNullOrWhiteSpace(request.Description))
+                {
+                    request.Description = request.Description.Trim();
+                }
+                request.Title = request.Title.Trim();
+                
                 await _companyCertificateService.CreateCertificateAsync(request);
                 TempData["success"] = "Certificate Added Successfully";
                 return RedirectToAction(nameof(Index));
@@ -48,13 +55,20 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var companyCertificate = await _companyCertificateService.GetCertificateByIdAsync(id);
-            var editRequest = new CompanyCertificateRequest()
+            if (companyCertificate != null)
             {
-               Description = companyCertificate.Description,    
-               Title = companyCertificate.Title,
-            };
-
-            return View(editRequest);
+                CompanyCertificateRequest editRequest = new();
+                if (!string.IsNullOrWhiteSpace(companyCertificate.Description))
+                {
+                    editRequest.Description = companyCertificate.Description;
+                }
+                if (!string.IsNullOrWhiteSpace(companyCertificate.Title))
+                {
+                    editRequest.Title = companyCertificate.Title;
+                }
+                return View(editRequest);
+            }
+            else { return View(); }
         }
 
         [HttpPost]
@@ -63,7 +77,13 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _companyCertificateService.UpdateCertificateAsync(id,request);
+                if (!string.IsNullOrWhiteSpace(request.Description))
+                {
+                    request.Description = request.Description.Trim();
+                }
+                request.Title = request.Title.Trim();
+                
+                await _companyCertificateService.UpdateCertificateAsync(id, request);
                 TempData["success"] = "Certificate Updated Successfully";
                 return RedirectToAction(nameof(Index));
             }

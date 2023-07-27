@@ -21,41 +21,41 @@
 
 <section id="list" class="list">
     <div class="container" data-aos="fade-up">
-
-        @if (Model.Any())
+        @if(Model != null)
         {
-            <div class="text-center">
-                <div class="container" data-aos="fade-up">
-                @foreach (var service in Model)
-                {
-                        <div class="row gy-4 member-item featured mt-4" data-aos="fade-up" data-aos-delay="200">
-                            <div class="col-lg-12">
-                                <h3>@service.Title </h3>
-                                @if (service.Icon != null || service.Icon != "")
-                                {
-                                    <div class="icon"><i class="@service.Icon"></i></div>
-                                }                             
-                            </div>
-                            <div class="col-lg-12">
-                                <p>@Html.Raw(service.Description)</p>
-                            </div>
-                            <div class="flex-btn-container-row">
-                                <a class="flex-btn-row edit-btn text-center" asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.ServicesController"
-                                   asp-action="@Breadcrumb.Edit" asp-route-id="@service.Id" class="readmore stretched-link">
-                                    <span>@Breadcrumb.Edit</span><i class="fa-regular fa-pen-to-square"></i>
-                                </a>
-                                <a class="flex-btn-row delete-btn text-center" asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.ServicesController"
-                                   asp-action="@Breadcrumb.Delete" asp-route-id="@service.Id" class="readmore stretched-link">
-                                    <span>@Breadcrumb.Delete</span><i class="fa-regular fa-trash-can"></i>
-                                </a>
-                                <br>
+            @if (Model.Any())
+            {
+                <div class="text-center">
+                    <div class="container" data-aos="fade-up">
+                        @foreach (var service in Model)
+                        {
+                            <div class="row gy-4 member-item featured mt-4" data-aos="fade-up" data-aos-delay="200">
+                                <div class="col-lg-12">
+                                    <h3>@service.Title </h3>
+                                </div>
+                                <div class="col-lg-12">
+                                    <p>@Html.Raw(service.ShortDescription)</p>
+                                </div>
+                                <div class="flex-btn-container-row">
+                                    <a class="flex-btn-row edit-btn text-center" asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.ServicesController"
+                                       asp-action="@Breadcrumb.Edit" asp-route-id="@service.Id" class="readmore stretched-link">
+                                        <span>@Breadcrumb.Edit</span><i class="fa-regular fa-pen-to-square"></i>
+                                    </a>
+                                    <a class="flex-btn-row delete-btn text-center" asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.ServicesController"
+                                       asp-action="@Breadcrumb.Delete" asp-route-id="@service.Id" class="readmore stretched-link">
+                                        <span>@Breadcrumb.Delete</span><i class="fa-regular fa-trash-can"></i>
+                                    </a>
+                                    <br>
+                                </div>
+
                             </div>
 
-                        </div><!-- End Members Item -->                  
-                }
+                            <!-- End Members Item -->
+                        }
+                    </div>
                 </div>
-            </div>
-        }
+            }
+        }   
 
         <div class="col-12 add-btn-container text-center" data-aos="fade-up" data-aos-delay="100">
             <a class="add-button" asp-area="@Breadcrumb.AdminArea" asp-action="Create"><i class="bi bi-plus"></i></a>

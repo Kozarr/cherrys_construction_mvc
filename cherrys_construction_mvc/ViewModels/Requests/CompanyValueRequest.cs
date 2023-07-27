@@ -1,9 +1,12 @@
-﻿namespace cherrys_construction_mvc.ViewModels.Requests
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace cherrys_construction_mvc.ViewModels.Requests
 {
     public class CompanyValueRequest
     {
-        public string Title { get; set; }
-        public string Description { get; set; }
+        [Required]
+        public string? Title { get; set; }
+        public string? Description { get; set; }
         public string? ImageLink { get; set; }
         public IFormFile? Image { get; set; }
     }

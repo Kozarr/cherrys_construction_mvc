@@ -7,8 +7,6 @@ using cherrys_construction_mvc.ViewModels.Requests;
 using cherrys_construction_mvc.ViewModels.Responce;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
 using System.Data;
 
 namespace cherrys_construction_mvc.Areas.Admin.Controllers
@@ -60,16 +58,16 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
             {
                 foreach (var post in blogPosts)
                 {
-                    if (!post.Description.IsNullOrEmpty())
+                    if (!string.IsNullOrWhiteSpace(post.Description))
                     {
                         if (post.Description.Length > 200)
                         {
-                            post.ShortDescription = post.Description.Substring(0, 200);
+                            post.ShortDescription = post.Description[..200];
                             post.ShortDescription += "...";
                         }
                         else
                         {
-                            post.ShortDescription = post.Description.Substring(0, post.Description.Length);
+                            post.ShortDescription = post.Description;
                             post.ShortDescription += "...";
                         }
                         post.CreatedDateString = post.CreatedDate.ToString("MMMM dd, yyyy");
@@ -140,7 +138,15 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
                     var compInfo = compList.ToList().First();
                     blogPost.Author = compInfo.CompanyName;
                 }
-                
+                if (!string.IsNullOrWhiteSpace(blogPost.Description))
+                {
+                    blogPost.Description = blogPost.Description.Trim();
+                }
+                if (!string.IsNullOrWhiteSpace(blogPost.Title))
+                {
+                    blogPost.Title = blogPost.Title.Trim();
+                }
+
                 await _postService.CreateBlogPostAsync(blogPost);
                 await _postService.SaveChangesAsync();
                 TempData["success"] = "Blog Post Created Successfully";
@@ -200,7 +206,16 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
                 {
                     blogPost.UpdatedDate = null;
                 }
-                
+
+                if (!string.IsNullOrWhiteSpace(blogPost.Description))
+                {
+                    blogPost.Description = blogPost.Description.Trim();
+                }
+                if (!string.IsNullOrWhiteSpace(blogPost.Title))
+                {
+                    blogPost.Title = blogPost.Title.Trim();
+                }
+
                 await _postService.UpdateBlogPostAsync(blogPost.Id, blogPost);
                 await _postService.SaveChangesAsync();
                 TempData["success"] = "Blog Post Updated Successfully";

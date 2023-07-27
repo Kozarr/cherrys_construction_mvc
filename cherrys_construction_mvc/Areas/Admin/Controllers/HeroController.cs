@@ -60,6 +60,19 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
                 var checker = await _heroSliderService.GetHeroSlidersAsync();
                 if (!checker.Any())
                 {
+                    if (!string.IsNullOrWhiteSpace(request.Description))
+                    {
+                        request.Description = request.Description.Trim();
+                    }
+                    if (!string.IsNullOrWhiteSpace(request.Title))
+                    {
+                        request.Title = request.Title.Trim();
+                    }
+                    if (!string.IsNullOrWhiteSpace(request.ButtonText))
+                    {
+                        request.ButtonText = request.ButtonText.Trim();
+                    }
+
                     await _heroSliderService.CreateHeroSliderAsync(request);
                     TempData["success"] = "Hero Slides Added Successfully";
                 }
@@ -115,6 +128,18 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
                         
                     }
                     request.SelectedDeletePhoto = SelectedDeletePhotoIds;
+                }
+                if (!string.IsNullOrWhiteSpace(request.Description))
+                {
+                    request.Description = request.Description.Trim();
+                }
+                if (!string.IsNullOrWhiteSpace(request.Title))
+                {
+                    request.Title = request.Title.Trim();
+                }
+                if (!string.IsNullOrWhiteSpace(request.ButtonText))
+                {
+                    request.ButtonText = request.ButtonText.Trim();
                 }
                 await _heroSliderService.UpdateHeroSliderAsync(id, request);
                 TempData["success"] = "Hero Slides Updated Successfully";

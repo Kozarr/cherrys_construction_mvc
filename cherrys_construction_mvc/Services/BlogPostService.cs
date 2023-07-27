@@ -12,14 +12,14 @@ namespace cherrys_construction_mvc.Services
     public class BlogPostService : IBlogPostService
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly IEfRepository<BlogPost> _blogPostRepository;    
+        private readonly IEfRepository<BlogPost> _blogPostRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<BlogPost> _logger;
 
 
-        public BlogPostService(IWebHostEnvironment webHostEnvironment, 
-            IEfRepository<BlogPost> blogPost, 
-            IMapper mapper, 
+        public BlogPostService(IWebHostEnvironment webHostEnvironment,
+            IEfRepository<BlogPost> blogPost,
+            IMapper mapper,
             ILogger<BlogPost> logger)
         {
             _blogPostRepository = blogPost;
@@ -65,7 +65,7 @@ namespace cherrys_construction_mvc.Services
 
         public async Task<BlogPostResponce> GetBlogPostByIdAsync(int id)
         {
-            var post = await _blogPostRepository.GetByIdAsync(id); 
+            var post = await _blogPostRepository.GetByIdAsync(id);
             return _mapper.Map<BlogPostResponce>(post);
         }
 
@@ -88,30 +88,27 @@ namespace cherrys_construction_mvc.Services
             {
                 if (request.Image != null)
                 {
-                    if (!request.ImageLink.IsNullOrEmpty())
+                    if (!string.IsNullOrWhiteSpace(request.ImageLink))
                     {
                         string wwwRootPath = _webHostEnvironment.WebRootPath;
                         var oldImagePath = Path.Combine(wwwRootPath, post.ImageLink.TrimStart('\\'));
                         if (File.Exists(oldImagePath))
                         {
                             File.Delete(oldImagePath);
-                        }                   
+                        }
                     }
                     request.ImageLink = await Helper.Helper.UploadImage(request.Image, _webHostEnvironment, StaticDetails.SquareImage);
                 }
                 else
                 {
-                    request.ImageLink = post.ImageLink;                 
+                    request.ImageLink = post.ImageLink;
                 }
                 request.CreatedDate = post.CreatedDate;
 
-                if(request.Author == null)
-                {
-                    request.Author = post.Author;
-                }                
+                request.Author ??= post.Author;
 
                 _mapper.Map(request, post);
-                await _blogPostRepository.UpdateAsync(post);        
+                await _blogPostRepository.UpdateAsync(post);
             }
             else
             {
@@ -119,5 +116,5 @@ namespace cherrys_construction_mvc.Services
             }
         }
     }
-       
+
 }

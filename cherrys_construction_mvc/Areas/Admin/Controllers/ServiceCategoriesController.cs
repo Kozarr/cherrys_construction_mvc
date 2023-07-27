@@ -43,19 +43,26 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         // POST: ServiceTypeController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([FromForm]ServiceTypeRequest request)
+        public async Task<ActionResult> Create([FromForm] ServiceTypeRequest request)
         {
-            try
+            if (ModelState.IsValid)
             {
+                if (!string.IsNullOrWhiteSpace(request.Title))
+                {
+                    request.Title = request.Title.Trim();
+                }
+                if (!string.IsNullOrWhiteSpace(request.Description))
+                {
+                    request.Description = request.Description.Trim();
+                }
                 await _serviceTypeService.CreateServiceTypeAsync(request);
                 TempData["success"] = "Service Category Added Successfully";
                 return RedirectToAction(nameof(Index));
+
+               
             }
-            catch
-            {
-                TempData["error"] = "Service Category Failed To Add";
-                return View();
-            }
+            TempData["error"] = "Service Category Failed To Add";
+            return View();
         }
 
         // GET: ServiceTypeController/Edit/5
@@ -78,13 +85,21 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([FromForm]ServiceTypeRequest request,int id)
         {
-            try
+            if (ModelState.IsValid)
             {
+                if (!string.IsNullOrWhiteSpace(request.Title))
+                {
+                    request.Title = request.Title.Trim();
+                }
+                if (!string.IsNullOrWhiteSpace(request.Description))
+                {
+                    request.Description = request.Description.Trim();
+                }
                 await _serviceTypeService.UpdateServiceTypeAsync(id,request);
                 TempData["success"] = "Service Category Updated Successfully";
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            else
             {
                 TempData["error"] = "Service Category Failed To Update";
                 return View();

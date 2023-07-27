@@ -4,7 +4,6 @@ using cherrys_construction_mvc.ViewModels.Requests;
 using cherrys_construction_mvc.ViewModels.Responce;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Runtime.CompilerServices;
 
 namespace cherrys_construction_mvc.Areas.Admin.Controllers
 {
@@ -31,8 +30,7 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
             else
             {
                 return View();
-            }
-            
+            }            
         }
 
         [HttpGet]
@@ -55,6 +53,11 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
                 }
                 else
                 {
+                    if (!string.IsNullOrWhiteSpace(request.Description))
+                    {
+                        request.Description = request.Description.Trim();
+                    }
+                    request.Title = request.Title.Trim();
                     await _certSettings.CreateCompanyCertificateSettingAsync(request);
                     TempData["success"] = "Certificates Section Information Created";
                     return RedirectToAction(nameof(Index));
@@ -76,8 +79,14 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
                 if(item != null)
                 {
                     CompanyCertificateSettingRequest request = new();
-                    request.Title = item.Title;
-                    request.Description = item.Description;
+                    if (!string.IsNullOrWhiteSpace(item.Title))
+                    {
+                        request.Title = item.Title.Trim();
+                    }
+                    if (!string.IsNullOrWhiteSpace(item.Description))
+                    {
+                        request.Description = item.Description.Trim();
+                    }
                     request.ImageLink = item.ImageLink;
                     return View(request);
                 }
@@ -104,6 +113,14 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
                 var checker = await _certSettings.GetCompanyCertificateSettingByIdAsync(id);
                 if (checker != null)
                 {
+                    if (!string.IsNullOrWhiteSpace(request.Description))
+                    {
+                        request.Description = request.Description.Trim();
+                    }
+                    if (!string.IsNullOrWhiteSpace(request.Title))
+                    {
+                        request.Title = request.Title.Trim();
+                    }
                     await _certSettings.UpdateCompanyCertificateSettingAsync(id, request);
                     TempData["success"] = "Certificates Section Information Updated";
                 }

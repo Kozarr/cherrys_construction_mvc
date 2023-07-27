@@ -7,9 +7,9 @@ namespace cherrys_construction_mvc.ViewModels.Requests
     public class TestimonyRequest
     {
         [Required]
-        public string Name { get; set; }
+        public string? Name { get; set; }
         [Required]
-        public string Description { get; set; }
+        public string? Description { get; set; }
         [ValidateNever]
         public int Stars { get; set; }
         [ValidateNever]

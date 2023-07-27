@@ -38,9 +38,8 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CallToActionSettingRequest item)
         {
-            var checker = await _callToActionSetting.GetCallToActionSettingsAsync();
-            var any = checker.Any();
-            if (any)
+            var checker = await _callToActionSetting.GetCallToActionSettingsAsync(); 
+            if (checker.Any())
             {
                 TempData["error"] = "Call To Action Setting Already Exists";
                 return RedirectToAction(nameof(Index));
@@ -49,6 +48,22 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    if (!string.IsNullOrWhiteSpace(item.Title))
+                    {
+                        item.Title = item.Title.Trim();
+                    }
+                    if (!string.IsNullOrWhiteSpace(item.Description))
+                    {
+                        item.Description = item.Description.Trim();
+                    }
+                    if (!string.IsNullOrWhiteSpace(item.FormTitle))
+                    {
+                        item.FormTitle = item.FormTitle.Trim();
+                    }
+                    if (!string.IsNullOrWhiteSpace(item.FormDescription))
+                    {
+                        item.FormDescription = item.FormDescription.Trim();
+                    }
                     await _callToActionSetting.CreateCallToActionSettingAsync(item);
                     TempData["success"] = "Call To Action Settings Added";
                     return RedirectToAction(nameof(Index));
@@ -109,6 +124,22 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
+                if (!string.IsNullOrWhiteSpace(item.Title))
+                {
+                    item.Title = item.Title.Trim();
+                }
+                if (!string.IsNullOrWhiteSpace(item.Description))
+                {
+                    item.Description = item.Description.Trim();
+                }
+                if (!string.IsNullOrWhiteSpace(item.FormTitle))
+                {
+                    item.FormTitle = item.FormTitle.Trim();
+                }
+                if (!string.IsNullOrWhiteSpace(item.FormDescription))
+                {
+                    item.FormDescription = item.FormDescription.Trim();
+                }
                 await _callToActionSetting.UpdateCallToActionSettingAsync(id ,item);
                 TempData["success"] = "Call To Action Settings Updated";
                 return RedirectToAction(nameof(Index));

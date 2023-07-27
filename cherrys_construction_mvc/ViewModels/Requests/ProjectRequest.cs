@@ -8,9 +8,9 @@ namespace cherrys_construction_mvc.ViewModels.Requests
     public class ProjectRequest
     {
         [Required]
-        public string Title { get; set; }
+        public string? Title { get; set; }
         [Required]
-        public string Description { get; set; }
+        public string? Description { get; set; }
         [ValidateNever]
         public string? ClientName { get; set; }
         public DateTime ProjectStartDate { get; set; }

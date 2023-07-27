@@ -162,6 +162,8 @@ namespace cherrys_construction_mvc.Mapper
             _ = CreateMap<CompanyInfo, CompanyInfoRequest>();
             _ = CreateMap<CompanyInfoRequest, CompanyInfo>();
 
+            _ = CreateMap<CompanyInfoRequest, CompanyInfoResponce>().ReverseMap();
+
             _ = CreateMap<CompanyInfo, CompanyInfoResponce>();
             _ = CreateMap<CompanyInfoResponce, CompanyInfo>();
 

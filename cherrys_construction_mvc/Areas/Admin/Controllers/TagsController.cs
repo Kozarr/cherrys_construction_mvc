@@ -33,6 +33,10 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (!string.IsNullOrWhiteSpace(request.Name))
+                {
+                    request.Name = request.Name.Trim();
+                }
                 await _tagService.CreateTagAsync(request);
                 TempData["success"] = "New Tag Added Successfully";
                 return RedirectToAction(nameof(Index));
@@ -65,6 +69,10 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (!string.IsNullOrWhiteSpace(request.Name))
+                {
+                    request.Name = request.Name.Trim();
+                }
                 await _tagService.UpdateTagAsync(id, request);
                 TempData["success"] = "Tag Updated Successfully";
                 return RedirectToAction(nameof(Index));

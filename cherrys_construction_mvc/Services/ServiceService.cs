@@ -41,13 +41,16 @@ namespace cherrys_construction_mvc.Services
             var service = await _serviceRepository.GetByIdAsync(serviceId);
             if (service != null)
             {
-                string wwwRootPath = _webHostEnvironment.WebRootPath;
-                var oldImagePath = Path.Combine(wwwRootPath, service.ImageLink.TrimStart('\\'));
-                if (oldImagePath != null)
+                if (!string.IsNullOrWhiteSpace(service.ImageLink))
                 {
-                    if (File.Exists(oldImagePath))
+                    string wwwRootPath = _webHostEnvironment.WebRootPath;
+                    var oldImagePath = Path.Combine(wwwRootPath, service.ImageLink.TrimStart('\\'));
+                    if (oldImagePath != null)
                     {
-                        File.Delete(oldImagePath);
+                        if (File.Exists(oldImagePath))
+                        {
+                            File.Delete(oldImagePath);
+                        }
                     }
                 }
                 await _serviceRepository.DeleteAsync(service);
@@ -82,13 +85,13 @@ namespace cherrys_construction_mvc.Services
             {
                 if (request.Image != null)
                 {
-                    if (service.ImageLink != null)
+                    if (!string.IsNullOrWhiteSpace(service.ImageLink))
                     {
                         string wwwRootPath = _webHostEnvironment.WebRootPath;
                         var oldImagePath = Path.Combine(wwwRootPath, service.ImageLink.TrimStart('\\'));
-                        if (System.IO.File.Exists(oldImagePath))
+                        if (File.Exists(oldImagePath))
                         {
-                            System.IO.File.Delete(oldImagePath);
+                            File.Delete(oldImagePath);
                         }
                     }
                     request.ImageLink = await Helper.Helper.UploadImage(request.Image, _webHostEnvironment, StaticDetails.StandardImage);

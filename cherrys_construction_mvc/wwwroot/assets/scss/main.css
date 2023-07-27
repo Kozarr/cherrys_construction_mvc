@@ -302,19 +302,18 @@ label {
 # Toastr
 --------------------------------------------------------------*/
 #toast-container {
-  transition: all 0.3s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 #toast-container .toast {
-  transition: all 0.3s ease-in-out;
+  transition: all 0.2s ease-in-out;
   font-weight: 500;
   font-size: 0.9rem;
   border-radius: 15px;
   box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.06);
-  opacity: 0.85;
+  opacity: 1;
 }
 #toast-container .toast:hover {
   box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.2);
-  opacity: 0.98;
   transform: scale(1.02);
 }
 
@@ -492,11 +491,15 @@ section {
 }
 .header.sticked {
   background: rgba(11, 37, 71, 0.9);
-  padding: 15px 0;
+  padding: 4px 0;
   box-shadow: 0px 2px 20px rgba(82, 86, 94, 0.1);
 }
+.header .logo {
+  transition: all 0.5s;
+}
 .header .logo img {
-  max-height: 70px;
+  transition: all 0.5s;
+  max-height: 60px;
   margin-right: 6px;
 }
 .header .logo h1 {
@@ -505,6 +508,15 @@ section {
   font-weight: 700;
   color: #fff;
   font-family: var(--font-primary);
+}
+.header.sticked {
+  transition: all 0.5s;
+}
+.header.sticked .logo {
+  transition: all 0.5s;
+}
+.header.sticked .logo img {
+  max-height: 50px;
 }
 
 /*--------------------------------------------------------------
@@ -2890,9 +2902,9 @@ Template: Resi Pro
     font-size: 36px;
   }
 }
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 376px) {
   .hero .info h2 {
-    font-size: 2rem;
+    font-size: 2.2rem;
     margin-bottom: 15px;
     padding-bottom: 15px;
   }
@@ -2901,9 +2913,9 @@ Template: Resi Pro
   color: rgba(255, 255, 255, 0.8);
   font-size: 18px;
 }
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 376px) {
   .hero .info p {
-    font-size: 0.9rem;
+    font-size: 1.1rem;
   }
 }
 .hero .info .btn-get-started {
@@ -2922,7 +2934,7 @@ Template: Resi Pro
 .hero .info .btn-get-started:hover {
   background: #0B2547;
 }
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 376px) {
   .hero .info .btn-get-started {
     padding: 8px 30px;
     margin: 5px;

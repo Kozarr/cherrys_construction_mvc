@@ -15,8 +15,8 @@ namespace cherrys_construction_mvc.Services
         private readonly IEfRepository<Testimony> _testimonyRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<TestimonyService> _logger;
-        public TestimonyService(IEfRepository<Testimony> testimonyRepository, 
-            IMapper mapper, 
+        public TestimonyService(IEfRepository<Testimony> testimonyRepository,
+            IMapper mapper,
             IWebHostEnvironment webHostEnvironment,
             ILogger<TestimonyService> logger)
         {
@@ -28,12 +28,11 @@ namespace cherrys_construction_mvc.Services
 
         public async Task CreateTestimonyAsync(TestimonyRequest request)
         {
-            if(request.Image != null)
+            if (request.Image != null)
             {
                 var imageLink = await Helper.Helper.UploadImage(request.Image, _webHostEnvironment, StaticDetails.SquareImage);
                 request.ImageLink = imageLink;
             }
-            //request.ProjectId = DBNull.Value;
             var testimony = _mapper.Map<Testimony>(request);
             await _testimonyRepository.AddAsync(testimony);
             await _testimonyRepository.SaveChangesAsync();
@@ -42,13 +41,16 @@ namespace cherrys_construction_mvc.Services
         public async Task DeleteTestimonyAsync(int testimonyId)
         {
             var testimomy = await _testimonyRepository.GetByIdAsync(testimonyId);
-            if(testimomy != null)
+            if (testimomy != null)
             {
-                string wwwRootPath = _webHostEnvironment.WebRootPath;
-                var oldImagePath = Path.Combine(wwwRootPath, testimomy.ImageLink.TrimStart('\\'));
-                if (File.Exists(oldImagePath))
+                if (!string.IsNullOrWhiteSpace(testimomy.ImageLink))
                 {
-                    File.Delete(oldImagePath);
+                    string wwwRootPath = _webHostEnvironment.WebRootPath;
+                    var oldImagePath = Path.Combine(wwwRootPath, testimomy.ImageLink.TrimStart('\\'));
+                    if (File.Exists(oldImagePath))
+                    {
+                        File.Delete(oldImagePath);
+                    }
                 }
                 await _testimonyRepository.DeleteAsync(testimomy);
                 await _testimonyRepository.SaveChangesAsync();
@@ -76,15 +78,18 @@ namespace cherrys_construction_mvc.Services
         public async Task UpdateTestimonyAsync(int testimonyId, TestimonyRequest request)
         {
             var testimomy = await _testimonyRepository.GetByIdAsync(testimonyId);
-            if(testimomy != null)
+            if (testimomy != null)
             {
                 if (request.Image != null)
                 {
-                    string wwwRootPath = _webHostEnvironment.WebRootPath;
-                    var oldImagePath = Path.Combine(wwwRootPath, testimomy.ImageLink.TrimStart('\\'));
-                    if (File.Exists(oldImagePath))
+                    if (!string.IsNullOrWhiteSpace(testimomy.ImageLink))
                     {
-                        File.Delete(oldImagePath);
+                        string wwwRootPath = _webHostEnvironment.WebRootPath;
+                        var oldImagePath = Path.Combine(wwwRootPath, testimomy.ImageLink.TrimStart('\\'));
+                        if (File.Exists(oldImagePath))
+                        {
+                            File.Delete(oldImagePath);
+                        }
                     }
                     request.ImageLink = await Helper.Helper.UploadImage(request.Image, _webHostEnvironment, StaticDetails.SquareImage);
                 }
@@ -100,7 +105,7 @@ namespace cherrys_construction_mvc.Services
             {
                 _logger.LogWarning("Could not find existing testimony to update - Testimony Service");
             }
-            
+
         }
     }
 }

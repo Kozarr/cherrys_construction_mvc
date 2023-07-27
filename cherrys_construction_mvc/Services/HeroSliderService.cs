@@ -18,9 +18,9 @@ namespace cherrys_construction_mvc.Services
         private readonly IMapper _mapper;
         private readonly ILogger<HeroSliderService> _logger;
         public HeroSliderService(IEfRepository<HeroSliderImage> heroSliderImageRepository,
-            IEfRepository<HeroSlider> heroSliderRepository, 
-            IMapper mapper, 
-            IWebHostEnvironment webHostEnvironment, 
+            IEfRepository<HeroSlider> heroSliderRepository,
+            IMapper mapper,
+            IWebHostEnvironment webHostEnvironment,
             IHeroSliderImageService imageService,
             ILogger<HeroSliderService> logger)
         {
@@ -38,16 +38,19 @@ namespace cherrys_construction_mvc.Services
             await _heroSliderRepository.AddAsync(heroSlider);
             await _heroSliderRepository.SaveChangesAsync();
 
-            if (request.ListImages.Count > 0)
+            if (request.ListImages != null)
             {
-                foreach (var item in request.ListImages)
+                if (request.ListImages.Any())
                 {
-                    var imageRequest = new HeroSliderImageRequest()
+                    foreach (var item in request.ListImages)
                     {
-                        PathImage = Helper.Helper.UploadImage(item, _webHostEnvironment, StaticDetails.LargeCoverImage).Result,
-                        HeroSliderId = heroSlider.Id
-                    };
-                    await _imageService.CreateHeroSliderImageAsync(imageRequest);
+                        var imageRequest = new HeroSliderImageRequest()
+                        {
+                            PathImage = Helper.Helper.UploadImage(item, _webHostEnvironment, StaticDetails.LargeCoverImage).Result,
+                            HeroSliderId = heroSlider.Id
+                        };
+                        await _imageService.CreateHeroSliderImageAsync(imageRequest);
+                    }
                 }
             }
         }
@@ -55,7 +58,7 @@ namespace cherrys_construction_mvc.Services
         public async Task DeleteHeroSliderAsync(int heroSliderId)
         {
             var slider = await _heroSliderRepository.GetByIdAsync(heroSliderId);
-            if(slider == null)
+            if (slider == null)
             {
                 _logger.LogWarning("Failed to find hero slide to delete");
             }
@@ -86,10 +89,10 @@ namespace cherrys_construction_mvc.Services
 
         public async Task UpdateHeroSliderAsync(int heroSliderId, HeroSliderRequest request)
         {
-            if(request != null)
+            if (request != null)
             {
                 var slider = await _heroSliderRepository.GetByIdAsync(heroSliderId);
-                if(slider == null)
+                if (slider == null)
                 {
                     _logger.LogWarning("Could not find existing hero slider in - HeroSlider Service");
                 }
@@ -101,40 +104,49 @@ namespace cherrys_construction_mvc.Services
 
                     if (request.ListImages != null)
                     {
-                        foreach (var item in request.ListImages)
+                        if (request.ListImages.Any())
                         {
-                            var imageRequest = new HeroSliderImageRequest()
+                            foreach (var item in request.ListImages)
                             {
-                                PathImage = Helper.Helper.UploadImage(item, _webHostEnvironment, StaticDetails.LargeCoverImage).Result,
-                                HeroSliderId = heroSliderId
-                            };
-                            await _imageService.CreateHeroSliderImageAsync(imageRequest);
+                                var imageRequest = new HeroSliderImageRequest()
+                                {
+                                    PathImage = Helper.Helper.UploadImage(item, _webHostEnvironment, StaticDetails.LargeCoverImage).Result,
+                                    HeroSliderId = heroSliderId
+                                };
+                                await _imageService.CreateHeroSliderImageAsync(imageRequest);
+                            }
                         }
                     }
                     if (request.SelectedDeletePhoto != null)
                     {
-                        foreach (var id in request.SelectedDeletePhoto)
+                        if (request.SelectedDeletePhoto.Any())
                         {
-                            var imageForDelete = await _heroSliderImageRepository.GetByIdAsync(id);
-                            if(imageForDelete == null)
+                            foreach (var id in request.SelectedDeletePhoto)
                             {
-                                _logger.LogWarning("Could not find a selected photo to delete in HeroSlider Service");
+                                var imageForDelete = await _heroSliderImageRepository.GetByIdAsync(id);
+                                if (imageForDelete == null)
+                                {
+                                    _logger.LogWarning("Could not find a selected photo to delete in HeroSlider Service");
+                                }
+                                else
+                                {
+                                    if (!string.IsNullOrWhiteSpace(imageForDelete.PathImage))
+                                    {
+                                        var fullPathForDelete = _webHostEnvironment.WebRootPath + imageForDelete.PathImage;
+                                        Helper.Helper.DeleteImage(fullPathForDelete);
+                                    }                                   
+                                    await _imageService.DeleteHeroSliderImageAsync(id);
+                                }
                             }
-                            else
-                            {
-                                var fullPathForDelete = _webHostEnvironment.WebRootPath + imageForDelete.PathImage;
-                                Helper.Helper.DeleteImage(fullPathForDelete);
-                                await _imageService.DeleteHeroSliderImageAsync(id);
-                            }                          
                         }
                     }
-                }              
+                }
             }
             else
             {
                 _logger.LogWarning("Didnt receive request to update in - HerSlider Service");
             }
-           
+
         }
     }
 }
