@@ -53,22 +53,24 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([FromForm] TestimonyRequest request)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                if (!string.IsNullOrWhiteSpace(request.Name))
                 {
-                    await _testimonyService.CreateTestimonyAsync(request);
-                    TempData["success"] = "Testimony Added Successfully";
-
+                    request.Name = request.Name.Trim();
                 }
-                return RedirectToAction(nameof(Index));
+                if (!string.IsNullOrWhiteSpace(request.Description))
+                {
+                    request.Description = request.Description.Trim();
+                }
+                if (!string.IsNullOrWhiteSpace(request.Position))
+                {
+                    request.Position = request.Position.Trim();
+                }
+                await _testimonyService.CreateTestimonyAsync(request);
+                TempData["success"] = "Testimony Added Successfully";
             }
-            catch(Exception ex)
-            {
-                TempData["error"] = "Testimony Failed To Add";
-                var a = ex.Message;
-                return View();
-            }
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: TestimonyController/Edit/5
@@ -99,13 +101,25 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([FromForm] TestimonyRequest request,int id)
         {
-            try
+            if (ModelState.IsValid)
             {
+                if (!string.IsNullOrWhiteSpace(request.Name))
+                {
+                    request.Name = request.Name.Trim();
+                }
+                if (!string.IsNullOrWhiteSpace(request.Description))
+                {
+                    request.Description = request.Description.Trim();
+                }
+                if (!string.IsNullOrWhiteSpace(request.Position))
+                {
+                    request.Position = request.Position.Trim();
+                }
                 await _testimonyService.UpdateTestimonyAsync(id, request);
                 TempData["success"] = "Testimony Updated Successfully";
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            else
             {
                 TempData["error"] = "Testimony Failed To Update";
                 return View();
@@ -125,13 +139,13 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteTestimony(int id)
         {
-            try
-            {
+            if (id > 0)
+            {               
                 await _testimonyService.DeleteTestimonyAsync(id);
                 TempData["success"] = "Testimony Deleted Successfully";
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            else
             {
                 TempData["error"] = "Testimony Failed To Delete";
                 return View();

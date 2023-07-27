@@ -323,19 +323,18 @@ label {
 # Toastr
 --------------------------------------------------------------*/
 #toast-container {
-    transition: all 0.3s ease-in-out;
+    transition: all 0.2s ease-in-out;
     //box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.06);
 
     .toast {
-        transition: all 0.3s ease-in-out;
+        transition: all 0.2s ease-in-out;
         font-weight: 500;
         font-size: 0.9rem;
         border-radius: 15px;
         box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.06);
-        opacity: 0.85;
+        opacity: 1;
         &:hover {
             box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.2);
-            opacity: 0.98;
             transform: scale(1.02);
         }
     }

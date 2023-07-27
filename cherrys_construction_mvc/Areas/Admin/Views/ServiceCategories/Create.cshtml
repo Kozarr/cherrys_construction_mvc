@@ -28,10 +28,12 @@
             <form enctype="multipart/form-data" method="post">
                 <div class="card">
                     <div class="card-body">
-                        <div class="col-md-12">
-                            <label asp-for="Title">Name</label>
-                            <input asp-for="Title" class="form-control" />
-                            <span asp-validation-for="Title" class="text-danger"></span>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-floating">
+                                <input id="obj80824" asp-for="Title" class="form-control" placeholder="Service Category Name" />
+                                <label for="obj80824" asp-for="Title">Service Category Name</label>
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                            </div>                          
                         </div>
                         <div class="col-12">
                             <textarea asp-for="@Model.Description" class="form-control" placeholder="Description..."></textarea>
@@ -46,7 +48,6 @@
                             <a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.ServiceCategoriesController" asp-action="Index" class="back-btn">@Breadcrumb.Back</a>
                             <button type="submit" class="create-btn">@Breadcrumb.Create</button>
                         </div>
-
                     </div>
                 </div>
             </form><!-- End Multi Columns Form -->

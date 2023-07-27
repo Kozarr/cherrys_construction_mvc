@@ -5,6 +5,7 @@ using cherrys_construction_mvc.ViewModels.Requests;
 using cherrys_construction_mvc.ViewModels.Responce;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Protocol;
 using System.Data;
 
 namespace cherrys_construction_mvc.Areas.Admin.Controllers
@@ -30,7 +31,6 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
             _projectTagService = projectTagService;
             _logger = logger;
         }
-
 
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -77,7 +77,7 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         {  
             var selectedTagsIds = collection["skill"].ToList();
             List<int> TagIds = new List<int>();
-            if (selectedTagsIds.Count() > 0)
+            if (selectedTagsIds.Any())
             {
                 foreach (var item in selectedTagsIds)
                 {
@@ -95,6 +95,18 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
             }
             if (ModelState.IsValid)
             {
+                if (!string.IsNullOrWhiteSpace(request.Title))
+                {
+                    request.Title = request.Title.Trim();
+                }
+                if (!string.IsNullOrWhiteSpace(request.Description))
+                {
+                    request.Description = request.Description.Trim();
+                }
+                if (!string.IsNullOrWhiteSpace(request.ClientName))
+                {
+                    request.ClientName = request.ClientName.Trim();
+                }
                 await _projectService.CreateProjectAsync(request);
                 TempData["success"] = "Project Added Successfully";
                 return RedirectToAction("Index");
@@ -111,40 +123,55 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         {
             var project = await _projectService.GetProjectByIdAsync(id);
             var infoIds = await _projectTagService.GetAllDataByProjectId(id);
-            IEnumerable<int> SelectedTagIds = project.ProjectTags.Select(i => i.TagId);
-
+            ProjectRequest editRequest = new();
+            if (project != null)
+            {
+                // Possibly remove code below
+                if (project.ProjectTags != null)
+                {
+                    if (project.ProjectTags.Any())
+                    {
+                        IEnumerable<int> SelectedTagIds = project.ProjectTags.Select(i => i.TagId);
+                    }
+                }
+                // remove code above if funcationality is not affected
+                editRequest.Title = project.Title;
+                editRequest.ServiceTypeId = project.ServiceTypeId;
+                editRequest.ClientName = project.ClientName;
+                editRequest.Description = project.Description;
+                editRequest.ProjectEndDate = project.ProjectEndDate;
+                editRequest.ProjectStartDate = project.ProjectStartDate;
+                if(project.Images != null)
+                {
+                    if (project.Images.Any())
+                    {
+                        editRequest.Images = project.Images;
+                    }
+                }
+            }
             var tagsData = await _tagService.GetTagsAsync();
 
+            List<TagItem> tagListItems = new();
 
-            List<TagItem> tagListItems = new List<TagItem>();
-
-            foreach (var tag in tagsData)
+            if (tagsData.Any())
             {
-                var item = new TagItem()
+                foreach (var tag in tagsData)
                 {
-                    Value = tag.Id.ToString(),
-                    Text = tag.Name
-                };
-                if (infoIds.Select(a => a.TagId).ToList().Contains(tag.Id))
-                {
-                    item.Selected = true;
+                    var item = new TagItem()
+                    {
+                        Value = tag.Id.ToString(),
+                        Text = tag.Name
+                    };
+                    if (infoIds.Select(a => a.TagId).ToList().Contains(tag.Id))
+                    {
+                        item.Selected = true;
+                    }
+                    tagListItems.Add(item);
                 }
-                tagListItems.Add(item);
             }
-
-            var editRequest = new ProjectRequest()
-            {
-                Title = project.Title,
-                ServiceTypeId = project.ServiceTypeId,
-                ServiceTypes = (List<ServiceTypeResponce>)await _serviceTypeService.GetServiceTypesAsync(),
-                ClientName = project.ClientName,
-                Description = project.Description,
-                ProjectEndDate = project.ProjectEndDate,
-                ProjectStartDate = project.ProjectStartDate,
-                Tags = tagListItems,
-                Images = project.Images,
-                
-            };
+            var serviceTypes = await _serviceTypeService.GetServiceTypesAsync();
+            editRequest.ServiceTypes = serviceTypes.ToList();
+            editRequest.Tags = tagListItems;                      
             return View(editRequest);
         }
 
@@ -157,8 +184,8 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
                 var selectedDeletePhoto = collection["checkPhoto"].ToList();
                 var selectedTagsIds = collection["skill"].ToList();
 
-                List<int> TagIds = new List<int>();
-                List<int> SelectedDeletePhotoIds = new List<int>();
+                List<int> TagIds = new();
+                List<int> SelectedDeletePhotoIds = new();
                 if (selectedTagsIds.Any())
                 {
                     foreach (var item in selectedTagsIds)
@@ -189,7 +216,18 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
                     }
                     request.SelectedDeletePhoto = SelectedDeletePhotoIds;
                 }
-
+                if (!string.IsNullOrWhiteSpace(request.Title))
+                {
+                    request.Title = request.Title.Trim();
+                }
+                if (!string.IsNullOrWhiteSpace(request.Description))
+                {
+                    request.Description = request.Description.Trim();
+                }
+                if (!string.IsNullOrWhiteSpace(request.ClientName))
+                {
+                    request.ClientName = request.ClientName.Trim();
+                }
                 await _projectService.UpdateProjectAsync(id, request);
                 TempData["success"] = "Project Updated Successfully";
                 return RedirectToAction(nameof(Index));
@@ -214,7 +252,7 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteProject(int id)
         {
-            if(id != 0)
+            if(id > 0)
             {              
                 await _projectService.DeleteProjectAsync(id);
                 TempData["success"] = "Project Deleted Successfully";

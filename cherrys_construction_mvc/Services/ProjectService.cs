@@ -42,31 +42,35 @@ namespace cherrys_construction_mvc.Services
             await _projectRepository.AddAsync(project);
             await _projectRepository.SaveChangesAsync();
 
-            if (request.TagIds.Any())
+            if (request.TagIds != null)
             {
-                foreach (var tagId in request.TagIds)
+                if (request.TagIds.Any())
                 {
-                    var projectTagRequest = new ProjectTagRequest()
+                    foreach (var tagId in request.TagIds)
                     {
-                        ProjectId = project.Id,
-                        TagId = tagId
-                    };
+                        var projectTagRequest = new ProjectTagRequest()
+                        {
+                            ProjectId = project.Id,
+                            TagId = tagId
+                        };
 
-                    await _projectTagService.CreateProjectTagAsync(projectTagRequest);
+                        await _projectTagService.CreateProjectTagAsync(projectTagRequest);
+                    }
                 }
             }
-
-
-            if (request.Files.Any())
+            if (request.Files != null)
             {
-                foreach (var item in request.Files)
+                if (request.Files.Any())
                 {
-                    var imageRequest = new ImageRequest()
+                    foreach (var item in request.Files)
                     {
-                        PathImage = Helper.Helper.UploadImage(item, _webHostEnvironment, StaticDetails.StandardImage).Result,
-                        ProjectId = project.Id
-                    };
-                    await _imageService.CreateImageAsync(imageRequest);
+                        var imageRequest = new ImageRequest()
+                        {
+                            PathImage = Helper.Helper.UploadImage(item, _webHostEnvironment, StaticDetails.StandardImage).Result,
+                            ProjectId = project.Id
+                        };
+                        await _imageService.CreateImageAsync(imageRequest);
+                    }
                 }
             }
         }
@@ -92,7 +96,6 @@ namespace cherrys_construction_mvc.Services
             {
                 _logger.LogWarning("Could not find existing project in - Project Service");
             }
-
         }
 
         public async Task<ProjectResponce> GetProjectByIdAsync(int projectId)
@@ -141,24 +144,34 @@ namespace cherrys_construction_mvc.Services
                 await _projectRepository.SaveChangesAsync();
 
                 var tags = await _projectTagService.GetAllDataByProjectId(projectId);
+
                 if (tags.Any())
                 {
-                    foreach (var tagId in request.TagIds)
+                    if (request.TagIds != null)
                     {
-                        if (!tags.Where(a => a.TagId == tagId).Any())
+                        if (request.TagIds.Any())
                         {
-                            var projectTagRequest = new ProjectTagRequest()
+                            foreach (var tagId in request.TagIds)
                             {
-                                ProjectId = projectId,
-                                TagId = tagId
-                            };
-                            await _projectTagService.CreateProjectTagAsync(projectTagRequest);
-                            //var item = tags.SingleOrDefault(a => a.TagId == tagId);
-                            tags.Remove(tags.SingleOrDefault(a => a.TagId == tagId));
-                        }
-                        else
-                        {
-                            tags.Remove(tags.SingleOrDefault(a => a.TagId == tagId));
+
+                                if (!tags.Where(a => a.TagId == tagId).Any())
+                                {
+                                    var projectTagRequest = new ProjectTagRequest()
+                                    {
+                                        ProjectId = projectId,
+                                        TagId = tagId
+                                    };
+                                    await _projectTagService.CreateProjectTagAsync(projectTagRequest);
+                                    //var item = tags.SingleOrDefault(a => a.TagId == tagId);
+                                    tags.Remove(tags.SingleOrDefault(a => a.TagId == tagId));
+                                }
+                                else
+                                {
+                                    tags.Remove(tags.SingleOrDefault(a => a.TagId == tagId));
+                                }
+
+
+                            }
                         }
                     }
 
@@ -180,8 +193,11 @@ namespace cherrys_construction_mvc.Services
                                 }
                                 else
                                 {
-                                    var fullPathForDelete = _webHostEnvironment.WebRootPath + imageForDelete.PathImage;
-                                    Helper.Helper.DeleteImage(fullPathForDelete);
+                                    if (!string.IsNullOrWhiteSpace(imageForDelete.PathImage))
+                                    {
+                                        var fullPathForDelete = _webHostEnvironment.WebRootPath + imageForDelete.PathImage;
+                                        Helper.Helper.DeleteImage(fullPathForDelete);
+                                    }
                                     await _imageService.DeleteImageAsync(id);
                                 }
                             }

@@ -2,29 +2,43 @@
 # Header
 --------------------------------------------------------------*/
 .header {
-  transition: all 0.5s;
-  z-index: 997;
-  padding: 15px 0px;
+    transition: all 0.5s;
+    z-index: 997;
+    padding: 15px 0px;
 
-  &.sticked {
-    background: rgba($cherrys-blue, .9);
-    padding: 15px 0;
-    box-shadow: 0px 2px 20px rgba($secondary, 0.10);
-  }
-
-  .logo {
-    img {
-      max-height: 70px;
-      margin-right: 6px;
-    }
-    
-    h1 {
-      font-size: 30px;
-      margin: 0;
-      font-weight: 700;
-      color: #fff;
-      font-family: var(--font-primary);
+    &.sticked {
+        background: rgba($cherrys-blue, .9);
+        padding: 4px 0;
+        box-shadow: 0px 2px 20px rgba($secondary, 0.10);
     }
 
-  }
+    .logo {
+        transition: all 0.5s;
+
+        img {
+            transition: all 0.5s;
+            max-height: 60px;
+            margin-right: 6px;
+        }
+
+        h1 {
+            font-size: 30px;
+            margin: 0;
+            font-weight: 700;
+            color: #fff;
+            font-family: var(--font-primary);
+        }
+    }
+
+    &.sticked {
+        transition: all 0.5s;
+
+        .logo {
+            transition: all 0.5s;
+
+            img {
+                max-height: 50px;
+            }
+        }
+    }
 }

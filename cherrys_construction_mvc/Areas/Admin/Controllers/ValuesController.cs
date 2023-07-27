@@ -43,13 +43,21 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([FromForm]CompanyValueRequest request)
         {
-            try
+            if (ModelState.IsValid)
             {
+                if (!string.IsNullOrWhiteSpace(request.Title))
+                {
+                    request.Title = request.Title.Trim();
+                }
+                if (!string.IsNullOrWhiteSpace(request.Description))
+                {
+                    request.Description = request.Description.Trim();
+                }
                 await _companyValueService.CreateCompanyValueAsync(request);
                 TempData["success"] = "Value Added Successfully";
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            else
             {
                 TempData["error"] = "Value Failed To Add";
                 return View();
@@ -75,13 +83,21 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([FromForm]CompanyValueRequest request,int id)
         {
-            try
+            if(ModelState.IsValid)
             {
+                if (!string.IsNullOrWhiteSpace(request.Title))
+                {
+                    request.Title = request.Title.Trim();
+                }
+                if (!string.IsNullOrWhiteSpace(request.Description))
+                {
+                    request.Description = request.Description.Trim();
+                }
                 await _companyValueService.UpdateCompanyValueAsync(id,request);
                 TempData["success"] = "Value Updated Successfully";
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            else
             {
                 TempData["error"] = "Value Failed To Update";
                 return View();
@@ -100,13 +116,13 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteCompanyValue(int id)
         {
-            try
+            if (id > 0)
             {
                 await _companyValueService.DeleteCompanyValueAsync(id);
                 TempData["success"] = "Value Deleted Successfully";
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            else
             {
                 TempData["error"] = "Value Failed To Delete";
                 return View();

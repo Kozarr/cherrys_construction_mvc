@@ -43,25 +43,26 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([FromForm] CompanyQualityRequest request )
         {
-            try
+            if (ModelState.IsValid)
             {
+                if (!string.IsNullOrWhiteSpace(request.Title))
+                {
+                    request.Title = request.Title.Trim();
+                }
+                if (!string.IsNullOrWhiteSpace(request.Description))
+                {
+                    request.Description = request.Description.Trim();
+                }
+                await _companyQualityService.CreateCompanyQualityAsync(request);
+                TempData["success"] = "New Company Quality Added Successfully";
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                TempData["error"] = "Company Quality Failed To Add";
+                return RedirectToAction(nameof(Index));
+            }
 
-                if (ModelState.IsValid)
-                {
-                    await _companyQualityService.CreateCompanyQualityAsync(request);
-                    TempData["success"] = "New Company Quality Added Successfully";
-                    return RedirectToAction(nameof(Index));
-                }
-                else
-                {
-                    TempData["error"] = "Company Quality Failed To Add";
-                    return RedirectToAction(nameof(Index));
-                }
-            }
-            catch
-            {
-                return View();
-            }
         }
 
         // GET: CompanyQualityController/Edit/5
@@ -84,6 +85,14 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         {          
             if (ModelState.IsValid)
             {
+                if (!string.IsNullOrWhiteSpace(request.Title))
+                {
+                    request.Title = request.Title.Trim();
+                }
+                if (!string.IsNullOrWhiteSpace(request.Description))
+                {
+                    request.Description = request.Description.Trim();
+                }
                 await _companyQualityService.UpdateCompanyQualityAsync(id, request);
                 TempData["success"] = "Company Quality Updated Successfully";
                 return RedirectToAction(nameof(Index));

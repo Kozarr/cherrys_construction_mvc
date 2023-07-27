@@ -57,57 +57,12 @@ namespace cherrys_construction_mvc.Services
         public async Task UpdateCompanyInfoAsync(int oldCompanyInfoId, CompanyInfoRequest request)
         {
             var oldCompanyInfo = await _companyInfoRepository.GetByIdAsync(oldCompanyInfoId);
+
+            
             if (oldCompanyInfo != null)
             {
-                if (request.NavigationImageURL != null)
-                {
-                    oldCompanyInfo.NavigationImageURL = request.NavigationImageURL;
-                }
-                if (request.FooterImageURL != null)
-                {
-                    oldCompanyInfo.FooterImageURL = request.FooterImageURL;
-                }
-                if (request.CompanyEmail != null)
-                {
-                    oldCompanyInfo.CompanyEmail = request.CompanyEmail;
-                }
-                if (request.CompanyName != null)
-                {
-                    oldCompanyInfo.CompanyName = request.CompanyName;
-                }
-                if (request.CompanyPhoneNumber != null)
-                {
-                    oldCompanyInfo.CompanyPhoneNumber = request.CompanyPhoneNumber;
-                }
-                if (request.ServiceArea != null)
-                {
-                    oldCompanyInfo.ServiceArea = request.ServiceArea;
-                }
-                if (request.SendButton != null)
-                {
-                    oldCompanyInfo.SendButton = request.SendButton;
-                }
-                // Social Links
-                if (request.YoutubeLink != null)
-                {
-                    oldCompanyInfo.YoutubeLink = request.YoutubeLink;
-                }
-                if (request.LinkedInLink != null)
-                {
-                    oldCompanyInfo.LinkedInLink = request.LinkedInLink;
-                }
-                if (request.TwitterLink != null)
-                {
-                    oldCompanyInfo.TwitterLink = request.TwitterLink;
-                }
-                if (request.FaceBookLink != null)
-                {
-                    oldCompanyInfo.FaceBookLink = request.FaceBookLink;
-                }
-                if (request.InstagramLink != null)
-                {
-                    oldCompanyInfo.InstagramLink = request.InstagramLink;
-                }
+                oldCompanyInfo = _mapper.Map<CompanyInfo>(request);
+                
                 await _companyInfoRepository.UpdateAsync(oldCompanyInfo);
                 await _companyInfoRepository.SaveChangesAsync();
             }

@@ -1,4 +1,5 @@
-﻿using cherrys_construction_mvc.Interfaces;
+﻿using AutoMapper;
+using cherrys_construction_mvc.Interfaces;
 using cherrys_construction_mvc.Utility;
 using cherrys_construction_mvc.ViewModels.Requests;
 using Microsoft.AspNetCore.Authorization;
@@ -12,11 +13,14 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
     {
         private readonly IMemberService _memberService;
         private readonly ILogger<MembersController> _logger;
+        private readonly IMapper _mapper;
         public MembersController(IMemberService memberService, 
-            ILogger<MembersController> logger)
+            ILogger<MembersController> logger,
+            IMapper mapper)
         {
             _memberService = memberService;
             _logger = logger;
+            _mapper = mapper;
         }
 
 
@@ -47,6 +51,23 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
                 {
                     request.InstagramLink = "";
                 }
+                if (!string.IsNullOrWhiteSpace(request.Name))
+                {
+                    request.Name = request.Name.Trim();
+                }
+                if (!string.IsNullOrWhiteSpace(request.Description))
+                {
+                    request.Description = request.Description.Trim();
+                }
+                if (!string.IsNullOrWhiteSpace(request.InstagramLink))
+                {
+                    request.InstagramLink = request.InstagramLink.Trim();
+                }
+                if (!string.IsNullOrWhiteSpace(request.Role))
+                {
+                    request.Role = request.Role.Trim();
+                }
+
                 await _memberService.CreateMemberAsync(request);
                 TempData["success"] = "New Team Member Created Successfully";
                 return RedirectToAction("Index");
@@ -56,7 +77,6 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
                 TempData["error"] = "Team Member Creation Failed";
                 return View();
             }
-            //var members = await _memberService.GetMemberssAsync();
         }
 
         // GET : EDIT (~Update)
@@ -68,26 +88,7 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
             if(member != null)
             {
                 MemberRequest editRequest = new ();
-                if(!string.IsNullOrWhiteSpace(member.Name))
-                {
-                    editRequest.Name = member.Name.Trim();
-                }
-                if (!string.IsNullOrWhiteSpace(member.Description))
-                {
-                    editRequest.Description = member.Description.Trim();
-                }
-                if (!string.IsNullOrWhiteSpace(member.InstagramLink))
-                {
-                    editRequest.InstagramLink = member.InstagramLink.Trim();
-                }
-                if (!string.IsNullOrWhiteSpace(member.Role))
-                {
-                    editRequest.Role = member.Role.Trim();
-                }
-                if (!string.IsNullOrWhiteSpace(member.ImageLink))
-                {
-                    editRequest.ImageLink = member.ImageLink;
-                }
+                editRequest = _mapper.Map<MemberRequest>(member);
                 return View(editRequest);
             }
             else
@@ -102,12 +103,28 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(MemberRequest request,int id)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
 
                 if (string.IsNullOrWhiteSpace(request.InstagramLink))
                 {
                     request.InstagramLink = "";
+                }
+                if (!string.IsNullOrWhiteSpace(request.Name))
+                {
+                    request.Name = request.Name.Trim();
+                }
+                if (!string.IsNullOrWhiteSpace(request.Description))
+                {
+                    request.Description = request.Description.Trim();
+                }
+                if (!string.IsNullOrWhiteSpace(request.InstagramLink))
+                {
+                    request.InstagramLink = request.InstagramLink.Trim();
+                }
+                if (!string.IsNullOrWhiteSpace(request.Role))
+                {
+                    request.Role = request.Role.Trim();
                 }
                 await _memberService.UpdateMemberAsync(id, request);
                 TempData["success"] = "Team Member Updated Successfully";

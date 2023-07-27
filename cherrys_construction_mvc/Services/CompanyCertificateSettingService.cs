@@ -74,13 +74,16 @@ namespace cherrys_construction_mvc.Services
             else
             {
                 if (request.Image != null)
-                {
-                    string wwwRootPath = _webHostEnvironment.WebRootPath;
-                    var oldImagePath = Path.Combine(wwwRootPath, compSet.ImageLink.TrimStart('\\'));
-                    if (File.Exists(oldImagePath))
+                {                   
+                    if(!string.IsNullOrWhiteSpace(compSet.ImageLink))
                     {
-                        File.Delete(oldImagePath);
-                    }
+                        string wwwRootPath = _webHostEnvironment.WebRootPath;
+                        var oldImagePath = Path.Combine(wwwRootPath, compSet.ImageLink.TrimStart('\\'));
+                        if (File.Exists(oldImagePath))
+                        {
+                            File.Delete(oldImagePath);
+                        }
+                    }                    
                     request.ImageLink = await Helper.Helper.UploadImage(request.Image, _webHostEnvironment, StaticDetails.StandardImage);
                 }
                 else

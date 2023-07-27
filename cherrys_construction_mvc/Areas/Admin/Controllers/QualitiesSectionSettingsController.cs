@@ -1,9 +1,9 @@
-﻿using cherrys_construction_mvc.Interfaces;
+﻿using AutoMapper;
+using cherrys_construction_mvc.Interfaces;
 using cherrys_construction_mvc.Utility;
 using cherrys_construction_mvc.ViewModels.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Runtime.CompilerServices;
 
 namespace cherrys_construction_mvc.Areas.Admin.Controllers
 {
@@ -12,9 +12,12 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
     public class QualitiesSectionSettingsController : Controller
     {
         private readonly ICompanyQualitiySettingService _qualitiesSettings;
-        public QualitiesSectionSettingsController(ICompanyQualitiySettingService qualitiesSettings)
+        private readonly IMapper _mapper;
+        public QualitiesSectionSettingsController(ICompanyQualitiySettingService qualitiesSettings,
+            IMapper mapper)
         {
             _qualitiesSettings = qualitiesSettings;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -44,6 +47,14 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
                 }
                 else
                 {
+                    if (!string.IsNullOrWhiteSpace(request.Title))
+                    {
+                        request.Title = request.Title.Trim();
+                    }
+                    if (!string.IsNullOrWhiteSpace(request.Description))
+                    {
+                        request.Description = request.Description.Trim();
+                    }
                     await _qualitiesSettings.CreateCompanyQualitiySettingAsync(request);
                     TempData["success"] = "Qualities Section Information Created";
                     return RedirectToAction(nameof(Index));
@@ -59,15 +70,12 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            if(id != 0)
+            if(id > 0)
             {
                 var item = await _qualitiesSettings.GetCompanyQualitiySettingByIdAsync(id);
                 if(item != null)
                 {
-                    CompanyQualitySettingRequest request = new();
-                    request.Title = item.Title;
-                    request.Description = item.Description;
-                    request.ImageLink = item.ImageLink;
+                    var request = _mapper.Map<CompanyQualitySettingRequest>(item);
                     return View(request);
                 }
                 else
@@ -93,6 +101,14 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
                 var checker = await _qualitiesSettings.GetCompanyQualitiySettingByIdAsync(id);
                 if(checker != null)
                 {
+                    if (!string.IsNullOrWhiteSpace(request.Title))
+                    {
+                        request.Title = request.Title.Trim();
+                    }
+                    if (!string.IsNullOrWhiteSpace(request.Description))
+                    {
+                        request.Description = request.Description.Trim();
+                    }
                     await _qualitiesSettings.UpdateCompanyQualitiySettingAsync(id, request);
                     TempData["success"] = "Qualities Section Information Updated";
                 }

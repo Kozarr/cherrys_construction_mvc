@@ -44,13 +44,15 @@ namespace cherrys_construction_mvc.Services
             var companyValue = await _companyValueRepository.GetByIdAsync(companyValueId);
             if(companyValue != null)
             {
-                string wwwRootPath = _webHostEnvironment.WebRootPath;
-                var oldImagePath = Path.Combine(wwwRootPath, companyValue.ImageLink.TrimStart('\\'));
-                if (File.Exists(oldImagePath))
+                if (!string.IsNullOrWhiteSpace(companyValue.ImageLink))
                 {
-                    File.Delete(oldImagePath);
+                    string wwwRootPath = _webHostEnvironment.WebRootPath;
+                    var oldImagePath = Path.Combine(wwwRootPath, companyValue.ImageLink.TrimStart('\\'));
+                    if (File.Exists(oldImagePath))
+                    {
+                        File.Delete(oldImagePath);
+                    }
                 }
-
                 await _companyValueRepository.DeleteAsync(companyValue);
                 await _companyValueRepository.SaveChangesAsync();
             }
@@ -83,11 +85,14 @@ namespace cherrys_construction_mvc.Services
             {
                 if (request.Image != null)
                 {
-                    string wwwRootPath = _webHostEnvironment.WebRootPath;
-                    var oldImagePath = Path.Combine(wwwRootPath, companyValue.ImageLink.TrimStart('\\'));
-                    if (File.Exists(oldImagePath))
+                    if (!string.IsNullOrWhiteSpace(companyValue.ImageLink))
                     {
-                        File.Delete(oldImagePath);
+                        string wwwRootPath = _webHostEnvironment.WebRootPath;
+                        var oldImagePath = Path.Combine(wwwRootPath, companyValue.ImageLink.TrimStart('\\'));
+                        if (File.Exists(oldImagePath))
+                        {
+                            File.Delete(oldImagePath);
+                        }
                     }
                     request.ImageLink = await Helper.Helper.UploadImage(request.Image, _webHostEnvironment, StaticDetails.StandardImage);
                 }

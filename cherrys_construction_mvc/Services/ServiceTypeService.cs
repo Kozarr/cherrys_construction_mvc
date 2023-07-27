@@ -58,10 +58,9 @@ namespace cherrys_construction_mvc.Services
                 //        await _projectRepository.SaveChangesAsync();
                 //    }
                 //}
-
-                string wwwRootPath = _webHostEnvironment.WebRootPath;
-                if (serviceType.ImageLink != null)
+                if (!string.IsNullOrWhiteSpace(serviceType.ImageLink))
                 {
+                    string wwwRootPath = _webHostEnvironment.WebRootPath;
                     var oldImagePath = Path.Combine(wwwRootPath, serviceType.ImageLink.TrimStart('\\'));
                     if (File.Exists(oldImagePath))
                     {
@@ -98,7 +97,7 @@ namespace cherrys_construction_mvc.Services
             {
                 if (request.Image != null)
                 {
-                    if (request.ImageLink != null)
+                    if (!string.IsNullOrWhiteSpace(serviceType.ImageLink))
                     {
                         string wwwRootPath = _webHostEnvironment.WebRootPath;
                         var oldImagePath = Path.Combine(wwwRootPath, serviceType.ImageLink.TrimStart('\\'));

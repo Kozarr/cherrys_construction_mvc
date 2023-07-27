@@ -50,14 +50,17 @@ namespace cherrys_construction_mvc.Services
             }
             else
             {
-                var oldImagePath = Path.Combine(wwwRootPath, member.ImageLink.TrimStart('\\'));
-                if (oldImagePath != null)
+                if (!string.IsNullOrWhiteSpace(member.ImageLink))
                 {
-                    if (File.Exists(oldImagePath))
+                    var oldImagePath = Path.Combine(wwwRootPath, member.ImageLink.TrimStart('\\'));
+                    if (oldImagePath != null)
                     {
-                        File.Delete(oldImagePath);
+                        if (File.Exists(oldImagePath))
+                        {
+                            File.Delete(oldImagePath);
+                        }
                     }
-                }
+                }               
                 await _memberRepository.DeleteAsync(member);
                 await _memberRepository.SaveChangesAsync();
             }   
@@ -82,12 +85,15 @@ namespace cherrys_construction_mvc.Services
             {
                 if (request.Image != null)
                 {
-                    string wwwRootPath = _webHostEnvironment.WebRootPath;
-                    var oldImagePath = Path.Combine(wwwRootPath, member.ImageLink.TrimStart('\\'));
-                    if (File.Exists(oldImagePath))
+                    if (!string.IsNullOrWhiteSpace(member.ImageLink))
                     {
-                        File.Delete(oldImagePath);
-                    }
+                        string wwwRootPath = _webHostEnvironment.WebRootPath;
+                        var oldImagePath = Path.Combine(wwwRootPath, member.ImageLink.TrimStart('\\'));
+                        if (File.Exists(oldImagePath))
+                        {
+                            File.Delete(oldImagePath);
+                        }
+                    }                  
                     request.ImageLink = await Helper.Helper.UploadImage(request.Image, _webHostEnvironment, StaticDetails.SquareImage);
                 }
                 else

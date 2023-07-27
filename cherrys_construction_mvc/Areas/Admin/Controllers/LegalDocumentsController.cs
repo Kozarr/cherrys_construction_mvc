@@ -37,6 +37,15 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (!string.IsNullOrWhiteSpace(doc.Body))
+                {
+                    doc.Body = doc.Body.Trim();
+                }
+                if (!string.IsNullOrWhiteSpace(doc.Title))
+                {
+                    doc.Title = doc.Title.Trim();
+                }
+
                 await _legalDocService.CreateLegalDocumentAsync(doc);
                 TempData["success"] = "Created Document";
             }
@@ -56,16 +65,14 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
                 if (item != null)
                 {
                     LegalDocumentRequest doc = new();
-                    if (!string.IsNullOrEmpty(item.Title))
+                    if (!string.IsNullOrWhiteSpace(item.Title))
                     {
-                        doc.Title = item.Title.Trim();
+                        doc.Title = item.Title;
                     }
-                    else { }
                     if (!string.IsNullOrWhiteSpace(item.Body))
                     {
-                        doc.Body = item.Body.Trim();
+                        doc.Body = item.Body;
                     }
-                    else { }
                     return View(doc);
                 }
                 else
@@ -86,19 +93,27 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(LegalDocumentRequest doc, int id)
+        public async Task<IActionResult> Edit(LegalDocumentRequest doc)
         {
             if (ModelState.IsValid)
             {
-                var docExists = await _legalDocService.GetLegalDocumentByIdAsync(id);
-                if (docExists != null)
+                if (doc.Id > 0)
                 {
-                    await _legalDocService.UpdateLegalDocumentAsync(id, doc);
+                    if (!string.IsNullOrWhiteSpace(doc.Body))
+                    {
+                        doc.Body = doc.Body.Trim();
+                    }
+                    if (!string.IsNullOrWhiteSpace(doc.Title))
+                    {
+                        doc.Title = doc.Title.Trim();
+                    }
+                    await _legalDocService.UpdateLegalDocumentAsync(doc.Id, doc);
                     TempData["success"] = "Document Updated";
                 }
                 else
                 {
-                    TempData["error"] = "Document Was Not Found";
+                    TempData["error"] = "Failed To Recieve Document Information";
+                    _logger.LogError("Legal Document Controller - Id was not greater than 0");
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -112,7 +127,7 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            if (id != 0)
+            if (id > 0)
             {
                 var item = await _legalDocService.GetLegalDocumentByIdAsync(id);
                 if (item != null)
@@ -136,7 +151,7 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteDoc(int id)
         {
-            if (id != 0)
+            if (id > 0)
             {
                 var item = await _legalDocService.GetLegalDocumentByIdAsync(id);
                 if (item != null)

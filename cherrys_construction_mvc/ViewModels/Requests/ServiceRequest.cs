@@ -7,15 +7,9 @@ namespace cherrys_construction_mvc.ViewModels.Requests
     {
         public int Id { get; set; }
         [Required]
-        public string Title { get; set; }
+        public string? Title { get; set; }
         [Required]
-        public string Description { get; set; }
-        [ValidateNever]
-        public string? Icon { get; set; }
-        [ValidateNever]
-        public string? ArticleTitle { get; set; }
-        [ValidateNever]
-        public string? ArticleDescription { get; set; }
+        public string? Description { get; set; }   
         [ValidateNever]
         public string? ImageLink { get; set; }
         [ValidateNever]

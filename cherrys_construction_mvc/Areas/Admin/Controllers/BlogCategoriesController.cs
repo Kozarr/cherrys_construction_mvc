@@ -1,13 +1,10 @@
 ﻿using AutoMapper;
 using cherrys_construction_mvc.Interfaces;
-using cherrys_construction_mvc.Models;
-using cherrys_construction_mvc.Services;
 using cherrys_construction_mvc.Utility;
 using cherrys_construction_mvc.ViewModels.Requests;
 using cherrys_construction_mvc.ViewModels.Responce;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 
 namespace cherrys_construction_mvc.Areas.Admin.Controllers
 {
@@ -47,9 +44,9 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
                 if(blogCategory != null)
                 {
                     BlogCategoryRequest request = new();
-                    if (!blogCategory.Name.IsNullOrEmpty())
+                    if (!string.IsNullOrWhiteSpace(blogCategory.Name))
                     {
-                        request.Name = blogCategory.Name;
+                        request.Name = blogCategory.Name.Trim();
                         request.Id = blogCategory.Id;
                         return View(request);
                     }
@@ -70,6 +67,10 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (!string.IsNullOrWhiteSpace(blogCategory.Name))
+                {
+                    blogCategory.Name = blogCategory.Name.Trim();
+                }
                 await _blogCategoryService.UpdateBlogCategoryAsync(blogCategory.Id, blogCategory);
                 TempData["success"] = "Blog Category Updated Successfully";
                 return RedirectToAction(nameof(Index));
@@ -80,16 +81,21 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(BlogCategoryRequest blogCategory)
         {
             if (ModelState.IsValid)
             {
+                if (!string.IsNullOrWhiteSpace(blogCategory.Name))
+                {
+                    blogCategory.Name = blogCategory.Name.Trim();
+                }
                 await _blogCategoryService.CreateBlogCategoryAsync(blogCategory);
                 TempData["success"] = "Blog Category Created Successfully";
                 return RedirectToAction(nameof(Index));
