@@ -25,41 +25,58 @@
             <h2>@Breadcrumb.TestimoniesTitle</h2>
         </div>
 
-        @if (Model.Any())
+        @if (Model != null)
         {
             <div class="text-center">
                 <div class="container" data-aos="fade-up">
-
-                    @foreach (var item in Model)
-                    {
-                        <div class="row gy-4 list-item featured mt-4" data-aos="fade-up" data-aos-delay="200">
-                            <div class="col-lg-4 align-content-center justify-content-center">
-                                <img class="img-fluid" style="clip-path:none;border-radius:20px;" src="@item.ImageLink" />
-                            </div>
-                            <div class="col-lg-8 d-flex align-items-center justify-content-center">
-                                <div>
-                                    <h3>@item.Name</h3>
-                                    <h4 style="color:gray">@item.Project.Title</h4>
-                                    <h5>@item.Position</h5>
-                                    @Html.Raw(@item.Description)
+                    @if (Model.Any())
+                    {                                         
+                        @foreach (var item in Model)
+                        {
+                            <div class="row gy-4 list-item featured mt-4" data-aos="fade-up" data-aos-delay="200">
+                                <div class="col-lg-3 align-content-center justify-content-center">
+                                    @if(!string.IsNullOrWhiteSpace(item.ImageLink)){
+                                        <img class="img-fluid" style="max-height:250px;clip-path:none;border-radius:20px;" src="@item.ImageLink" />
+                                    }
+                                    else
+                                    {
+                                        <img class="img-fluid" style="max-height:250px;clip-path:none;border-radius:20px;" src="~/assets/img/user-solid.svg" />
+                                    }
                                 </div>
+                                <div class="col-lg-9 d-flex align-items-center justify-content-center">
+                                    <div>
+                                        <h3>@item.Name</h3>
+                                        @if(item.CurrentProject != null)
+                                        {
+                                            <h4 style="color:gray">@item.CurrentProject.Title</h4>
+                                        }                                    
+                                        <h5>@item.Position</h5>
+                                        @Html.Raw(@item.Description)
+                                        <div class="stars">
+                                            @for (int star = 0; star != item.Stars; star++)
+                                            {
+                                                <i class="bi bi-star-fill"></i>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flex-btn-container-row">
+                                    <a class="flex-btn-row edit-btn text-center" asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.TestimoniesController"
+                                       asp-action="@Breadcrumb.Edit" asp-route-id="@item.Id" class="readmore stretched-link">
+                                        <span>@Breadcrumb.Edit</span><i class="fa-regular fa-pen-to-square"></i>
+                                    </a>
+                                    <a class="flex-btn-row delete-btn text-center" asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.TestimoniesController"
+                                       asp-action="@Breadcrumb.Delete" asp-route-id="@item.Id" class="readmore stretched-link">
+                                        <span>@Breadcrumb.Delete</span><i class="fa-regular fa-trash-can"></i>
+                                    </a>
+                                    <br>
+                                </div>
+
                             </div>
 
-                            <div class="flex-btn-container-row">
-                                <a class="flex-btn-row edit-btn text-center" asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.TestimoniesController"
-                                   asp-action="@Breadcrumb.Edit" asp-route-id="@item.Id" class="readmore stretched-link">
-                                    <span>@Breadcrumb.Edit</span><i class="fa-regular fa-pen-to-square"></i>
-                                </a>
-                                <a class="flex-btn-row delete-btn text-center" asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.TestimoniesController"
-                                   asp-action="@Breadcrumb.Delete" asp-route-id="@item.Id" class="readmore stretched-link">
-                                    <span>@Breadcrumb.Delete</span><i class="fa-regular fa-trash-can"></i>
-                                </a>
-                                <br>
-                            </div>
-
-                        </div>
-
-                        <!-- End Members Item -->
+                            <!-- End Members Item -->
+                        }
                     }
                 </div>
 

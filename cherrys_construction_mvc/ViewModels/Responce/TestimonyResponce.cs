@@ -9,7 +9,7 @@
         public string? Position { get; set; }
         public string? ImageLink { get; set; }
         public int ProjectId { get; set; }
-        public ProjectResponce? Project { get; set; }
+        public ProjectResponce? CurrentProject { get; set; }
 
     }
 }

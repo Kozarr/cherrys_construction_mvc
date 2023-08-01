@@ -12,10 +12,7 @@ namespace cherrys_construction_mvc.Models
         public DateTime ProjectStartDate { get; set; }
         public DateTime ProjectEndDate { get; set; }
 
-
-        public int ServiceTypeId { get; set; }
-        public ServiceType? ServiceType { get; set; }
-
+        public int ServiceTypeId { get; set; }    
         
         public Testimony? Testimony { get; set; }
 

@@ -10,12 +10,12 @@ namespace cherrys_construction_mvc.Specification.TestimonySpec
         public TestimonyIncludeFullInfoSpecification()
         {
 
-            Query.Include(c => c.Project).AsSplitQuery();
+            Query.Include(c => c.CurrentProject).AsSplitQuery();
         }
 
         public TestimonyIncludeFullInfoSpecification(int id)
         {
-            Query.Where(s => id == s.Id).Include(c => c.Project).AsSplitQuery();
+            Query.Where(s => id == s.Id).Include(c => c.CurrentProject).AsSplitQuery();
         }
 
 

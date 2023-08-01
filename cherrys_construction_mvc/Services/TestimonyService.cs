@@ -40,19 +40,22 @@ namespace cherrys_construction_mvc.Services
 
         public async Task DeleteTestimonyAsync(int testimonyId)
         {
-            var testimomy = await _testimonyRepository.GetByIdAsync(testimonyId);
-            if (testimomy != null)
+            var testimony = await _testimonyRepository.GetByIdAsync(testimonyId);
+            if (testimony != null)
             {
-                if (!string.IsNullOrWhiteSpace(testimomy.ImageLink))
+                if (!string.IsNullOrWhiteSpace(testimony.ImageLink))
                 {
-                    string wwwRootPath = _webHostEnvironment.WebRootPath;
-                    var oldImagePath = Path.Combine(wwwRootPath, testimomy.ImageLink.TrimStart('\\'));
-                    if (File.Exists(oldImagePath))
+                    if (testimony.ImageLink != "\\assets\\img\\user-circle.png")
                     {
-                        File.Delete(oldImagePath);
-                    }
+                        string wwwRootPath = _webHostEnvironment.WebRootPath;
+                        var oldImagePath = Path.Combine(wwwRootPath, testimony.ImageLink.TrimStart('\\'));
+                        if (File.Exists(oldImagePath))
+                        {
+                            File.Delete(oldImagePath);
+                        }
+                    }                   
                 }
-                await _testimonyRepository.DeleteAsync(testimomy);
+                await _testimonyRepository.DeleteAsync(testimony);
                 await _testimonyRepository.SaveChangesAsync();
             }
             else
@@ -68,7 +71,7 @@ namespace cherrys_construction_mvc.Services
             return _mapper.Map<TestimonyResponce>(testimony);
         }
 
-        public async Task<IEnumerable<TestimonyResponce>> GetTestimonysAsync()
+        public async Task<IEnumerable<TestimonyResponce>> GetTestimoniesAsync()
         {
             var spec = new TestimonyIncludeFullInfoSpecification();
             var testimonies = await _testimonyRepository.ListAsync(spec);
@@ -77,15 +80,15 @@ namespace cherrys_construction_mvc.Services
 
         public async Task UpdateTestimonyAsync(int testimonyId, TestimonyRequest request)
         {
-            var testimomy = await _testimonyRepository.GetByIdAsync(testimonyId);
-            if (testimomy != null)
+            var testimony = await _testimonyRepository.GetByIdAsync(testimonyId);
+            if (testimony != null)
             {
                 if (request.Image != null)
                 {
-                    if (!string.IsNullOrWhiteSpace(testimomy.ImageLink))
+                    if (!string.IsNullOrWhiteSpace(testimony.ImageLink))
                     {
                         string wwwRootPath = _webHostEnvironment.WebRootPath;
-                        var oldImagePath = Path.Combine(wwwRootPath, testimomy.ImageLink.TrimStart('\\'));
+                        var oldImagePath = Path.Combine(wwwRootPath, testimony.ImageLink.TrimStart('\\'));
                         if (File.Exists(oldImagePath))
                         {
                             File.Delete(oldImagePath);
@@ -95,10 +98,10 @@ namespace cherrys_construction_mvc.Services
                 }
                 else
                 {
-                    request.ImageLink = testimomy.ImageLink;
+                    request.ImageLink = testimony.ImageLink;
                 }
-                _mapper.Map(request, testimomy);
-                await _testimonyRepository.UpdateAsync(testimomy);
+                _mapper.Map(request, testimony);
+                await _testimonyRepository.UpdateAsync(testimony);
                 await _testimonyRepository.SaveChangesAsync();
             }
             else

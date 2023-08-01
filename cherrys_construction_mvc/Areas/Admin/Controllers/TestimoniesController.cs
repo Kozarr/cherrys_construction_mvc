@@ -1,6 +1,8 @@
-﻿using cherrys_construction_mvc.Interfaces;
+﻿using AutoMapper;
+using cherrys_construction_mvc.Interfaces;
 using cherrys_construction_mvc.Utility;
 using cherrys_construction_mvc.ViewModels.Requests;
+using cherrys_construction_mvc.ViewModels.Responce;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,10 +15,14 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
 
         private readonly ITestimonyService _testimonyService;
         private readonly IProjectService _projectService;
-        public TestimoniesController(ITestimonyService testimonyService, IProjectService projectService)
+        private readonly IMapper _mapper;
+        public TestimoniesController(ITestimonyService testimonyService, 
+            IProjectService projectService,
+            IMapper mapper)
         {
             _testimonyService = testimonyService;
             _projectService = projectService;
+            _mapper = mapper;
         }
 
 
@@ -24,8 +30,20 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> Index()
         {
-            var testimonies = await _testimonyService.GetTestimonysAsync();
-            return View(testimonies);
+            var testimonies = await _testimonyService.GetTestimoniesAsync();
+            if (testimonies.Any())
+            {
+                foreach(var item in testimonies)
+                {
+                    if(item.ProjectId > 0)
+                    {
+                        var project = await _projectService.GetProjectByIdAsync(item.ProjectId);
+                        item.CurrentProject = project;
+                    }                          
+                }
+                return View(testimonies);
+            }
+            return View();
         }
 
         // GET: TestimonyController/Details/5
@@ -40,11 +58,12 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> Create()
         {
-            TestimonyRequest testimonyRequest = new()
+            TestimonyRequest testimonyRequest = new();
+            var listProjects = await _projectService.GetProjectsWithoutTestimonyAsync();
+            if (listProjects.Any())
             {
-                Projects = (List<ViewModels.Responce.ProjectResponce>)await _projectService.GetProjectsWithoutTestimonyAsync()
-            };
-
+                testimonyRequest.Projects = listProjects.ToList();
+            }                     
             return View(testimonyRequest);
         }
 
@@ -55,6 +74,14 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                if(request.Stars > 5)
+                {
+                    request.Stars = 5;
+                }
+                if(request.Stars < 0)
+                {
+                    request.Stars = 0;
+                }
                 if (!string.IsNullOrWhiteSpace(request.Name))
                 {
                     request.Name = request.Name.Trim();
@@ -67,6 +94,10 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
                 {
                     request.Position = request.Position.Trim();
                 }
+                if(request.Image == null)
+                {
+                    request.ImageLink = "\\assets\\img\\user-circle.png";
+                }
                 await _testimonyService.CreateTestimonyAsync(request);
                 TempData["success"] = "Testimony Added Successfully";
             }
@@ -77,23 +108,22 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> Edit(int id)
         {
-            var testimony = await _testimonyService.GetTestimonyByIdAsync(id);
-            var projectName = await _projectService.GetProjectByIdAsync(testimony.ProjectId);
-            var editRequest = new TestimonyRequest()
+            if (id > 0)
             {
-                Position = testimony.Position,
-                Stars = testimony.Stars,
-                ProjectId = testimony.ProjectId,
-                Name = testimony.Name,
-                ImageLink =  testimony.ImageLink,
-                Description = testimony.Description,
-                Projects = (List<ViewModels.Responce.ProjectResponce>)await _projectService.GetProjectsWithoutTestimonyAsync(),
-            };
-            if (projectName != null && projectName.Title != null)
-            {
-                editRequest.ProjectName = projectName.Title;
+                TestimonyRequest editRequest = new();
+                var testimony = await _testimonyService.GetTestimonyByIdAsync(id);
+                var currentProject = await _projectService.GetProjectByIdAsync(testimony.ProjectId);
+                if(testimony!= null)
+                {
+                    editRequest = _mapper.Map<TestimonyRequest>(testimony);
+                }
+                if(currentProject != null)
+                {
+                    editRequest.CurrentProject = currentProject;
+                }
+                return View(editRequest);
             }
-            return View(editRequest);
+            return View();
         }
 
         // POST: TestimonyController/Edit/5
@@ -103,6 +133,14 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (request.Stars > 5)
+                {
+                    request.Stars = 5;
+                }
+                if (request.Stars < 0)
+                {
+                    request.Stars = 0;
+                }
                 if (!string.IsNullOrWhiteSpace(request.Name))
                 {
                     request.Name = request.Name.Trim();

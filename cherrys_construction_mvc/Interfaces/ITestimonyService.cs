@@ -5,7 +5,7 @@ namespace cherrys_construction_mvc.Interfaces
 {
     public interface ITestimonyService
     {
-        Task<IEnumerable<TestimonyResponce>> GetTestimonysAsync();
+        Task<IEnumerable<TestimonyResponce>> GetTestimoniesAsync();
         Task<TestimonyResponce> GetTestimonyByIdAsync(int testimonyId);
         Task CreateTestimonyAsync(TestimonyRequest request);
         Task UpdateTestimonyAsync(int testimonyId, TestimonyRequest request);

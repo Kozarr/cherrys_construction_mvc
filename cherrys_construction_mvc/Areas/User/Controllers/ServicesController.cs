@@ -57,7 +57,7 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
             }
             else { }
 
-            var testimonies = await _testimonyService.GetTestimonysAsync();
+            var testimonies = await _testimonyService.GetTestimoniesAsync();
             if (testimonies.Any())
             {
                 serviceResponce.Testimonies = testimonies;
@@ -108,7 +108,7 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
                 }
                 else { }
 
-                var testimonies = await _testimonyService.GetTestimonysAsync();
+                var testimonies = await _testimonyService.GetTestimoniesAsync();
                 if (testimonies.Any())
                 {
                     serviceResponce.Testimonies = testimonies;

@@ -13,35 +13,37 @@ namespace cherrys_construction_mvc.Mapper
             #region Project
 
             _ = CreateMap<Project, ProjectResponce>()
-                .ForPath(a => a.ProjectServiceType.Title, t => t.MapFrom(t => t.ServiceType.Title))
-                .ForPath(a => a.ProjectServiceType.Id, t => t.MapFrom(t => t.ServiceType.Id))
-                .ForPath(a => a.ProjectServiceType.Description, t => t.MapFrom(t => t.ServiceType.Description))
-                .ForPath(a => a.ProjectServiceType.PageDescription, t => t.MapFrom(t => t.ServiceType.PageDescription))
-                .ForPath(a => a.ProjectServiceType.PageTitle, t => t.MapFrom(t => t.ServiceType.PageTitle))
-                .ForPath(a => a.ProjectTestimony.Id, t => t.MapFrom(t => t.Testimony.Id))
-                .ForPath(a => a.ProjectTestimony.Name, t => t.MapFrom(t => t.Testimony.Name))
-                .ForPath(a => a.ProjectTestimony.Description, t => t.MapFrom(t => t.Testimony.Description))
-                .ForPath(a => a.ProjectTestimony.Stars, t => t.MapFrom(t => t.Testimony.Stars))
+                //.ForPath(a => a.ProjectServiceType.Title, t => t.MapFrom(t => t.ServiceType.Title))
+                //.ForPath(a => a.ProjectServiceType.Id, t => t.MapFrom(t => t.ServiceType.Id))
+                //.ForPath(a => a.ProjectServiceType.Description, t => t.MapFrom(t => t.ServiceType.Description))
+                //.ForPath(a => a.ProjectServiceType.PageDescription, t => t.MapFrom(t => t.ServiceType.PageDescription))
+                //.ForPath(a => a.ProjectServiceType.PageTitle, t => t.MapFrom(t => t.ServiceType.PageTitle))
+                .ForPath(a => a.Testimony.Id, t => t.MapFrom(t => t.Testimony.Id))
+                .ForPath(a => a.Testimony.Name, t => t.MapFrom(t => t.Testimony.Name))
+                .ForPath(a => a.Testimony.Description, t => t.MapFrom(t => t.Testimony.Description))
+                .ForPath(a => a.Testimony.Stars, t => t.MapFrom(t => t.Testimony.Stars))
 
-                .ForPath(a => a.ProjectTestimony.ImageLink, t => t.MapFrom(t => t.Testimony.ImageLink))
-                .ForPath(a => a.ProjectTestimony.Position, t => t.MapFrom(t => t.Testimony.Position))
+                .ForPath(a => a.Testimony.ImageLink, t => t.MapFrom(t => t.Testimony.ImageLink))
+                .ForPath(a => a.Testimony.Position, t => t.MapFrom(t => t.Testimony.Position))
                 .ForPath(s => s.ProjectTags, t => t.MapFrom(a => a.ProjectTags))
                 ;
-            //_ = CreateMap<ProjectResponce, Project>();
-            //.ForPath(a => a.ProjectTestimony.ProjectId, t => t.MapFrom(t => t.Testimony.ProjectId))
+            _ = CreateMap<ProjectResponce, Project>()
+                .ForPath(a => a.Testimony.ProjectId, t => t.MapFrom(t => t.Testimony.ProjectId));
             _ = CreateMap<Project, ProjectRequest>();
             _ = CreateMap<ProjectRequest, Project>();
-
+            _ = CreateMap<ProjectRequest, ProjectResponce>().ReverseMap();
 
             #endregion
             #region Testimony
 
             _ = CreateMap<Testimony, TestimonyResponce>().
-                ForPath(a => a.Project.Title, t => t.MapFrom(t => t.Project.Title));
+                ForPath(a => a.CurrentProject.Title, t => t.MapFrom(t => t.CurrentProject.Title));
 
 
             _ = CreateMap<Testimony, TestimonyRequest>();
             _ = CreateMap<TestimonyRequest, Testimony>();
+
+            _ = CreateMap<TestimonyRequest, TestimonyResponce>().ReverseMap();
 
 
             #endregion
@@ -50,6 +52,7 @@ namespace cherrys_construction_mvc.Mapper
             _ = CreateMap<ImageModel, ImageRequest>();
             _ = CreateMap<ImageRequest, ImageModel>();
             _ = CreateMap<ImageModel, ImageResponce>().ForMember(a => a.PathImage, o => o.MapFrom(s => s.PathImage));
+            _ = CreateMap<ImageResponce, ImageModel>().ReverseMap();
 
 
 

@@ -109,7 +109,7 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
             else { }
 
             // Testimonies
-            var testimonies = await _testimonyService.GetTestimonysAsync();
+            var testimonies = await _testimonyService.GetTestimoniesAsync();
             if (testimonies.Any())
             {
                 homeResponce.Testimonies = testimonies;

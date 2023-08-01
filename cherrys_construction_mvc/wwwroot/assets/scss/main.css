@@ -1864,6 +1864,9 @@ Template: Logis Pricing Section
 .list .card .card-title {
   margin-top: 15px;
 }
+.list .stars {
+  color: #FFB133;
+}
 .list .icon {
   margin-top: 30px;
   width: 48px;
