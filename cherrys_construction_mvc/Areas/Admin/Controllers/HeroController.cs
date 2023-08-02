@@ -94,14 +94,18 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         public async Task<ActionResult> Edit(int id)
         {
             var slider = await _heroSliderService.GetHeroSliderByIdAsync(id);
-            var editRequest = new HeroSliderRequest()
+            if(slider != null)
             {
-                ButtonText = slider.ButtonText,
-                Description = slider.Description,
-                Title = slider.Title,
-                ActiveImages = slider.Images
-            };
-            return View(editRequest);
+                var editRequest = new HeroSliderRequest()
+                {
+                    ButtonText = slider.ButtonText,
+                    Description = slider.Description,
+                    Title = slider.Title,
+                    ActiveImages = slider.Images
+                };
+                return View(editRequest);
+            }
+            return View(null);
         }
 
         // POST: HeroSliderController/Edit/5

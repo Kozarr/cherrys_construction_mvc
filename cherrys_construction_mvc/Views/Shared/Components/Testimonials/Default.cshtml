@@ -1,0 +1,48 @@
+﻿@model IEnumerable<TestimonyResponce>    
+
+@if(Model != null)
+{
+<!-- ======= Testimonials Section ======= -->
+        <section id="testimonials" class="testimonials section">
+            <div class="container" data-aos="fade-up">
+
+                <div class="section-header">
+                    <h2>Testimonials</h2>
+                    <p>
+                        Hear from those who have trusted us with their visions and shared in our passion for quality construction.
+                    </p>
+                </div>
+
+                <div class="slides-2 swiper">
+                    <div class="swiper-wrapper">
+                        @if (Model.Any())
+                        {
+                            @foreach (var item in Model)
+                            {
+                                <div class="swiper-slide">
+                                    <div class="testimonial-wrap">
+                                        <div class="testimonial-item">
+                                            <img src="@item.ImageLink" class="testimonial-img" alt="">
+                                            <h3>@item.Name</h3>
+                                            <h4>@item.Position</h4>
+                                            <div class="stars">
+                                                @for (int star = 0; star != item.Stars; star++)
+                                                {
+                                                    <i class="bi bi-star-fill"></i>
+                                                }
+                                            </div>
+                                            <p>
+                                                @Html.Raw(@item.Description)
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+        </section>   
+    <!-- End Testimonials Section -->
+}

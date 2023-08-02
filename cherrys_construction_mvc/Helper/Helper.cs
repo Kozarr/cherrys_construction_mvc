@@ -67,54 +67,50 @@ namespace cherrys_construction_mvc.Helper
             {
                 using (var ms = new MemoryStream(file))
                 {
-                    using (var image = new Bitmap(Image.FromStream(ms)))
+                    Bitmap bitmap = new(System.Drawing.Image.FromStream(ms));
+                    using var image = bitmap;
+                    float aspectW = image.Width;
+                    float aspectH = image.Height;
+                    float aspectRatio = aspectW / aspectH;
+                    if (aspectRatio > 1.9)
                     {
-                        float aspectW = image.Width;
-                        float aspectH = image.Height;
-                        float aspectRatio = aspectW / aspectH;
-                        if (aspectRatio > 1.9)
-                        {
-                            size = StaticDetails.UltrawideImage;
-                            quality = 80;
-                        }
-                        int width, height;
-                        if (image.Width > image.Height)
-                        {
-                            width = size;
-                            height = Convert.ToInt32(image.Height * size / (double)image.Width);
-                        }
-                        {
-                            width = Convert.ToInt32(image.Width * size / (double)image.Height);
-                            height = size;
-                        }
-                        var resized = new Bitmap(width, height);
-                        using (var graphics = Graphics.FromImage(resized))
-                        {
-                            graphics.CompositingQuality = CompositingQuality.HighSpeed;
-                            graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                            graphics.CompositingMode = CompositingMode.SourceCopy;
-                            graphics.DrawImage(image, 0, 0, width, height);
+                        size = StaticDetails.UltrawideImage;
+                        quality = 80;
+                    }
+                    int width, height;
+                    //Wide Image
+                    if (image.Width > image.Height)
+                    {
+                        width = size;
+                        height = Convert.ToInt32(image.Height * size / (double)image.Width);
+                    }
+                    //Tall Image
+                    else
+                    {
+                        width = Convert.ToInt32(image.Width * size / (double)image.Height);
+                        height = size;
+                    }
+                    var resized = new Bitmap(width, height);
+                    using var graphics = Graphics.FromImage(resized);
+                    graphics.CompositingQuality = CompositingQuality.HighSpeed;
+                    graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    graphics.CompositingMode = CompositingMode.SourceCopy;
+                    graphics.DrawImage(image, 0, 0, width, height);
 
-                            using (var output = File.Open(Path.Combine(uploadPath, newFileName + extension), FileMode.Create))
-                            {
-                                var qualityParamId = Encoder.Quality;
-                                var encoderParameters = new EncoderParameters(1);
-                                encoderParameters.Param[0] = new EncoderParameter(qualityParamId, quality);
-                                var codec = ImageCodecInfo.GetImageDecoders().FirstOrDefault(codec => codec.FormatID == ImageFormat.Jpeg.Guid);
-                                // if this below has issues when hosted, then it needs to be switched to a FileStream CopyTo method
-                                resized.Save(output, codec, encoderParameters);
+                    using (var output = File.Open(Path.Combine(uploadPath, newFileName + extension), FileMode.Create))
+                    {
+                        var qualityParamId = Encoder.Quality;
+                        var encoderParameters = new EncoderParameters(1);
+                        encoderParameters.Param[0] = new EncoderParameter(qualityParamId, quality);
+                        var codec = ImageCodecInfo.GetImageDecoders().FirstOrDefault(codec => codec.FormatID == ImageFormat.Jpeg.Guid);
+                        // if this below has issues when hosted, then it needs to be switched to a FileStream CopyTo method
+                        resized.Save(output, codec, encoderParameters);
 
-                                string ImageUrl = @"\images\" + newFileName + extension;
-                                return ImageUrl;
-                            }
-
-                        }
+                        string ImageUrl = @"\images\" + newFileName + extension;
+                        return ImageUrl;
                     }
 
                 }
-
-
-
             }
         }
 

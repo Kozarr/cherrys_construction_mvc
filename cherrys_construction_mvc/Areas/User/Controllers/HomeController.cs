@@ -12,53 +12,38 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IMemberService _memberService;
-        private readonly ICompanyValueService _companyValueService;
         private readonly IHeroSliderService _heroSliderService;
         private readonly IServiceTypeService _serviceTypeService;
         private readonly IServiceService _serviceService;
-        private readonly ICompanyCertificateService _companyCertificateService;
-        private readonly ITestimonyService _testimonyService;
         private readonly ICallToActionMessage _callToActionMessage;
         private readonly ICallToActionSetting _callToActionSetting;
         private readonly ICompanyInfoService _companyInfoService;
         private readonly Mail _mail;
         private readonly ILegalDocumentService _legal;
-        private readonly ICompanyCertificateSettingService _certSettings;
-        public HomeController(ILogger<HomeController> logger, 
-            IMemberService memberService, 
-            ICompanyValueService companyValueService, 
+        public HomeController(ILogger<HomeController> logger,  
             IHeroSliderService heroSliderService, 
             IServiceTypeService serviceTypeService, 
             IServiceService serviceService, 
-            ICompanyCertificateService companyCertificateService, 
-            ITestimonyService testimonyService,
             ICallToActionMessage callToActionMessage,
             ICallToActionSetting callToActionSetting,
             ICompanyInfoService companyInfoService,
             Mail mail,
-            ILegalDocumentService legal,
-            ICompanyCertificateSettingService certSettings)
+            ILegalDocumentService legal)
         {
-            _memberService = memberService;
             _logger = logger;
-            _companyValueService = companyValueService;
             _heroSliderService = heroSliderService;
             _serviceTypeService = serviceTypeService;
             _serviceService = serviceService;
-            _companyCertificateService = companyCertificateService;
-            _testimonyService = testimonyService;
             _callToActionSetting = callToActionSetting;
             _callToActionMessage = callToActionMessage;
             _companyInfoService = companyInfoService;
             _mail = mail;
             _legal = legal;
-            _certSettings = certSettings;
         }
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var homeResponce = new HomeViewModel();
+            HomeViewModel homeResponce = new();
 
             // HERO SLIDER
             var heroSlider = await _heroSliderService.GetHeroSlidersAsync();
@@ -67,22 +52,13 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
                 var hero = heroSlider.First();
                 homeResponce.HeroSlider = hero;
             }
-            else { }
 
-            // Serviec Types
+            // Service Categories
             var serviceType = await _serviceTypeService.GetServiceTypesAsync();
             if(serviceType.Any())
             {
                 homeResponce.ServiceTypes = serviceType;
             }
-            else { }
-
-            var certSectionSettings = await _certSettings.GetCompanyCertificateSettingsAsync();
-            if (certSectionSettings.Any())
-            {
-                homeResponce.CertSettings = certSectionSettings.First();
-            }
-            else { }
 
             // Services
             var services = await _serviceService.GetServicessAsync();
@@ -90,31 +66,6 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
             {
                 homeResponce.Services = services;
             }
-            else { }
-            
-            // Company Certificates
-            var companyCerts = await _companyCertificateService.GetCertificatesAsync();
-            if (companyCerts.Any())
-            {
-                homeResponce.CompanyCertificates = companyCerts;
-            }
-            else { }
-
-            // Company Values
-            var companyVal = await _companyValueService.GetCompanyValuesAsync();
-            if (companyVal.Any())
-            {
-                homeResponce.CompanyValues = companyVal;
-            }
-            else { }
-
-            // Testimonies
-            var testimonies = await _testimonyService.GetTestimoniesAsync();
-            if (testimonies.Any())
-            {
-                homeResponce.Testimonies = testimonies;
-            }
-            else { }
 
             // Call To Action Settings
             var ctaToReturn = await _callToActionSetting.GetCallToActionSettingsAsync();
@@ -123,7 +74,6 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
                 var returnCTA = ctaToReturn.First();
                 homeResponce.CallToActionSettings = returnCTA;
             }
-            else { }
 
             var companyInfo = await _companyInfoService.GetCompanyInfosAsync();
             if (companyInfo.Any())
@@ -131,7 +81,6 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
                 var compInfo = companyInfo.First();
                 homeResponce.CompanyInfo = compInfo;              
             }    
-            else { }
 
             return View(homeResponce);
         }

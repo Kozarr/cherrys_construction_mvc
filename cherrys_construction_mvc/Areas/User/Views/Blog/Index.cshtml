@@ -116,12 +116,9 @@
                                             <img src="@post.ImageLink" class="img-fluid" alt="">
                                         </a>
                                     }
-                                    @if (post.CreatedDate != null)
-                                    {
-                                        <a class="date-display" asp-action="Index" asp-route-currentFilter="@post.CreatedDateString">
-                                            <span class="post-date">@post.CreatedDateString</span>
-                                        </a>
-                                    }
+                                    <a class="date-display" asp-action="Index" asp-route-currentFilter="@post.CreatedDateString">
+                                        <span class="post-date">@post.CreatedDateString</span>
+                                    </a>
                                 </div>
 
                                 <div class="post-content">

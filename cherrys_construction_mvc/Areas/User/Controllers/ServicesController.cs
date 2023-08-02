@@ -11,66 +11,42 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
     public class ServicesController : Controller
     {
         private readonly ILogger<ServicesController> _logger; 
-        private readonly ICompanyValueService _companyValueService;
         private readonly IServiceTypeService _serviceTypeService;
         private readonly IServiceService _serviceService;
         private readonly ICompanyInfoService _companyInfoService;
-        private readonly ITestimonyService _testimonyService;
-
         public ServicesController(
             ILogger<ServicesController> logger,        
-            ICompanyValueService companyValueService,
             IServiceTypeService serviceTypeService,
             IServiceService serviceService,
-            ITestimonyService testimonyService,
             ICompanyInfoService companyInfoService)
         {           
-            _logger = logger;
-            _companyValueService = companyValueService;       
+            _logger = logger;    
             _serviceTypeService = serviceTypeService;
             _serviceService = serviceService;          
-            _testimonyService = testimonyService;
             _companyInfoService = companyInfoService;
         }
         public async Task<IActionResult> Index()
         {
-            var serviceResponce = new ServiceViewModel();
+            ServiceViewModel serviceResponce = new();
 
             var services = await _serviceService.GetServicessAsync();
             if(services.Any())
             {
                 serviceResponce.Services = services;
             }
-            else { }
 
             var serviceTypes = await _serviceTypeService.GetServiceTypesAsync();
             if (serviceTypes.Any())
             {
                 serviceResponce.ServiceTypes = serviceTypes;
             }
-            else { }
-
-            var companyValues = await _companyValueService.GetCompanyValuesAsync();
-            if (companyValues.Any())
-            {
-                serviceResponce.CompanyValues = companyValues;
-            }
-            else { }
-
-            var testimonies = await _testimonyService.GetTestimoniesAsync();
-            if (testimonies.Any())
-            {
-                serviceResponce.Testimonies = testimonies;
-            }
-            else { }
 
             var companyInfo = await _companyInfoService.GetCompanyInfosAsync();
             if (companyInfo.Any())
             {
-                var info = companyInfo.ToList()[0];
+                var info = companyInfo.ToList().FirstOrDefault();
                 serviceResponce.CompanyInfo = info;
             }
-            else { }
 
             return View(serviceResponce);
         }
@@ -85,54 +61,29 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
             }
             else
             {
-                var serviceResponce = new ServiceViewModel();
+                ServiceViewModel serviceResponce = new();
 
                 var services = await _serviceService.GetServicessAsync();
                 if (services.Any())
                 {
                     serviceResponce.Services = services;
                 }
-                else { }
 
                 var serviceTypes = await _serviceTypeService.GetServiceTypesAsync();
                 if (serviceTypes.Any())
                 {
                     serviceResponce.ServiceTypes = serviceTypes;
                 }
-                else { }
-
-                var companyValues = await _companyValueService.GetCompanyValuesAsync();
-                if (companyValues.Any())
-                {
-                    serviceResponce.CompanyValues = companyValues;
-                }
-                else { }
-
-                var testimonies = await _testimonyService.GetTestimoniesAsync();
-                if (testimonies.Any())
-                {
-                    serviceResponce.Testimonies = testimonies;
-                }
-                else { }
 
                 var companyInfo = await _companyInfoService.GetCompanyInfosAsync();
                 if (companyInfo.Any())
                 {
-                    var info = companyInfo.ToList()[0];
+                    var info = companyInfo.ToList().FirstOrDefault();
                     serviceResponce.CompanyInfo = info;
                 }
-                else { }
-
                 serviceResponce.Service = service;
-
                 return View(serviceResponce);
-
             }
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -3,11 +3,10 @@ using AutoMapper;
 using cherrys_construction_mvc.EfRepository.Interfaces;
 using cherrys_construction_mvc.Interfaces;
 using cherrys_construction_mvc.Models;
+using cherrys_construction_mvc.Services.ImageSharp.Interface;
 using cherrys_construction_mvc.Utility;
 using cherrys_construction_mvc.ViewModels.Requests;
 using cherrys_construction_mvc.ViewModels.Responce;
-using Microsoft.AspNetCore.Hosting;
-using System.Drawing;
 
 namespace cherrys_construction_mvc.Services
 {
@@ -17,21 +16,25 @@ namespace cherrys_construction_mvc.Services
         private readonly IEfRepository<Member> _memberRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<MemberService> _logger;
+        private readonly IImageProcessorService _imageProcessor;
         public MemberService(IEfRepository<Member> memberRepository, 
             IMapper mapper, 
             IWebHostEnvironment webHostEnvironment,
-            ILogger<MemberService> logger)
+            ILogger<MemberService> logger,
+            IImageProcessorService imageProcessor)
         {
             _memberRepository = memberRepository;
             _mapper = mapper;
             _webHostEnvironment = webHostEnvironment;
             _logger = logger;
+            _imageProcessor = imageProcessor;
         }
         public async Task CreateMemberAsync(MemberRequest request)
         {
             if (request.Image != null)
-            {           
-                request.ImageLink = await Helper.Helper.UploadImage(request.Image, _webHostEnvironment, StaticDetails.SquareImage);
+            {
+                //request.ImageLink = await Helper.Helper.UploadImage(request.Image, _webHostEnvironment, StaticDetails.SquareImage);
+                request.ImageLink = await _imageProcessor.UploadImage(request.Image, _webHostEnvironment, StaticDetails.SquareImage);
             }
 
             var member = _mapper.Map<Member>(request);
@@ -94,7 +97,7 @@ namespace cherrys_construction_mvc.Services
                             File.Delete(oldImagePath);
                         }
                     }                  
-                    request.ImageLink = await Helper.Helper.UploadImage(request.Image, _webHostEnvironment, StaticDetails.SquareImage);
+                    request.ImageLink = await _imageProcessor.UploadImage(request.Image, _webHostEnvironment, StaticDetails.SquareImage);
                 }
                 else
                 {

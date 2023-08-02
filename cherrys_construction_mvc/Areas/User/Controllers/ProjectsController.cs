@@ -15,27 +15,24 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
         private readonly ITagService _tagService;
         private readonly ICompanyInfoService _companyInfoService;
         private readonly IServiceTypeService _serviceTypeService;
-        private readonly ITestimonyService _testimonyService;
         public ProjectsController(
             ILogger<ProjectsController> logger,
             IProjectService projectService,
             ITagService tagService,
             ICompanyInfoService companyInfoService,
-            IServiceTypeService serviceTypeService,
-            ITestimonyService testimonyService)
+            IServiceTypeService serviceTypeService)
         {
             _logger = logger;
             _projectService = projectService;
             _tagService = tagService;
             _companyInfoService = companyInfoService;
             _serviceTypeService = serviceTypeService;
-            _testimonyService = testimonyService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var projectViewModelResponce = new ProjectViewModel();
+            ProjectViewModel projectViewModelResponce = new();
 
             var projects = await _projectService.GetProjectsAsync();
             if(projects.Any())
@@ -98,11 +95,6 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
             }
 
             return View(projectDetails);
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

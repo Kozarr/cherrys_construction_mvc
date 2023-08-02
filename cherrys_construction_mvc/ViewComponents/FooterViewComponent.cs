@@ -1,6 +1,5 @@
 ﻿using cherrys_construction_mvc.Interfaces;
 using cherrys_construction_mvc.ViewModels.FooterComponentVM;
-using cherrys_construction_mvc.ViewModels.Responce;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cherrys_construction_mvc.ViewComponents

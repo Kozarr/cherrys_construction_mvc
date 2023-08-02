@@ -6,6 +6,8 @@ using cherrys_construction_mvc.Helper;
 using cherrys_construction_mvc.Interfaces;
 using cherrys_construction_mvc.Mapper;
 using cherrys_construction_mvc.Services;
+using cherrys_construction_mvc.Services.ImageSharp;
+using cherrys_construction_mvc.Services.ImageSharp.Interface;
 using cherrys_construction_mvc.Utility;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -58,6 +60,13 @@ builder.Services.AddScoped<ILegalDocumentService, LegalDocumentService>();
 builder.Services.AddScoped<IBlogPostService, BlogPostService>();
 builder.Services.AddScoped<IBlogCategoryService, BlogCategoryService>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
+builder.Services.AddScoped<IImageProcessorService, ImageProcessorService>();
+
+//builder.Services.AddControllersWithViews()
+//    .AddRazorOptions(options =>
+//    {
+//        options.ViewLocationFormats.Add("/Views/Shared/Components/Members/Default.cshtml");
+//    });
 
 builder.Services.AddScoped(typeof(IEfRepository<>), typeof(EfRepository<>));
 builder.Services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));

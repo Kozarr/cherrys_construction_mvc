@@ -1,268 +1,51 @@
-﻿@using cherrys_construction_mvc.ViewModels.About;
-@model AboutViewModel
+﻿@using cherrys_construction_mvc.ViewModels.Responce;
+@model CompanyInfoResponce
 
 @{
     ViewData["Title"] = Breadcrumb.UserAboutTitle;
 }
+@if (Model != null)
+{   
+    <!-- ======= Breadcrumbs ======= -->
+    @if (!string.IsNullOrWhiteSpace(Model.NavigationImageURL))
+    {
+        string imageLink = Model.NavigationImageURL.Remove(0, 8);
+        string image = ("~/images/" + imageLink);
+        <div class="breadcrumbs d-flex align-items-center" style="background-image: url('@Url.Content(image)');">
+            <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
 
-<!-- ======= Breadcrumbs ======= -->
-@if (Model.CompanyInfo != null && Model.CompanyInfo.NavigationImageURL != null)
-{
-    string imageLink = Model.CompanyInfo.NavigationImageURL.Remove(0, 8);
-    string image = ("~/images/" + imageLink);
-    <div class="breadcrumbs d-flex align-items-center" style="background-image: url('@Url.Content(image)');">
-        <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+                <h2>@Breadcrumb.UserAboutTitle</h2>
+                <ol>
+                    <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Index">@Breadcrumb.HomeTitle</a></li>
+                    <li>@Breadcrumb.UserAboutTitle</li>
+                </ol>
 
-            <h2>@Breadcrumb.UserAboutTitle</h2>
-            <ol>
-                <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Index">@Breadcrumb.HomeTitle</a></li>
-                <li>@Breadcrumb.UserAboutTitle</li>
-            </ol>
-
+            </div>
         </div>
-    </div>
+    }
+    else
+    {
+        <div class="breadcrumbs d-flex align-items-center" style="background-color: darkslategray;">
+            <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+
+                <h2>@Breadcrumb.UserAboutTitle</h2>
+                <ol>
+                    <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Index">@Breadcrumb.HomeTitle</a></li>
+                    <li>@Breadcrumb.UserAboutTitle</li>
+                </ol>
+
+            </div>
+        </div>
+    }
     <!-- End Breadcrumbs -->
 }
 else
 {
-    <div class="breadcrumbs d-flex align-items-center" style="background-color: darkslategray;">
-        <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
-
-            <h2>@Breadcrumb.UserAboutTitle</h2>
-            <ol>
-                <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Index">@Breadcrumb.HomeTitle</a></li>
-                <li>@Breadcrumb.UserAboutTitle</li>
-            </ol>
-
-        </div>
-    </div>
-
-    <!-- End Breadcrumbs -->
-}
-
-@if (Model.CompanyInfo == null)
-{
     <partial name="_WebsiteSettingsWarningPartial" />
 }
-<!-- ======= About / Company Story Section ======= -->
-@if (Model.Story != null)
-{
-    <section id="about" class="about">
-        <div class="container" data-aos="fade-up">
-            <div class="row position-relative">
-                @foreach (var item in Model.Story)
-                {
-                    string imageLink = item.ImageLink.Remove(0, 8);
-                    string image = ("~/images/" + imageLink);
-                    <div class="col-lg-7 about-img" style="background-image: url('@Url.Content(image)');"></div>
-                    <div class="col-lg-7">
-                        <h2 style="color:#364d59;">@item.Title</h2>
-                        <div class="our-story">
-                            <h4>@item.ArticleSmallText</h4>
-                            <h3>@item.ArticleTitle</h3>
-                            <p>@Html.Raw(item.ArticleDescription)</p>
-                        </div>
-                    </div>
-                }
-            </div>
-        </div>
-    </section>
-}
-else { }
-<!-- End About / Company Story Section -->
-<!-- ======= Company Certificates Section ======= -->
-<section id="alt-services" class="alt-services">
-    <div class="container" data-aos="fade-up">
-        @if (Model != null)
-        {
-            @if (Model.CompanyCertificates != null)
-            {
-                <div class="row justify-content-around gy-4">
-                    @if (Model.CertSettings != null)
-                    {
-                        @if (!string.IsNullOrWhiteSpace(Model.CertSettings.ImageLink))
-                        {
-                            string imageLink = Model.CertSettings.ImageLink.Remove(0, 8);
-                            string image = ("~/images/" + imageLink);
-                            <div class="col-lg-6 img-bg" style="background-image: url('@Url.Content(image)');" data-aos="zoom-in" data-aos-delay="100"></div>
-                            <div class="col-lg-5 d-flex flex-column justify-content-center">
-                                @if (Model.CertSettings != null)
-                                {
-                                    <h3>@Model.CertSettings.Title</h3>
-                                    @Html.Raw(Model.CertSettings.Description)
-                                }
-                                @if (Model.CompanyCertificates.Any())
-                                {
-                                    @foreach (var item in Model.CompanyCertificates)
-                                    {
-                                        <div class="icon-box d-flex position-relative" data-aos="fade-up" data-aos-delay="100">
-                                            <div>
-                                                <h4><a class="stretched-link">@item.Title</a></h4>
-                                                <p>@Html.Raw(item.Description)</p>
-                                            </div>
-                                        </div>
-                                    }
-                                }
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="col-lg-12 d-flex flex-column justify-content-center">
-                                @if (Model.CertSettings != null)
-                                {
-                                    <h3>@Model.CertSettings.Title</h3>
-                                    @Html.Raw(Model.CertSettings.Description)
-                                }
-                                @if (Model.CompanyCertificates.Any())
-                                {
-                                    @foreach (var item in Model.CompanyCertificates)
-                                    {
-                                        <div class="icon-box d-flex position-relative" data-aos="fade-up" data-aos-delay="100">
-                                            <div>
-                                                <h4><a class="stretched-link">@item.Title</a></h4>
-                                                <p>@Html.Raw(item.Description)</p>
-                                            </div>
-                                        </div>
-                                    }
-                                }
-                            </div>
-                        }
-                    }
-                </div>
-            }
-        }
-    </div>
-</section>
-<!-- End Company Certificates Section -->
-<!-- ======= Company Qualities Section ======= -->
-@if (Model.Qualities != null)
-{
-    <section id="alt-services-2" class="alt-services section-bg">
-        <div class="container" data-aos="fade-up">
+@* @await Component.InvokeAsync("CompanyStory") *@
+@await Component.InvokeAsync("Certificates")
+@await Component.InvokeAsync("Qualities")
+@* @await Component.InvokeAsync("Members"); *@
+@await Component.InvokeAsync("Testimonials")
 
-            <div class="row justify-content-around gy-4">
-                <div class="col-lg-5 d-flex flex-column justify-content-center">
-                    @if(Model.CompanyQualitiesSettings != null)
-                    {
-                        <h3>@Model.CompanyQualitiesSettings.Title</h3>
-                        @Html.Raw(Model.CompanyQualitiesSettings.Description);
-                    }
-
-                    @foreach (var item in Model.Qualities)
-                    {
-
-                        <div class="icon-box d-flex position-relative" data-aos="fade-up" data-aos-delay="100">
-                            <div>
-                                <h4><a href="" class="stretched-link">@item.Title</a></h4>
-                                <p>@Html.Raw(item.Description)</p>
-                            </div>
-                        </div>
-                    }
-
-
-                </div>
-                @if (Model.CompanyQualitiesSettings != null)
-                {
-                    @if (Model.CompanyQualitiesSettings.ImageLink != null || Model.CompanyQualitiesSettings.ImageLink != " ")
-                    {
-                        string imageLink = Model.CompanyQualitiesSettings.ImageLink.Remove(0, 8);
-                        string image = ("~/images/" + imageLink);
-                        <div class="col-lg-6 img-bg" style="background-image: url('@Url.Content(image)');" data-aos="zoom-in" data-aos-delay="100"></div>
-                    }
-                }
-            </div>
-
-        </div>
-    </section>
-}
-<!-- End Comapany Qualities Section -->
-@if (Model.Members != null)
-{
-    var DataAOS = 100;
-    <!-- ======= Our Team Section ======= -->
-    <section id="team" class="team">
-        <div class="container" data-aos="fade-up">
-
-
-
-            <div class="section-header">
-                <h2>Our Team</h2>
-                @*<p>Aperiam dolorum et et wuia molestias qui eveniet numquam nihil porro incidunt dolores placeat sunt id nobis omnis tiledo stran delop</p>*@
-            </div>
-
-            <div class="row gy-5">
-                @if (Model.Members.Any())
-                {
-                    @foreach (var item in Model.Members)
-                    {
-                        <div class="col-lg-4 col-md-6 member" data-aos="fade-up" data-aos-delay="@DataAOS">
-                            <div class="member-img">
-                                <img src="@item.ImageLink" class="img-fluid" />
-                                @if (!string.IsNullOrWhiteSpace(item.InstagramLink))
-                                {
-                                    <div class="social">
-                                        <a href="@item.InstagramLink"><i class="bi bi-instagram"></i></a>
-                                    </div>
-                                }
-                            </div>
-                            <div class="member-info text-center">
-                                <h4>@item.Name</h4>
-                                <span>@item.Role</span>
-                                <p>@Html.Raw(item.Description)</p>
-                            </div>
-                        </div>
-                        DataAOS += 50;
-                    }
-                }
-                
-            </div>
-        </div>
-    </section>
-    <!-- End Our Team Section -->
-}
-<!-- ======= Testimonials Section ======= -->
-@if (Model.Testimonies != null)
-{
-    <section id="testimonials" class="testimonials section">
-        <div class="container" data-aos="fade-up">
-
-            <div class="section-header">
-                <h2>Testimonials</h2>
-                <p>
-                    Hear from those who have trusted us with their visions and shared in our passion for quality construction.
-                </p>
-            </div>
-
-            <div class="slides-2 swiper">
-                <div class="swiper-wrapper">
-
-                    @foreach (var item in Model.Testimonies)
-                    {
-                        <div class="swiper-slide">
-                            <div class="testimonial-wrap">
-                                <div class="testimonial-item">
-                                    <img src="@item.ImageLink" class="testimonial-img" alt="">
-                                    <h3>@item.Name</h3>
-                                    <h4>@item.Position</h4>
-                                    <div class="stars">
-                                        @for (int star = 0; star != item.Stars; star++)
-                                        {
-                                            <i class="bi bi-star-fill"></i>
-                                        }
-                                    </div>
-                                    <p>
-                                        @Html.Raw(@item.Description)
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    }
-
-                </div>
-                <div class="swiper-pagination"></div>
-            </div>
-
-        </div>
-    </section>
-}
-<!-- End Testimonials Section -->

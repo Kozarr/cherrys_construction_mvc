@@ -1,0 +1,27 @@
+﻿@model CompanyStoryResponce
+@if (Model != null)
+{
+    <!-- ======= About / Company Story Section ======= -->
+    <section id="about" class="about">
+        <div class="container" data-aos="fade-up">
+            <div class="row position-relative">
+                @if (!string.IsNullOrWhiteSpace(Model.ImageLink))
+                {
+                    string imageLink = Model.ImageLink.Remove(0, 8);
+                    string image = ("~/images/" + imageLink);
+                    <div class="col-lg-7 about-img" style="background-image: url('@Url.Content(image)');"></div>
+                }
+                <div class="col-lg-7">
+                    <h2 style="color:#364d59;">@Model.Title</h2>
+                    <div class="our-story">
+                        <h4>@Model.ArticleSmallText</h4>
+                        <h3>@Model.ArticleTitle</h3>
+                        <p>@Html.Raw(Model.ArticleDescription)</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- End About / Company Story Section -->
+}

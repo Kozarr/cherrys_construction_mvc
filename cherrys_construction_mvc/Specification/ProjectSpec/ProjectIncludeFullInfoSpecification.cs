@@ -14,7 +14,7 @@ namespace cherrys_construction_mvc.Specification.ProjectSpec
         public ProjectIncludeFullInfoSpecification(int id)
         {
             //Query.Where(s => id == s.Id).Include(c => c.ServiceType).Include(t => t.Testimony).Include(a => a.Images).Include(a => a.ProjectTags).ThenInclude(a => a.Tag).AsSplitQuery();
-            Query.Where(s => id == s.Id).Include(t=>t.Testimony).Include(a=>a.Images).Include(a => a.ProjectTags).ThenInclude(a=>a.Tag).AsSplitQuery();
+            Query.Where(s => id == s.Id).Include(t => t.Testimony).Include(a => a.Images).Include(a => a.ProjectTags).ThenInclude(a => a.Tag).AsSplitQuery();
         }
 
     }
