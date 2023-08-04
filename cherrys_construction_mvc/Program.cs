@@ -61,12 +61,6 @@ builder.Services.AddScoped<IBlogCategoryService, BlogCategoryService>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IImageProcessorService, ImageProcessorService>();
 
-//builder.Services.AddControllersWithViews()
-//    .AddRazorOptions(options =>
-//    {
-//        options.ViewLocationFormats.Add("/Views/Shared/Components/Members/Default.cshtml");
-//    });
-
 builder.Services.AddScoped(typeof(IEfRepository<>), typeof(EfRepository<>));
 builder.Services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
 
