@@ -26,6 +26,6 @@ namespace cherrys_construction_mvc.Utility
         public const int StandardImage = 1200;
         public const int PortraitImage = 500;
         public const int SquareAvatarImage = 500;
-        public const int UltrawideImage = 3000;
+        public const int UltrawideImage = 5000;
     }
 }

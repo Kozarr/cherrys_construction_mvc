@@ -27,7 +27,7 @@
             <form method="post" asp-action="Edit" enctype="multipart/form-data">
 
                 <div class="img-container">
-                    <div>
+                    <div class="img-div">
                         @if (!string.IsNullOrWhiteSpace(Model.CompanyInfo.NavigationImageURL))
                         {
                             <img class="img-fluid" src="@Model.CompanyInfo.NavigationImageURL" />
@@ -38,10 +38,9 @@
                             <span asp-validation-for="NavigationImage" class="text-danger"></span>
                         </div>
                     </div>
-                    <div>
+                    <div class="img-div">
                         @if (!string.IsNullOrWhiteSpace(Model.CompanyInfo.FooterImageURL))
                         {
-
                             <img class="img-fluid" src="@Model.CompanyInfo.FooterImageURL" />
                             <h5>Footer</h5>
                         }

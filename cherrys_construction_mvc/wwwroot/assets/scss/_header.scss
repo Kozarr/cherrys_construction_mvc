@@ -8,7 +8,7 @@
 
     &.sticked {
         background: rgba($cherrys-blue, .9);
-        padding: 4px 0;
+        padding: 6px 0;
         box-shadow: 0px 2px 20px rgba($secondary, 0.10);
     }
 
@@ -37,7 +37,7 @@
             transition: all 0.5s;
 
             img {
-                max-height: 50px;
+                max-height: 56px;
             }
         }
     }

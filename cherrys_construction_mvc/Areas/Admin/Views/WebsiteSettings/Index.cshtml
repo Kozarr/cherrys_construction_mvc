@@ -37,16 +37,16 @@
                 <div class="img-container">
                     @if (!string.IsNullOrWhiteSpace(Model.NavigationImageURL))
                     {
-                        <div>
+                        <div class="img-div">
                             <img src="@Model.NavigationImageURL" class="img-fluid">
-                            <p>Header</p>
+                            <h5>Header</h5>
                         </div>
                     }
                     @if (!string.IsNullOrWhiteSpace(Model.FooterImageURL))
                     {
-                        <div>
+                        <div class="img-div">
                             <img src="@Model.FooterImageURL" class="img-fluid">
-                            <p>Footer</p>
+                            <h5>Footer</h5>
                         </div>
                     }
                     

@@ -491,7 +491,7 @@ section {
 }
 .header.sticked {
   background: rgba(11, 37, 71, 0.9);
-  padding: 4px 0;
+  padding: 6px 0;
   box-shadow: 0px 2px 20px rgba(82, 86, 94, 0.1);
 }
 .header .logo {
@@ -516,7 +516,7 @@ section {
   transition: all 0.5s;
 }
 .header.sticked .logo img {
-  max-height: 50px;
+  max-height: 56px;
 }
 
 /*--------------------------------------------------------------
@@ -756,10 +756,10 @@ section {
   }
   .mobile-nav-show {
     color: #fff;
-    font-size: 1.75rem;
+    font-size: 2.1rem;
     cursor: pointer;
     line-height: 0;
-    transition: 0.5s;
+    transition: all 0.5s ease-in-out;
     z-index: 9999;
     margin-right: 10px;
   }
@@ -768,11 +768,9 @@ section {
     font-size: 2.1rem;
     cursor: pointer;
     line-height: 0;
-    transition: 0.5s;
-    position: fixed;
-    right: 20px;
-    top: 20px;
+    transition: all 0.5s ease-in-out;
     z-index: 9999;
+    padding-right: 10px;
   }
   .mobile-nav-active {
     overflow: hidden;
@@ -786,6 +784,46 @@ section {
     inset: 0;
     background-color: rgba(11, 37, 71, 0.5);
     z-index: 9996;
+  }
+  .mobile-nav-toggle {
+    width: 50px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 400ms;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  .mobile-nav-toggle .line {
+    fill: none;
+    transition: stroke-dasharray 400ms, stroke-dashoffset 400ms;
+    stroke: #000;
+    stroke-width: 5.5;
+    stroke-linecap: round;
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(215deg) brightness(104%) contrast(105%);
+  }
+  .toggle-rotate.active {
+    transform: rotate(45deg);
+  }
+  .mobile-nav-toggle .top {
+    stroke-dasharray: 40 82;
+  }
+  .mobile-nav-toggle .middle {
+    stroke-dasharray: 40 111;
+  }
+  .mobile-nav-toggle .bottom {
+    stroke-dasharray: 40 161;
+  }
+  .mobile-nav-toggle.active .top {
+    stroke-dasharray: 17 82;
+    stroke-dashoffset: -62px;
+  }
+  .mobile-nav-toggle.active .middle {
+    stroke-dashoffset: 23px;
+  }
+  .mobile-nav-toggle.active .bottom {
+    stroke-dashoffset: -83px;
   }
 }
 /*--------------------------------------------------------------
@@ -2279,15 +2317,7 @@ Template: Resi Pro
 /*--------------------------------------------------------------
 # List Items
 --------------------------------------------------------------*/
-.website-settings .web-container {
-  background-color: #ffffff;
-  box-shadow: 0 3px 20px -2px rgba(0, 0, 0, 0.25);
-}
-.website-settings .web-container .img-container {
-  display: flex;
-  flex-flow: row;
-}
-.website-settings .web-container .img-container p {
+.website-settings h5 {
   position: absolute;
   font-size: 1.8rem;
   font-weight: 700;
@@ -2296,27 +2326,54 @@ Template: Resi Pro
   text-shadow: 1px 1px 16px #0A0A0A;
 }
 @media (max-width: 767px) {
-  .website-settings .web-container .img-container p {
+  .website-settings h5 {
     font-size: 1.4rem;
     transform: translate(20px, -46px);
   }
 }
 @media (max-width: 480px) {
-  .website-settings .web-container .img-container p {
+  .website-settings h5 {
     font-size: 1.2rem;
     transform: translate(18px, -40px);
   }
 }
 @media (max-width: 376px) {
-  .website-settings .web-container .img-container p {
+  .website-settings h5 {
     font-size: 1rem;
     transform: translate(14px, -34px);
   }
 }
+.website-settings .web-container {
+  background-color: #ffffff;
+  box-shadow: 0 3px 20px -2px rgba(0, 0, 0, 0.25);
+}
+.website-settings .web-container .img-container {
+  display: flex;
+  flex-flow: row;
+}
+@media (max-width: 480px) {
+  .website-settings .web-container .img-container {
+    flex-flow: column;
+  }
+}
+.website-settings .web-container .img-container p {
+  position: relative;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ffffff;
+  padding-left: 10px;
+  text-shadow: 1px 1px 16px rgb(0, 0, 0);
+}
+.website-settings .web-container .img-container .img-div {
+  width: 50%;
+}
+@media (max-width: 480px) {
+  .website-settings .web-container .img-container .img-div {
+    width: 100%;
+  }
+}
 .website-settings .web-container .img-container img {
   padding: 10px;
-  max-width: 100%;
-  width: 100%;
 }
 .website-settings .web-container .web-content {
   padding: 10px;
@@ -2333,6 +2390,14 @@ Template: Resi Pro
 .website-settings .web-form-container .img-container img {
   padding: 10px;
   max-width: 100%;
+}
+.website-settings .web-form-container .img-container .img-div {
+  width: 50%;
+}
+@media (max-width: 480px) {
+  .website-settings .web-form-container .img-container .img-div {
+    width: 100%;
+  }
 }
 .website-settings .web-form-container .img-container .file-input {
   padding: 10px;
@@ -2382,42 +2447,6 @@ Template: Resi Pro
   .website-settings .web-form-container .web-form .web-form-input {
     width: 100%;
   }
-}
-.website-settings .web-form-container h5 {
-  position: absolute;
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #ffffff;
-  transform: translate(30px, -60px);
-  text-shadow: 1px 1px 16px #0A0A0A;
-}
-@media (max-width: 767px) {
-  .website-settings .web-form-container h5 {
-    font-size: 1.4rem;
-    transform: translate(20px, -46px);
-  }
-}
-@media (max-width: 480px) {
-  .website-settings .web-form-container h5 {
-    font-size: 1.2rem;
-    transform: translate(18px, -40px);
-  }
-}
-@media (max-width: 376px) {
-  .website-settings .web-form-container h5 {
-    font-size: 1rem;
-    transform: translate(14px, -34px);
-  }
-}
-.website-settings .web-item {
-  background: #fff;
-  height: 100%;
-  position: relative;
-  min-height: 100px;
-}
-.website-settings h4 {
-  color: #0A0A0A;
-  font-size: 1rem;
 }
 
 /*--------------------------------------------------------------

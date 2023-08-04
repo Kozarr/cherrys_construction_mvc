@@ -1,7 +1,32 @@
 ﻿/*--------------------------------------------------------------
 # List Items
 --------------------------------------------------------------*/
+// Index Page
 .website-settings {
+
+    h5 {
+        position: absolute;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: $white;
+        transform: translate(30px,-60px);
+        text-shadow: 1px 1px 16px $cherrys-black;
+
+        @media (max-width: $tablet-medium) {
+            font-size: 1.4rem;
+            transform: translate(20px,-46px);
+        }
+
+        @media (max-width: $phone-max) {
+            font-size: 1.2rem;
+            transform: translate(18px,-40px);
+        }
+
+        @media (max-width: $phone-min) {
+            font-size: 1rem;
+            transform: translate(14px,-34px);
+        }
+    }
 
     .web-container {
         background-color: $white;
@@ -11,34 +36,29 @@
             display: flex;
             flex-flow: row;
 
+            @media (max-width: $phone-max) {
+                flex-flow: column;
+            }
+
             p {
-                position: absolute;
+                position: relative;
                 font-size: 1.8rem;
                 font-weight: 700;
                 color: $white;
-                transform: translate(30px,-60px);
-                text-shadow: 1px 1px 16px $cherrys-black;
+                padding-left: 10px;
+                text-shadow: 1px 1px 16px rgba(0,0,0, 1);
+            }
 
-                @media (max-width: $tablet-medium) {
-                    font-size: 1.4rem;
-                    transform: translate(20px,-46px);
-                }
+            .img-div {
+                width: 50%;
 
                 @media (max-width: $phone-max) {
-                    font-size: 1.2rem;
-                    transform: translate(18px,-40px);
-                }
-
-                @media (max-width: $phone-min) {
-                    font-size: 1rem;
-                    transform: translate(14px,-34px);
+                    width: 100%;
                 }
             }
 
             img {
                 padding: 10px;
-                max-width: 100%;
-                width: 100%;
             }
         }
 
@@ -46,7 +66,8 @@
             padding: 10px;
         }
     }
-
+    // ---------------------------------------------------------
+    // Edit Form
     .web-form-container {
         .img-container {
             display: flex;
@@ -59,6 +80,14 @@
             img {
                 padding: 10px;
                 max-width: 100%;
+            }
+
+            .img-div {
+                width: 50%;
+
+                @media (max-width: $phone-max) {
+                    width: 100%;
+                }
             }
 
             .file-input {
@@ -117,44 +146,6 @@
                 }
             }
         }
-
-        h5 {
-            position: absolute;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: $white;
-            transform: translate(30px,-60px);
-            text-shadow: 1px 1px 16px $cherrys-black;
-
-            @media (max-width: $tablet-medium) {
-                font-size: 1.4rem;
-                transform: translate(20px,-46px);
-            }
-
-            @media (max-width: $phone-max) {
-                font-size: 1.2rem;
-                transform: translate(18px,-40px);
-            }
-
-            @media (max-width: $phone-min) {
-                font-size: 1rem;
-                transform: translate(14px,-34px);
-            }
-        }
-    }
-
-    .web-item {
-        background: #fff;
-        height: 100%;
-        position: relative;
-        min-height: 100px;
-    }
-
-    img {
-    }
-
-    h4 {
-        color: $cherrys-black;
-        font-size: 1rem;
     }
 }
+
