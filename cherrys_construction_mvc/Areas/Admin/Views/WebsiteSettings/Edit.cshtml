@@ -17,144 +17,121 @@
         </ol>
 
     </div>
-</div><!-- End Breadcrumbs -->
+</div>
+<!-- End Breadcrumbs -->
 
-<section id="list" class="list">
-    <div class="row">
-        <div class="list-container">
+<section id="website-settings" class="website-settings">
+    <div class="container">
+        <div class="web-form-container">
 
-            <!-- Multi Columns Form -->
             <form method="post" asp-action="Edit" enctype="multipart/form-data">
-                <div class="card">
-                    <div class="card-body">
 
-                        <div class="col-md-12 form-floating mb-3">
-                            <input asp-for="CompanyInfo.CompanyName" id="obj1" class="form-control" placeholder="Company Name" />
-                            <label asp-for="CompanyInfo.CompanyName" for="obj1">Company Name</label>
-                            <span asp-validation-for="CompanyInfo.CompanyName" class="text-danger"></span>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12 col-md-12">
-                                <p class="text-info">This email needs to be registered with SendGrid to work.</p>
-                                <div class="col-12 form-floating mb-3">
-                                    <input asp-for="CompanyInfo.CompanyEmail" id="obj2" class="form-control" type="email" placeholder="Company Email" />
-                                    <label asp-for="CompanyInfo.CompanyEmail" for="obj2">Company Email</label>
-                                    <span asp-validation-for="CompanyInfo.CompanyEmail" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6">
-                                <div class="col-12 form-floating mb-3">
-                                    <input asp-for="CompanyInfo.CompanyPhoneNumber" id="obj3" class="form-control" placeholder="Company Phone Number" />
-                                    <label asp-for="CompanyInfo.CompanyPhoneNumber" for="obj3">Company Phone Number</label>
-                                    <span asp-validation-for="CompanyInfo.CompanyPhoneNumber" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6">
-                                <div class="col-12 form-floating mb-3">
-                                    <input asp-for="CompanyInfo.SendButton" id="obj5" class="form-control" placeholder="Send Button" />
-                                    <label asp-for="CompanyInfo.SendButton" for="obj5">Contact Page - Form - Send Button (Text)</label>
-                                    <span asp-validation-for="CompanyInfo.SendButton" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <p class="text-info mt-2">Please add Service States seperated by a comma.</p>
-                            <div class="col-md-12 form-floating mb-3">
-                                <input asp-for="CompanyInfo.ServiceArea" id="obj4" class="form-control" placeholder="Service Area" />
-                                <label asp-for="CompanyInfo.ServiceArea" for="obj4">Service Areas</label>
-                                <span asp-validation-for="CompanyInfo.ServiceArea" class="text-danger"></span>
-                            </div>
-                        </div>
-
+                <div class="img-container">
+                    <div>
                         @if (!string.IsNullOrWhiteSpace(Model.CompanyInfo.NavigationImageURL))
                         {
-                            <div class="mt-5">
-                                <p class="text-info">Currnet Image</p>
-                                <div class="mb-1">
-                                    <img class="img-fluid" style="clip-path:none;max-height: 40vh;" src="@Model.CompanyInfo.NavigationImageURL" />
-                                </div>
-                            </div>
+                            <img class="img-fluid" src="@Model.CompanyInfo.NavigationImageURL" />
+                            <h5>Header</h5>
                         }
-
-                        @*Image*@
-                        <div class="mb-3">
-                            <p class="text-info mt-2">Navigation Window Image (breadcrumbs)</p>
-                            <div class="col-12 mb-3">
-                                <input asp-for="NavigationImage" type="file" class="form-control" />
-                                @*<label asp-for="FormFile" class="text-danger">Navigation Window Image (breadcrumbs)</label>*@
-                                <span asp-validation-for="NavigationImage" class="text-danger"></span>
-                            </div>
+                        <div class="file-input">
+                            <input asp-for="NavigationImage" type="file" class="form-control" value="Header Image" />
+                            <span asp-validation-for="NavigationImage" class="text-danger"></span>
                         </div>
-
+                    </div>
+                    <div>
                         @if (!string.IsNullOrWhiteSpace(Model.CompanyInfo.FooterImageURL))
                         {
-                            <div class="mt-5">
-                                <p class="text-info">Currnet Image</p>
-                                <div class="mb-1">
-                                    <img class="img-fluid" style="clip-path:none;max-height: 40vh;" src="@Model.CompanyInfo.FooterImageURL" />
-                                </div>
-                            </div>
+
+                            <img class="img-fluid" src="@Model.CompanyInfo.FooterImageURL" />
+                            <h5>Footer</h5>
                         }
-
-                        <div>
-                            <p class="text-info mt-2">Footer Image</p>
-                            <div class="col-12 mb-3">
-                                <input asp-for="FooterImage" type="file" class="form-control" />
-                                <span asp-validation-for="FooterImage" class="text-danger"></span>
-                            </div>
+                        <div class="file-input">
+                            <input asp-for="FooterImage" type="file" class="form-control" />
+                            <span asp-validation-for="FooterImage" class="text-danger"></span>
                         </div>
-
-                        <div class="pt-5">
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-12">
-                                    <div class="form-floating mb-3">
-                                        <input asp-for="CompanyInfo.FaceBookLink" id="obj6" class="form-control" placeholder="FaceBook Link" />
-                                        <label asp-for="CompanyInfo.FaceBookLink" for="obj6">FaceBook Link</label>
-                                  
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-12">
-                                    <div class="form-floating mb-3">
-                                        <input asp-for="CompanyInfo.InstagramLink" id="obj7" class="form-control" placeholder="Instagram Link" />
-                                        <label asp-for="CompanyInfo.InstagramLink" for="obj7">Instagram Link</label>
-                              
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-12">
-                                    <div class="form-floating mb-3">
-                                        <input asp-for="CompanyInfo.YoutubeLink" id="obj8" class="form-control" placeholder="Youtube Link" />
-                                        <label asp-for="CompanyInfo.YoutubeLink" for="obj8">Youtube Link</label>
-                           
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-12">
-                                    <div class="form-floating mb-3">
-                                        <input asp-for="CompanyInfo.LinkedInLink" id="obj9" class="form-control" placeholder="LinkedIn Link" />
-                                        <label asp-for="CompanyInfo.LinkedInLink" for="obj9">LinkedIn Link</label>
-                            
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-12">
-                                    <div class="form-floating mb-3">
-                                        <input asp-for="CompanyInfo.TwitterLink" id="obj333" class="form-control" placeholder="Twitter Link" />
-                                        <label asp-for="CompanyInfo.TwitterLink" for="obj333">Twitter Link</label>
-            
-                                    </div>
-                                </div>
-                            </div>
+                    </div>
+                </div>
+                <div class="warning-container">
+                    <h8 class="text-danger">This email needs to be registered with SendGrid to work.</h8>
+                </div>
+                <div class="web-form">
+                    <div class="input-card web-form-input">
+                        <div class="form-floating">
+                            <input asp-for="CompanyInfo.CompanyEmail" id="obj2" class="form-control" type="email" placeholder="Company Email" />
+                            <label asp-for="CompanyInfo.CompanyEmail" for="obj2">Email</label>
+                            <span asp-validation-for="CompanyInfo.CompanyEmail" class="text-danger"></span>
                         </div>
-
-                        <div class="mt-3">
-                            <a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.WebsiteSettingsController" asp-action="Index" class="back-btn">@Breadcrumb.Back</a>
-                            <button type="submit" class="edit-btn">@Breadcrumb.Save</button>
+                    </div>
+                    <div class="web-form-input">
+                        <div class="form-floating">
+                            <input asp-for="CompanyInfo.CompanyName" id="obj1" class="form-control" placeholder="Company Name" />
+                            <label asp-for="CompanyInfo.CompanyName" for="obj1">Business Name</label>
+                            <span asp-validation-for="CompanyInfo.CompanyName" class="text-danger"></span>
                         </div>
+                    </div>
+                    <div class="web-form-input">
+                        <div class="form-floating">
+                            <input asp-for="CompanyInfo.CompanyPhoneNumber" id="obj3" class="form-control" placeholder="Company Phone Number" />
+                            <label asp-for="CompanyInfo.CompanyPhoneNumber" for="obj3">Phone Number</label>
+                            <span asp-validation-for="CompanyInfo.CompanyPhoneNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="web-form-input">
+                        <div class="form-floating">
+                            <input asp-for="CompanyInfo.SendButton" id="obj5" class="form-control" placeholder="Send Button" />
+                            <label asp-for="CompanyInfo.SendButton" for="obj5">Contact Page - Form - Send Button (Text)</label>
+                            <span asp-validation-for="CompanyInfo.SendButton" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="web-form-input">
+                        <div class="form-floating">
+                            <input asp-for="CompanyInfo.ServiceArea" id="obj4" class="form-control" placeholder="Service Area" />
+                            <label asp-for="CompanyInfo.ServiceArea" for="obj4">Servicing Areas</label>
+                            <span asp-validation-for="CompanyInfo.ServiceArea" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="web-form-input">
+                        <div class="form-floating">
+                            <input asp-for="CompanyInfo.FaceBookLink" id="obj6" class="form-control" placeholder="FaceBook Link" />
+                            <label asp-for="CompanyInfo.FaceBookLink" for="obj6">FaceBook Link</label>
 
+                        </div>
+                    </div>
+                    <div class="web-form-input">
+                        <div class="form-floating">
+                            <input asp-for="CompanyInfo.InstagramLink" id="obj7" class="form-control" placeholder="Instagram Link" />
+                            <label asp-for="CompanyInfo.InstagramLink" for="obj7">Instagram Link</label>
+
+                        </div>
+                    </div>
+                    <div class="web-form-input">
+                        <div class="form-floating">
+                            <input asp-for="CompanyInfo.YoutubeLink" id="obj8" class="form-control" placeholder="Youtube Link" />
+                            <label asp-for="CompanyInfo.YoutubeLink" for="obj8">Youtube Link</label>
+
+                        </div>
+                    </div>
+                    <div class="web-form-input">
+                        <div class="form-floating">
+                            <input asp-for="CompanyInfo.LinkedInLink" id="obj9" class="form-control" placeholder="LinkedIn Link" />
+                            <label asp-for="CompanyInfo.LinkedInLink" for="obj9">LinkedIn Link</label>
+
+                        </div>
+                    </div>
+                    <div class="web-form-input">
+                        <div class="form-floating">
+                            <input asp-for="CompanyInfo.TwitterLink" id="obj333" class="form-control" placeholder="Twitter Link" />
+                            <label asp-for="CompanyInfo.TwitterLink" for="obj333">Twitter Link</label>
+                        </div>
                     </div>
                 </div>
 
-            </form><!-- End Multi Columns Form -->
+                <div class="mt-3 text-center">
+                    <a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.WebsiteSettingsController" asp-action="Index" class="back-btn">@Breadcrumb.Back</a>
+                    <button type="submit" class="edit-btn">@Breadcrumb.Save</button>
+                </div>
 
+            </form><!-- End Multi Columns Form -->
         </div>
     </div>
 </section>

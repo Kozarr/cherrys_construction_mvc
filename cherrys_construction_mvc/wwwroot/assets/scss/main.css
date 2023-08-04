@@ -2281,7 +2281,7 @@ Template: Resi Pro
 --------------------------------------------------------------*/
 .website-settings .web-container {
   background-color: #ffffff;
-  box-shadow: 0 3px 20px -2px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 3px 20px -2px rgba(0, 0, 0, 0.25);
 }
 .website-settings .web-container .img-container {
   display: flex;
@@ -2320,6 +2320,94 @@ Template: Resi Pro
 }
 .website-settings .web-container .web-content {
   padding: 10px;
+}
+.website-settings .web-form-container .img-container {
+  display: flex;
+  flex-flow: row;
+}
+@media (max-width: 480px) {
+  .website-settings .web-form-container .img-container {
+    flex-flow: column;
+  }
+}
+.website-settings .web-form-container .img-container img {
+  padding: 10px;
+  max-width: 100%;
+}
+.website-settings .web-form-container .img-container .file-input {
+  padding: 10px;
+}
+.website-settings .web-form-container .warning-container {
+  padding: 0px 10px;
+}
+@media (max-width: 991px) {
+  .website-settings .web-form-container .warning-container {
+    width: 51%;
+  }
+}
+@media (max-width: 480px) {
+  .website-settings .web-form-container .warning-container {
+    width: 100%;
+  }
+}
+.website-settings .web-form-container .warning-container h8 {
+  padding-bottom: 0px;
+}
+.website-settings .web-form-container .web-form {
+  display: flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+  padding: 0px 10px 10px 10px;
+  gap: 10px;
+}
+.website-settings .web-form-container .web-form .web-form-input {
+  width: 32.5%;
+}
+@media (max-width: 1401px) {
+  .website-settings .web-form-container .web-form .web-form-input {
+    width: 49.4%;
+  }
+}
+@media (max-width: 991px) {
+  .website-settings .web-form-container .web-form .web-form-input {
+    width: 49%;
+  }
+}
+@media (max-width: 767px) {
+  .website-settings .web-form-container .web-form .web-form-input {
+    width: 48.5%;
+  }
+}
+@media (max-width: 480px) {
+  .website-settings .web-form-container .web-form .web-form-input {
+    width: 100%;
+  }
+}
+.website-settings .web-form-container h5 {
+  position: absolute;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ffffff;
+  transform: translate(30px, -60px);
+  text-shadow: 1px 1px 16px #0A0A0A;
+}
+@media (max-width: 767px) {
+  .website-settings .web-form-container h5 {
+    font-size: 1.4rem;
+    transform: translate(20px, -46px);
+  }
+}
+@media (max-width: 480px) {
+  .website-settings .web-form-container h5 {
+    font-size: 1.2rem;
+    transform: translate(18px, -40px);
+  }
+}
+@media (max-width: 376px) {
+  .website-settings .web-form-container h5 {
+    font-size: 1rem;
+    transform: translate(14px, -34px);
+  }
 }
 .website-settings .web-item {
   background: #fff;

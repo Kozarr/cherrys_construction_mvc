@@ -5,7 +5,7 @@
 
     .web-container {
         background-color: $white;
-        box-shadow: 0 3px 20px -2px rgba(0, 0, 0,.15);
+        box-shadow: 0 3px 20px -2px rgba(0, 0, 0,.25);
 
         .img-container {
             display: flex;
@@ -44,6 +44,102 @@
 
         .web-content {
             padding: 10px;
+        }
+    }
+
+    .web-form-container {
+        .img-container {
+            display: flex;
+            flex-flow: row;
+
+            @media (max-width: $phone-max) {
+                flex-flow: column;
+            }
+
+            img {
+                padding: 10px;
+                max-width: 100%;
+            }
+
+            .file-input {
+                padding: 10px;
+            }
+        }
+
+        .warning-container {
+            padding: 0px 10px;
+
+            @media (max-width: $tablet-max) {
+                width: 51%;
+            }
+
+            @media (max-width: $phone-max) {
+                width: 100%;
+            }
+
+            h8 {
+                padding-bottom: 0px;
+            }
+        }
+
+
+        .web-form {
+            display: flex;
+            flex-flow: row;
+            flex-wrap: wrap;
+            padding: 0px 10px 10px 10px;
+            gap: 10px;
+
+
+
+            .input-card {
+                //box-shadow: 0 3px 20px -2px rgba(0,0,0, .25);
+            }
+
+            .web-form-input {
+                width: 32.5%;
+                //height: 100%;
+
+                @media (max-width: $lg-desktop-max) {
+                    width: 49.4%;
+                }
+
+                @media (max-width: $tablet-max) {
+                    width: 49%;
+                }
+
+                @media (max-width: $tablet-medium) {
+                    width: 48.5%;
+                }
+
+                @media (max-width: $phone-max) {
+                    width: 100%;
+                }
+            }
+        }
+
+        h5 {
+            position: absolute;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: $white;
+            transform: translate(30px,-60px);
+            text-shadow: 1px 1px 16px $cherrys-black;
+
+            @media (max-width: $tablet-medium) {
+                font-size: 1.4rem;
+                transform: translate(20px,-46px);
+            }
+
+            @media (max-width: $phone-max) {
+                font-size: 1.2rem;
+                transform: translate(18px,-40px);
+            }
+
+            @media (max-width: $phone-min) {
+                font-size: 1rem;
+                transform: translate(14px,-34px);
+            }
         }
     }
 
