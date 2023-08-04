@@ -10,50 +10,32 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
     [Area(Breadcrumb.HomeArea)]
     public class ServicesController : Controller
     {
-        private readonly ILogger<ServicesController> _logger; 
-        private readonly IServiceTypeService _serviceTypeService;
-        private readonly IServiceService _serviceService;
+        private readonly ILogger<ServicesController> _logger;
         private readonly ICompanyInfoService _companyInfoService;
+        private readonly IServiceService _service;
         public ServicesController(
-            ILogger<ServicesController> logger,        
-            IServiceTypeService serviceTypeService,
-            IServiceService serviceService,
-            ICompanyInfoService companyInfoService)
-        {           
-            _logger = logger;    
-            _serviceTypeService = serviceTypeService;
-            _serviceService = serviceService;          
+            ILogger<ServicesController> logger,
+            ICompanyInfoService companyInfoService,
+            IServiceService service)
+        {
+            _logger = logger;
             _companyInfoService = companyInfoService;
+            _service = service;
         }
         public async Task<IActionResult> Index()
         {
-            ServiceViewModel serviceResponce = new();
-
-            var services = await _serviceService.GetServicessAsync();
-            if(services.Any())
+            var companyInfoList = await _companyInfoService.GetCompanyInfosAsync();
+            if (companyInfoList.Any())
             {
-                serviceResponce.Services = services;
+                var info = companyInfoList.FirstOrDefault();
+                return View(info);
             }
-
-            var serviceTypes = await _serviceTypeService.GetServiceTypesAsync();
-            if (serviceTypes.Any())
-            {
-                serviceResponce.ServiceTypes = serviceTypes;
-            }
-
-            var companyInfo = await _companyInfoService.GetCompanyInfosAsync();
-            if (companyInfo.Any())
-            {
-                var info = companyInfo.ToList().FirstOrDefault();
-                serviceResponce.CompanyInfo = info;
-            }
-
-            return View(serviceResponce);
+            return View(null);
         }
 
         public async Task<IActionResult> Details(int id)
         {
-            var service = await _serviceService.GetServiceByIdAsync(id);
+            var service = await _service.GetServiceByIdAsync(id);
             if (service == null)
             {
                 TempData["error"] = "Service Not Found";
@@ -61,28 +43,22 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
             }
             else
             {
-                ServiceViewModel serviceResponce = new();
+                ServiceDetailsViewModel serviceDetails = new();
 
-                var services = await _serviceService.GetServicessAsync();
+                var services = await _service.GetServicesAsync();
                 if (services.Any())
                 {
-                    serviceResponce.Services = services;
-                }
-
-                var serviceTypes = await _serviceTypeService.GetServiceTypesAsync();
-                if (serviceTypes.Any())
-                {
-                    serviceResponce.ServiceTypes = serviceTypes;
+                    serviceDetails.Services = services;
                 }
 
                 var companyInfo = await _companyInfoService.GetCompanyInfosAsync();
                 if (companyInfo.Any())
                 {
-                    var info = companyInfo.ToList().FirstOrDefault();
-                    serviceResponce.CompanyInfo = info;
+                    var info = companyInfo.FirstOrDefault();
+                    serviceDetails.CompanyInfo = info;
                 }
-                serviceResponce.Service = service;
-                return View(serviceResponce);
+                serviceDetails.Service = service;
+                return View(serviceDetails);
             }
         }
 

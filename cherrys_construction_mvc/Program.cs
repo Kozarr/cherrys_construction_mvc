@@ -35,7 +35,6 @@ builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 
 builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles);
 
-
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<ITestimonyService, TestimonyService>();
 builder.Services.AddScoped<IImageService, ImageService>();

@@ -1,11 +1,10 @@
 ﻿@using cherrys_construction_mvc.ViewModels.Responce;
 @model CompanyInfoResponce
-
 @{
     ViewData["Title"] = Breadcrumb.UserAboutTitle;
 }
 @if (Model != null)
-{   
+{
     <!-- ======= Breadcrumbs ======= -->
     @if (!string.IsNullOrWhiteSpace(Model.NavigationImageURL))
     {
@@ -43,9 +42,10 @@ else
 {
     <partial name="_WebsiteSettingsWarningPartial" />
 }
-@* @await Component.InvokeAsync("CompanyStory") *@
+
+@await Component.InvokeAsync("OurStory")
 @await Component.InvokeAsync("Certificates")
 @await Component.InvokeAsync("Qualities")
-@* @await Component.InvokeAsync("Members"); *@
+@await Component.InvokeAsync("Team")
 @await Component.InvokeAsync("Testimonials")
 

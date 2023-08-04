@@ -34,8 +34,7 @@
                             <span asp-validation-for="Title" class="text-danger"></span>
                         </div>
                         <div class="col-md-12 mb-5">
-                            <label asp-for="Description">Hero Description</label>
-                            <textarea asp-for="Description" class="form-control"></textarea>
+                            <textarea asp-for="Description" class="form-control" placeholder="Description..."></textarea>
                             <span asp-validation-for="Description" class="text-danger"></span>
                         </div>
                         <div class="col-md-12 form-floating mb-3">
@@ -43,7 +42,6 @@
                             <label asp-for="ButtonText" for="obj2">Hero Scroll Down Button (Text)</label>
                             <span asp-validation-for="ButtonText" class="text-danger"></span>
                         </div>
-
                         <div class="col-12">
                             <label asp-for="ListImages">Images</label>
                             <input asp-for="ListImages" multiple type="file" class="form-control" />

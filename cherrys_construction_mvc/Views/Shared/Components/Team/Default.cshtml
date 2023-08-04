@@ -1,0 +1,52 @@
+﻿@model List<MemberResponce>
+
+@if (Model.Any())
+{
+    int aosDelay = 100;
+    <!-- ======= Team Section ======= -->
+    <section id="team" class="team section-bg">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-header">
+                <h2>Our Team</h2>
+                @*<p>Aperiam dolorum et et wuia molestias qui eveniet numquam nihil porro incidunt dolores placeat sunt id nobis omnis tiledo stran delop</p>*@
+            </div>
+
+            <div class="row gy-3">
+                
+                @foreach(var item in Model)
+                {
+                    <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
+                        <div class="team-member h-100" data-aos="fade-up" data-aos-delay="@aosDelay">
+                            @if (!string.IsNullOrWhiteSpace(item.ImageLink))
+                            {
+                                string imageLink = item.ImageLink.Remove(0, 8);
+                                string image = ("~/images/" + imageLink);                        
+                                <div class="img-bg" style="background-image: url('@Url.Content(image)');">
+                                    @if (!string.IsNullOrWhiteSpace(item.InstagramLink))
+                                    {
+                                        <div class="social">
+                                            <a href="@item.InstagramLink"><i class="bi bi-instagram"></i></a>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            <div class="member-info">
+                                <h4>@item.Name</h4>
+                                <span>@item.Role</span>
+                                @if (!string.IsNullOrWhiteSpace(item.Description))
+                                {
+                                    @Html.Raw(item.Description)
+                                }
+                            </div>
+                            
+                        </div>
+                    </div>
+                    aosDelay += 100;
+                }             
+            </div>
+
+        </div>
+    </section>
+    <!-- End Team Section -->
+}

@@ -2,6 +2,7 @@
 using cherrys_construction_mvc.EfRepository.Interfaces;
 using cherrys_construction_mvc.Interfaces;
 using cherrys_construction_mvc.Models;
+using cherrys_construction_mvc.Services.ImageSharp.Interface;
 using cherrys_construction_mvc.Utility;
 using cherrys_construction_mvc.ViewModels.Requests;
 using cherrys_construction_mvc.ViewModels.Responce;
@@ -14,22 +15,25 @@ namespace cherrys_construction_mvc.Services
         private readonly IMapper _mapper;
         private IWebHostEnvironment _webHostEnvironment;
         private readonly ILogger<CompanyStoryService> _logger;
-
-        public CompanyStoryService(IEfRepository<CompanyStory> companyStoryRepository, 
-            IMapper mapper, 
+        private readonly IImageProcessorService _imageProcessor;
+        public CompanyStoryService(
+            IEfRepository<CompanyStory> companyStoryRepository,
+            IMapper mapper,
             IWebHostEnvironment webHostEnvironment,
-            ILogger<CompanyStoryService> logger)
+            ILogger<CompanyStoryService> logger,
+            IImageProcessorService imageProcessor)
         {
-             _companyStoryRepository = companyStoryRepository;
+            _companyStoryRepository = companyStoryRepository;
             _mapper = mapper;
             _webHostEnvironment = webHostEnvironment;
             _logger = logger;
+            _imageProcessor = imageProcessor;
         }
         public async Task CreateCompanyStoryAsync(CompanyStoryRequest request)
         {
             if (request.Image != null)
             {
-                request.ImageLink = await Helper.Helper.UploadImage(request.Image, _webHostEnvironment, StaticDetails.StandardImage);
+                request.ImageLink = await _imageProcessor.ProcessImageAsync(request.Image, _webHostEnvironment, StaticDetails.StandardImage);
             }
             var companyStory = _mapper.Map<CompanyStory>(request);
             await _companyStoryRepository.AddAsync(companyStory);
@@ -67,20 +71,14 @@ namespace cherrys_construction_mvc.Services
                 {
                     if (!string.IsNullOrWhiteSpace(companyStory.ImageLink))
                     {
-                        string wwwRootPath = _webHostEnvironment.WebRootPath;
-                        var oldImagePath = Path.Combine(wwwRootPath, companyStory.ImageLink.TrimStart('\\'));
-                        if (File.Exists(oldImagePath))
-                        {
-                            File.Delete(oldImagePath);
-                        }
+                        _imageProcessor.DeleteImage(_webHostEnvironment.WebRootPath, companyStory.ImageLink);
                     }
-                    request.ImageLink = await Helper.Helper.UploadImage(request.Image, _webHostEnvironment, StaticDetails.StandardImage);
+                    request.ImageLink = await _imageProcessor.ProcessImageAsync(request.Image, _webHostEnvironment, StaticDetails.StandardImage);
                 }
                 else
                 {
                     request.ImageLink = companyStory.ImageLink;
                 }
-
                 _mapper.Map(request, companyStory);
                 await _companyStoryRepository.UpdateAsync(companyStory);
                 await _companyStoryRepository.SaveChangesAsync();

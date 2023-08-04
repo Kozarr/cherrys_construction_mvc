@@ -28,7 +28,7 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var members = await _memberService.GetMemberssAsync();
+            var members = await _memberService.GetMembersAsync();
             return View(members);
         }
 
@@ -43,13 +43,12 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([FromForm] MemberRequest request)
-        {    
-            // for test 
-            if (request.Name != null)
+        {
+            if (ModelState.IsValid)
             {
-                if (string.IsNullOrWhiteSpace(request.InstagramLink))
+                if (!string.IsNullOrWhiteSpace(request.InstagramLink))
                 {
-                    request.InstagramLink = "";
+                    request.InstagramLink = request.InstagramLink.Trim();
                 }
                 if (!string.IsNullOrWhiteSpace(request.Name))
                 {
@@ -101,14 +100,14 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         // POST : EDIT
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(MemberRequest request,int id)
+        public async Task<IActionResult> Edit(MemberRequest request)
         {
             if (ModelState.IsValid)
             {
 
-                if (string.IsNullOrWhiteSpace(request.InstagramLink))
+                if (!string.IsNullOrWhiteSpace(request.InstagramLink))
                 {
-                    request.InstagramLink = "";
+                    request.InstagramLink = request.InstagramLink.Trim();
                 }
                 if (!string.IsNullOrWhiteSpace(request.Name))
                 {
@@ -126,7 +125,7 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
                 {
                     request.Role = request.Role.Trim();
                 }
-                await _memberService.UpdateMemberAsync(id, request);
+                await _memberService.UpdateMemberAsync(request.Id, request);
                 TempData["success"] = "Team Member Updated Successfully";
                 return RedirectToAction(nameof(Index));
             }

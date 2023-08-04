@@ -1,29 +1,30 @@
 ﻿using cherrys_construction_mvc.Interfaces;
+using cherrys_construction_mvc.ViewModels.Responce;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cherrys_construction_mvc.ViewComponents
 {
     [ViewComponent]
-    public class CompanyStoryViewComponent : ViewComponent
+    public class OurStoryViewComponent : ViewComponent
     {
         private readonly ICompanyStoryService _storyService;
-        public CompanyStoryViewComponent(ICompanyStoryService storyService)
+        public OurStoryViewComponent(ICompanyStoryService storyService)
         {
             _storyService = storyService;
         }
-
         public async Task<IViewComponentResult> InvokeAsync()
         {
+            CompanyStoryResponce story = new();
             var stories = await _storyService.GetCompanyStoriesAsync();
-            if(stories.Any())
+            if (stories.Any())
             {
-                var story = stories.FirstOrDefault();
-                return View(story);
+                var pickedStory = stories.FirstOrDefault();
+                if (pickedStory != null)
+                {
+                    story = pickedStory;
+                }
             }
-            else
-            {
-                return View(null);
-            }
+            return View(story);
         }
     }
 }

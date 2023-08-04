@@ -2,6 +2,7 @@
 using cherrys_construction_mvc.EfRepository.Interfaces;
 using cherrys_construction_mvc.Interfaces;
 using cherrys_construction_mvc.Models;
+using cherrys_construction_mvc.Services.ImageSharp.Interface;
 using cherrys_construction_mvc.Specification.ProjectSpec;
 using cherrys_construction_mvc.Utility;
 using cherrys_construction_mvc.ViewModels.Requests;
@@ -18,13 +19,15 @@ namespace cherrys_construction_mvc.Services
         private readonly IProjectTagService _projectTagService;
         private readonly IMapper _mapper;
         private readonly ILogger<ProjectService> _logger;
+        private readonly IImageProcessorService _imageProcessor;
         public ProjectService(IEfRepository<Project> projectRepository,
             IEfRepository<ImageModel> imageRepository,
             IMapper mapper,
             IImageService imageService,
             IWebHostEnvironment webHostEnvironment,
             IProjectTagService projectTagService,
-            ILogger<ProjectService> logger)
+            ILogger<ProjectService> logger,
+            IImageProcessorService imageProcessor)
         {
             _projectRepository = projectRepository;
             _imageRepository = imageRepository;
@@ -33,6 +36,7 @@ namespace cherrys_construction_mvc.Services
             _webHostEnvironment = webHostEnvironment;
             _projectTagService = projectTagService;
             _logger = logger;
+            _imageProcessor = imageProcessor;
         }
 
         public async Task CreateProjectAsync(ProjectRequest request)
@@ -66,7 +70,7 @@ namespace cherrys_construction_mvc.Services
                     {
                         var imageRequest = new ImageRequest()
                         {
-                            PathImage = Helper.Helper.UploadImage(item, _webHostEnvironment, StaticDetails.StandardImage).Result,
+                            PathImage = await _imageProcessor.ProcessImageAsync(item, _webHostEnvironment, StaticDetails.StandardImage),
                             ProjectId = project.Id
                         };
                         await _imageService.CreateImageAsync(imageRequest);
@@ -87,8 +91,10 @@ namespace cherrys_construction_mvc.Services
                     await _projectRepository.SaveChangesAsync();
                     foreach (var image in imagesForDelete)
                     {
-                        var fullPathForDelete = _webHostEnvironment.WebRootPath + image.PathImage;
-                        Helper.Helper.DeleteImage(fullPathForDelete);
+                        if (!string.IsNullOrWhiteSpace(image.PathImage))
+                        {
+                            _imageProcessor.DeleteImage(_webHostEnvironment.WebRootPath, image.PathImage);
+                        }
                     }
                 }
             }
@@ -195,8 +201,7 @@ namespace cherrys_construction_mvc.Services
                                 {
                                     if (!string.IsNullOrWhiteSpace(imageForDelete.PathImage))
                                     {
-                                        var fullPathForDelete = _webHostEnvironment.WebRootPath + imageForDelete.PathImage;
-                                        Helper.Helper.DeleteImage(fullPathForDelete);
+                                        _imageProcessor.DeleteImage(_webHostEnvironment.WebRootPath, imageForDelete.PathImage);
                                     }
                                     await _imageService.DeleteImageAsync(id);
                                 }
@@ -210,7 +215,7 @@ namespace cherrys_construction_mvc.Services
                         {
                             var imageRequest = new ImageRequest()
                             {
-                                PathImage = Helper.Helper.UploadImage(item, _webHostEnvironment, StaticDetails.StandardImage).Result,
+                                PathImage = await _imageProcessor.ProcessImageAsync(item, _webHostEnvironment, StaticDetails.StandardImage),
                                 ProjectId = projectId
                             };
                             await _imageService.CreateImageAsync(imageRequest);

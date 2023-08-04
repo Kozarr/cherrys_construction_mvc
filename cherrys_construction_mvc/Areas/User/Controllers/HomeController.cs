@@ -12,18 +12,12 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IHeroSliderService _heroSliderService;
-        private readonly IServiceTypeService _serviceTypeService;
-        private readonly IServiceService _serviceService;
         private readonly ICallToActionMessage _callToActionMessage;
         private readonly ICallToActionSetting _callToActionSetting;
         private readonly ICompanyInfoService _companyInfoService;
         private readonly Mail _mail;
         private readonly ILegalDocumentService _legal;
-        public HomeController(ILogger<HomeController> logger,  
-            IHeroSliderService heroSliderService, 
-            IServiceTypeService serviceTypeService, 
-            IServiceService serviceService, 
+        public HomeController(ILogger<HomeController> logger,
             ICallToActionMessage callToActionMessage,
             ICallToActionSetting callToActionSetting,
             ICompanyInfoService companyInfoService,
@@ -31,9 +25,6 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
             ILegalDocumentService legal)
         {
             _logger = logger;
-            _heroSliderService = heroSliderService;
-            _serviceTypeService = serviceTypeService;
-            _serviceService = serviceService;
             _callToActionSetting = callToActionSetting;
             _callToActionMessage = callToActionMessage;
             _companyInfoService = companyInfoService;
@@ -44,28 +35,6 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
         public async Task<IActionResult> Index()
         {
             HomeViewModel homeResponce = new();
-
-            // HERO SLIDER
-            var heroSlider = await _heroSliderService.GetHeroSlidersAsync();
-            if (heroSlider.Any())
-            {
-                var hero = heroSlider.First();
-                homeResponce.HeroSlider = hero;
-            }
-
-            // Service Categories
-            var serviceType = await _serviceTypeService.GetServiceTypesAsync();
-            if(serviceType.Any())
-            {
-                homeResponce.ServiceTypes = serviceType;
-            }
-
-            // Services
-            var services = await _serviceService.GetServicessAsync();
-            if (services.Any())
-            {
-                homeResponce.Services = services;
-            }
 
             // Call To Action Settings
             var ctaToReturn = await _callToActionSetting.GetCallToActionSettingsAsync();
@@ -79,8 +48,8 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
             if (companyInfo.Any())
             {
                 var compInfo = companyInfo.First();
-                homeResponce.CompanyInfo = compInfo;              
-            }    
+                homeResponce.CompanyInfo = compInfo;
+            }
 
             return View(homeResponce);
         }
@@ -102,7 +71,7 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
 
         public async Task<IActionResult> Legal(int id)
         {
-            if(id != 0)
+            if (id > 0)
             {
                 LegalVM vM = new();
                 var doc = await _legal.GetLegalDocumentByIdAsync(id);
@@ -115,7 +84,7 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
                     var companyInfo = await _companyInfoService.GetCompanyInfosAsync();
                     vM.CompanyInfo = companyInfo.First();
                     vM.LegalDocument = doc;
-                       
+
                     return View(vM);
                 }
             }
@@ -124,7 +93,7 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
                 TempData["error"] = "Document Not Found";
                 return Redirect(nameof(Index));
             }
-            
+
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

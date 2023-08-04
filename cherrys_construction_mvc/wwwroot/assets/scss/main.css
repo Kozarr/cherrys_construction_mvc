@@ -1433,73 +1433,128 @@ section {
   font-size: 14px;
 }
 
+/*
+=======================================================
+* Template Name: Presento - v3.6.0
+* Template URL: https: //bootstrapmade.com/presento-bootstrap-corporate-template/
+* Author: BootstrapMade.com
+* License: https: //bootstrapmade.com/license/
+========================================================
+*/
 /*--------------------------------------------------------------
-# Our Team Section
+# Team
 --------------------------------------------------------------*/
-.team .member {
-  position: relative;
-}
-.team .member .member-img {
-  margin: 0 80px;
-  border-radius: 50%;
+.team .team-member {
+  margin-bottom: 20px;
   overflow: hidden;
+  background: #ffffff;
   position: relative;
+  border-radius: 0;
+  box-shadow: rgba(0, 0, 0, 0.1) 10px 10px 4px;
+  height: 100%;
+  background-repeat: no-repeat;
+  /*        .member-img {
+      position: relative;
+      overflow: hidden;
+  }*/
 }
-@media (max-width: 1024px) {
-  .team .member .member-img {
-    margin: 0 60px;
+.team .team-member .img-bg {
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 460px;
+  background-position: top;
+  width: auto;
+}
+@media screen and (max-width: 1401px) {
+  .team .team-member .img-bg {
+    height: 380px;
   }
 }
-.team .member .member-img img {
-  position: relative;
-  z-index: 1;
+@media screen and (max-width: 1200px) {
+  .team .team-member .img-bg {
+    height: 360px;
+  }
 }
-.team .member .member-img .social {
+@media screen and (max-width: 991px) {
+  .team .team-member .img-bg {
+    height: 380px;
+  }
+}
+@media screen and (max-width: 736px) {
+  .team .team-member .img-bg {
+    height: 420px;
+  }
+}
+@media (max-width: 735px) and (max-height: 735px) {
+  .team .team-member .img-bg {
+    height: 70vh;
+  }
+}
+@media (max-width: 735px) and (max-height: 1023px) {
+  .team .team-member .img-bg {
+    height: 60vh;
+  }
+}
+.team .team-member .social {
   position: absolute;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2;
-  padding-bottom: 20px;
-  transition: 0.3s;
-  visibility: hidden;
+  left: 0;
+  bottom: 30px;
+  right: 0;
   opacity: 0;
+  transition: ease-in-out 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.team .member .member-img .social a {
-  transition: 0.3s;
-  color: #fff;
-  font-size: 20px;
-  margin: 0 8px;
+.team .team-member .social a {
+  transition: color 0.3s;
+  color: #52565e;
+  margin: 0 3px;
+  width: 36px;
+  height: 36px;
+  background: #0B2547;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: ease-in-out 0.3s;
+  color: #ffffff;
 }
-.team .member .member-img .social a:hover {
-  color: var(--color-primary);
+.team .team-member .social a:hover {
+  background: #154889;
+  transform: scale(1.1);
 }
-.team .member .member-info {
-  margin-top: 30px;
-}
-.team .member .member-info h4 {
-  font-weight: 700;
-  margin-bottom: 6px;
+.team .team-member .social i {
   font-size: 18px;
-  color: var(--color-secondary);
+  line-height: 0;
 }
-.team .member .member-info span {
-  font-style: italic;
+.team .team-member .member-info {
+  padding: 25px 15px 0px 15px;
+}
+.team .team-member .member-info h4 {
+  font-weight: 700;
+  margin-bottom: 5px;
+  font-size: 1.4rem;
+  color: #0A0A0A;
+  text-align: center;
+}
+.team .team-member .member-info span {
   display: block;
-  font-size: 15px;
-  color: #838893;
-  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  /*color: lighten($cherrys-gray, 15);*/
+  color: #e68e00;
+  text-align: center;
 }
-.team .member .member-info p {
-  margin-bottom: 0;
-  font-size: 14px;
+.team .team-member .member-info p {
+  font-size: 0.8rem;
+  line-height: 26px;
+  color: #494946;
 }
-.team .member:hover .member-img .social {
-  padding-bottom: 0;
-  visibility: visible;
+.team .team-member:hover .social {
   opacity: 1;
+  bottom: 15px;
 }
 
 /*--------------------------------------------------------------
@@ -1915,9 +1970,11 @@ Template: Logis Pricing Section
   min-height: 100px;
 }
 .members img {
-  width: 200px;
-  height: 200px;
-  clip-path: circle();
+  height: auto;
+  max-height: 30vh;
+  max-width: 100%;
+  position: relative;
+  overflow: hidden;
 }
 .members h2 {
   color: #0B2547;
@@ -2217,6 +2274,62 @@ Template: Resi Pro
 }
 .recent-blog-posts .post-item:hover .post-img img {
   transform: scale(1.1);
+}
+
+/*--------------------------------------------------------------
+# List Items
+--------------------------------------------------------------*/
+.website-settings .web-container {
+  background-color: #ffffff;
+  box-shadow: 0 3px 20px -2px rgba(0, 0, 0, 0.15);
+}
+.website-settings .web-container .img-container {
+  display: flex;
+  flex-flow: row;
+}
+.website-settings .web-container .img-container p {
+  position: absolute;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ffffff;
+  transform: translate(30px, -60px);
+  text-shadow: 1px 1px 16px #0A0A0A;
+}
+@media (max-width: 767px) {
+  .website-settings .web-container .img-container p {
+    font-size: 1.4rem;
+    transform: translate(20px, -46px);
+  }
+}
+@media (max-width: 480px) {
+  .website-settings .web-container .img-container p {
+    font-size: 1.2rem;
+    transform: translate(18px, -40px);
+  }
+}
+@media (max-width: 376px) {
+  .website-settings .web-container .img-container p {
+    font-size: 1rem;
+    transform: translate(14px, -34px);
+  }
+}
+.website-settings .web-container .img-container img {
+  padding: 10px;
+  max-width: 100%;
+  width: 100%;
+}
+.website-settings .web-container .web-content {
+  padding: 10px;
+}
+.website-settings .web-item {
+  background: #fff;
+  height: 100%;
+  position: relative;
+  min-height: 100px;
+}
+.website-settings h4 {
+  color: #0A0A0A;
+  font-size: 1rem;
 }
 
 /*--------------------------------------------------------------

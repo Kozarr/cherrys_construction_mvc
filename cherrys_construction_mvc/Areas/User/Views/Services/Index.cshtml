@@ -1,70 +1,50 @@
-﻿@using cherrys_construction_mvc.ViewModels.Service;
-@model ServiceViewModel
-
+﻿@using cherrys_construction_mvc.ViewModels.Responce;
+@model CompanyInfoResponce
 @{
     ViewData["Title"] = Breadcrumb.UserServicesTitle;
 }
-
-<!-- ======= Breadcrumbs ======= -->
-@if (Model.CompanyInfo != null && Model.CompanyInfo.NavigationImageURL != null)
+@if (Model != null)
 {
-    string imageLink = Model.CompanyInfo.NavigationImageURL.Remove(0, 8);
-    string image = ("~/images/" + imageLink);
-    <div class="breadcrumbs d-flex align-items-center" style="background-image: url('@Url.Content(image)');">
-        <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+    @if (!string.IsNullOrWhiteSpace(Model.NavigationImageURL))
+    {
+        <!-- ======= Breadcrumbs ======= -->
+        string imageLink = Model.NavigationImageURL.Remove(0, 8);
+        string image = ("~/images/" + imageLink);
+        <div class="breadcrumbs d-flex align-items-center" style="background-image: url('@Url.Content(image)');">
+            <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
 
-            <h2>@Breadcrumb.UserServicesTitle</h2>
-            <ol>
-                <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Index">@Breadcrumb.HomeTitle</a></li>
-                <li>@Breadcrumb.UserServicesTitle</li>
-            </ol>
-
-        </div>
-    </div>
-    <!-- End Breadcrumbs -->
-}
-else
-{
-    <div class="breadcrumbs d-flex align-items-center" style="background-color: darkslategray;">
-        <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
-
-            <h2>@Breadcrumb.UserServicesTitle</h2>
-            <ol>
-                <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Index">@Breadcrumb.HomeTitle</a></li>
-                <li>@Breadcrumb.UserServicesTitle</li>
-            </ol>
-
-        </div>
-    </div>
-    <!-- End Breadcrumbs -->
-}
-@if (Model.CompanyInfo == null)
-{
-    <partial name="_WebsiteSettingsWarningPartial" />
-}
-
-@if (Model.ServiceTypes!=null)
-{
-    <!-- ======= Service Cards Section ======= -->
-    var DataAOS = 100;
-    <section id="services-cards" class="services-cards section">
-        <div class="container" data-aos="fade-up">
-            <div class="row gy-4">
-
-                @foreach (var item in Model.ServiceTypes)
-                {
-                    <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="@DataAOS">
-                        <h3>@item.Title</h3>
-                        <p>@Html.Raw(item.Description)</p>
-                    </div>
-                    DataAOS += 100;
-                }
+                <h2>@Breadcrumb.UserServicesTitle</h2>
+                <ol>
+                    <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Index">@Breadcrumb.HomeTitle</a></li>
+                    <li>@Breadcrumb.UserServicesTitle</li>
+                </ol>
 
             </div>
         </div>
-    </section>
-    <!-- End Service Cards Section -->
+        <!-- End Breadcrumbs -->
+    }
+    else
+    {
+        <!-- ======= Breadcrumbs ======= -->
+        <div class="breadcrumbs d-flex align-items-center" style="background-color: darkslategray;">
+            <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+
+                <h2>@Breadcrumb.UserServicesTitle</h2>
+                <ol>
+                    <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Index">@Breadcrumb.HomeTitle</a></li>
+                    <li>@Breadcrumb.UserServicesTitle</li>
+                </ol>
+
+            </div>
+        </div>
+        <!-- End Breadcrumbs -->
+    }
 }
-@* @await Component.InvokeAsync("Services") *@
+@if (Model == null)
+{
+    <partial name="_WebsiteSettingsWarningPartial" />
+}
+@await Component.InvokeAsync("ServiceTypesSmall")
+@await Component.InvokeAsync("Services")
 @await Component.InvokeAsync("Values")
 @await Component.InvokeAsync("Testimonials")

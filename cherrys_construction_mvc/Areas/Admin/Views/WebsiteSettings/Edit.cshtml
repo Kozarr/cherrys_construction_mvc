@@ -19,7 +19,6 @@
     </div>
 </div><!-- End Breadcrumbs -->
 
-
 <section id="list" class="list">
     <div class="row">
         <div class="list-container">
@@ -68,7 +67,7 @@
                             </div>
                         </div>
 
-                        @if (Model.CompanyInfo.NavigationImageURL != null || Model.CompanyInfo.NavigationImageURL == "")
+                        @if (!string.IsNullOrWhiteSpace(Model.CompanyInfo.NavigationImageURL))
                         {
                             <div class="mt-5">
                                 <p class="text-info">Currnet Image</p>
@@ -88,7 +87,7 @@
                             </div>
                         </div>
 
-                        @if (Model.CompanyInfo.FooterImageURL != null || Model.CompanyInfo.FooterImageURL == "")
+                        @if (!string.IsNullOrWhiteSpace(Model.CompanyInfo.FooterImageURL))
                         {
                             <div class="mt-5">
                                 <p class="text-info">Currnet Image</p>
@@ -98,12 +97,10 @@
                             </div>
                         }
 
-                        @*Image*@
                         <div>
                             <p class="text-info mt-2">Footer Image</p>
                             <div class="col-12 mb-3">
                                 <input asp-for="FooterImage" type="file" class="form-control" />
-                                @*<label asp-for="FormFile" class="text-danger">Navigation Window Image (breadcrumbs)</label>*@
                                 <span asp-validation-for="FooterImage" class="text-danger"></span>
                             </div>
                         </div>

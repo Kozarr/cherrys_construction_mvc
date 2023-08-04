@@ -10,20 +10,16 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
     public class AboutController : Controller
     {
         private readonly ICompanyInfoService _companyInfoService;
-
-
         public AboutController(ICompanyInfoService companyInfoService)
         {
             _companyInfoService = companyInfoService;
         }
-
         public async Task<IActionResult> Index()
         {
-            var settings = await _companyInfoService.GetCompanyInfosAsync();
-            if(settings.Any())
+            var infoListFromDb = await _companyInfoService.GetCompanyInfosAsync();
+            if (infoListFromDb.Any())
             {
-                var info = settings.FirstOrDefault();
-                return View(info);
+                return View(infoListFromDb.FirstOrDefault());
             }
             return View(null);
         }

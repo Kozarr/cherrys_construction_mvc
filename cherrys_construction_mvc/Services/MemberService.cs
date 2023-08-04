@@ -17,8 +17,8 @@ namespace cherrys_construction_mvc.Services
         private readonly IMapper _mapper;
         private readonly ILogger<MemberService> _logger;
         private readonly IImageProcessorService _imageProcessor;
-        public MemberService(IEfRepository<Member> memberRepository, 
-            IMapper mapper, 
+        public MemberService(IEfRepository<Member> memberRepository,
+            IMapper mapper,
             IWebHostEnvironment webHostEnvironment,
             ILogger<MemberService> logger,
             IImageProcessorService imageProcessor)
@@ -33,8 +33,7 @@ namespace cherrys_construction_mvc.Services
         {
             if (request.Image != null)
             {
-                //request.ImageLink = await Helper.Helper.UploadImage(request.Image, _webHostEnvironment, StaticDetails.SquareImage);
-                request.ImageLink = await _imageProcessor.UploadImage(request.Image, _webHostEnvironment, StaticDetails.SquareImage);
+                request.ImageLink = await _imageProcessor.ProcessImageAsync(request.Image, _webHostEnvironment, StaticDetails.StandardImage, true);
             }
 
             var member = _mapper.Map<Member>(request);
@@ -47,7 +46,7 @@ namespace cherrys_construction_mvc.Services
         {
             var member = await _memberRepository.GetByIdAsync(memberId);
             string wwwRootPath = _webHostEnvironment.WebRootPath;
-            if(member == null)
+            if (member == null)
             {
                 _logger.LogWarning("Could not find member to delete from existing ID");
             }
@@ -55,18 +54,11 @@ namespace cherrys_construction_mvc.Services
             {
                 if (!string.IsNullOrWhiteSpace(member.ImageLink))
                 {
-                    var oldImagePath = Path.Combine(wwwRootPath, member.ImageLink.TrimStart('\\'));
-                    if (oldImagePath != null)
-                    {
-                        if (File.Exists(oldImagePath))
-                        {
-                            File.Delete(oldImagePath);
-                        }
-                    }
-                }               
+                    _imageProcessor.DeleteImage(_webHostEnvironment.WebRootPath, member.ImageLink);
+                }
                 await _memberRepository.DeleteAsync(member);
                 await _memberRepository.SaveChangesAsync();
-            }   
+            }
         }
 
         public async Task<MemberResponce> GetMemberByIdAsync(int memberId)
@@ -75,7 +67,7 @@ namespace cherrys_construction_mvc.Services
             return _mapper.Map<MemberResponce>(member);
         }
 
-        public async Task<IEnumerable<MemberResponce>> GetMemberssAsync()
+        public async Task<IEnumerable<MemberResponce>> GetMembersAsync()
         {
             var members = await _memberRepository.ListAsync();
             return _mapper.Map<IEnumerable<MemberResponce>>(members);
@@ -84,20 +76,15 @@ namespace cherrys_construction_mvc.Services
         public async Task UpdateMemberAsync(int memberId, MemberRequest request)
         {
             var member = await _memberRepository.GetByIdAsync(memberId);
-            if(member != null)
+            if (member != null)
             {
                 if (request.Image != null)
                 {
                     if (!string.IsNullOrWhiteSpace(member.ImageLink))
                     {
-                        string wwwRootPath = _webHostEnvironment.WebRootPath;
-                        var oldImagePath = Path.Combine(wwwRootPath, member.ImageLink.TrimStart('\\'));
-                        if (File.Exists(oldImagePath))
-                        {
-                            File.Delete(oldImagePath);
-                        }
-                    }                  
-                    request.ImageLink = await _imageProcessor.UploadImage(request.Image, _webHostEnvironment, StaticDetails.SquareImage);
+                        _imageProcessor.DeleteImage(_webHostEnvironment.WebRootPath, member.ImageLink);
+                    }
+                    request.ImageLink = await _imageProcessor.ProcessImageAsync(request.Image, _webHostEnvironment, StaticDetails.StandardImage, true);
                 }
                 else
                 {
@@ -111,7 +98,7 @@ namespace cherrys_construction_mvc.Services
             {
                 _logger.LogWarning("Could not find existing member in Member Service");
             }
-            
+
         }
     }
 }

@@ -2,6 +2,7 @@
 using cherrys_construction_mvc.EfRepository.Interfaces;
 using cherrys_construction_mvc.Interfaces;
 using cherrys_construction_mvc.Models;
+using cherrys_construction_mvc.Services.ImageSharp.Interface;
 using cherrys_construction_mvc.Utility;
 using cherrys_construction_mvc.ViewModels.Requests;
 using cherrys_construction_mvc.ViewModels.Responce;
@@ -14,22 +15,26 @@ namespace cherrys_construction_mvc.Services
         private readonly IMapper _mapper;
         private IWebHostEnvironment _webHostEnvironment;
         private readonly ILogger<CompanyCertificateSetting> _logger;
-        public CompanyCertificateSettingService(IEfRepository<CompanyCertificateSetting> companyCertificateSetting,
+        private readonly IImageProcessorService _imageProcessor;
+        public CompanyCertificateSettingService(
+            IEfRepository<CompanyCertificateSetting> companyCertificateSetting,
             IMapper mapper,
             IWebHostEnvironment webHostEnvironment,
-            ILogger<CompanyCertificateSetting> logger)
+            ILogger<CompanyCertificateSetting> logger,
+            IImageProcessorService imageProcessor)
         {
             _companyCertificateSettingRepository = companyCertificateSetting;
             _mapper = mapper;
             _webHostEnvironment = webHostEnvironment;
             _logger = logger;
+            _imageProcessor = imageProcessor;
         }
 
         public async Task CreateCompanyCertificateSettingAsync(CompanyCertificateSettingRequest request)
         {
             if (request.Image != null)
             {
-                request.ImageLink = await Helper.Helper.UploadImage(request.Image, _webHostEnvironment, StaticDetails.StandardImage);
+                request.ImageLink = await _imageProcessor.ProcessImageAsync(request.Image, _webHostEnvironment, StaticDetails.StandardImage);
             }
             var compSet = _mapper.Map<CompanyCertificateSetting>(request);
             await _companyCertificateSettingRepository.AddAsync(compSet);
@@ -54,7 +59,6 @@ namespace cherrys_construction_mvc.Services
         public async Task<CompanyCertificateSettingResponce> GetCompanyCertificateSettingByIdAsync(int id)
         {
             var compSet = await _companyCertificateSettingRepository.GetByIdAsync(id);
-
             return _mapper.Map<CompanyCertificateSettingResponce>(compSet);
         }
 
@@ -77,14 +81,9 @@ namespace cherrys_construction_mvc.Services
                 {                   
                     if(!string.IsNullOrWhiteSpace(compSet.ImageLink))
                     {
-                        string wwwRootPath = _webHostEnvironment.WebRootPath;
-                        var oldImagePath = Path.Combine(wwwRootPath, compSet.ImageLink.TrimStart('\\'));
-                        if (File.Exists(oldImagePath))
-                        {
-                            File.Delete(oldImagePath);
-                        }
+                        _imageProcessor.DeleteImage(_webHostEnvironment.WebRootPath, compSet.ImageLink);
                     }                    
-                    request.ImageLink = await Helper.Helper.UploadImage(request.Image, _webHostEnvironment, StaticDetails.StandardImage);
+                    request.ImageLink = await _imageProcessor.ProcessImageAsync(request.Image, _webHostEnvironment, StaticDetails.StandardImage);
                 }
                 else
                 {

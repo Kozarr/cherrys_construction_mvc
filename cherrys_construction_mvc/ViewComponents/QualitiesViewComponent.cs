@@ -17,7 +17,7 @@ namespace cherrys_construction_mvc.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync()
         {
             QualitiesCVM component = new();
-            var settingList = await _settingService.GetCompanyQualitiySettingsAsync();
+            var settingList = await _settingService.GetCompanyQualitiesSettingsAsync();
             if(settingList.Any())
             {
                 component.CompanyQualitiesSettings = settingList.ToList().FirstOrDefault();

@@ -14,7 +14,7 @@ namespace cherrys_construction_mvc.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var members = await _memberService.GetMemberssAsync();
+            var members = await _memberService.GetMembersAsync();
             if (members.Any())
             {
                 return View(members);

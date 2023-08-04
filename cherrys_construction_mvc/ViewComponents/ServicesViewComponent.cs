@@ -1,27 +1,25 @@
 ﻿using cherrys_construction_mvc.Interfaces;
+using cherrys_construction_mvc.ViewModels.Responce;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cherrys_construction_mvc.ViewComponents
 {
-    [ViewComponent]
     public class ServicesViewComponent : ViewComponent
     {
-        private readonly IServiceService _servicesService;
-        public ServicesViewComponent(IServiceService serviceService)
+        private readonly IServiceService _service;
+        public ServicesViewComponent(IServiceService service)
         {
-            _servicesService = serviceService; 
+            _service = service;
         }
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var services = await _servicesService.GetServicessAsync();
-            if(services.Any())
+            List<ServiceResponce> services = new();
+            var servicesFromDb = await _service.GetServicesAsync();
+            if(servicesFromDb.Any()) 
             {
-                return View(services);
+                services = servicesFromDb.ToList();
             }
-            else
-            {
-                return View(null);
-            }
+            return View(services);
         }
     }
 }

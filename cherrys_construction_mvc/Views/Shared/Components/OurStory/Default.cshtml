@@ -1,6 +1,8 @@
 ﻿@model CompanyStoryResponce
 @if (Model != null)
 {
+    @if (!string.IsNullOrWhiteSpace(Model.Title))
+    {
     <!-- ======= About / Company Story Section ======= -->
     <section id="about" class="about">
         <div class="container" data-aos="fade-up">
@@ -24,4 +26,5 @@
         </div>
     </section>
     <!-- End About / Company Story Section -->
+    }
 }

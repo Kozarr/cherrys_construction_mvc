@@ -64,6 +64,7 @@ namespace cherrys_construction_mvc.Mapper
 
             _ = CreateMap<Member, MemberRequest>();
             _ = CreateMap<MemberRequest, Member>();
+            _ = CreateMap<MemberRequest, MemberResponce>().ReverseMap();
 
 
             #endregion

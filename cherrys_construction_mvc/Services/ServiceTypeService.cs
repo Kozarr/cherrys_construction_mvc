@@ -2,6 +2,7 @@
 using cherrys_construction_mvc.EfRepository.Interfaces;
 using cherrys_construction_mvc.Interfaces;
 using cherrys_construction_mvc.Models;
+using cherrys_construction_mvc.Services.ImageSharp.Interface;
 using cherrys_construction_mvc.Utility;
 using cherrys_construction_mvc.ViewModels.Requests;
 using cherrys_construction_mvc.ViewModels.Responce;
@@ -14,25 +15,27 @@ namespace cherrys_construction_mvc.Services
         private readonly IEfRepository<ServiceType> _serviceTypeRepository;
         private readonly IEfRepository<Project> _projectRepository;
         private readonly IMapper _mapper;
-        private IWebHostEnvironment _webHostEnvironment;
-
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IImageProcessorService _imageProcessor;
         public ServiceTypeService(IEfRepository<ServiceType> serviceTypeRepository,
             IEfRepository<Project> projectRepository,
             IMapper mapper,
             IWebHostEnvironment webHostEnvironment,
-            ILogger<ServiceTypeService> logger)
+            ILogger<ServiceTypeService> logger,
+            IImageProcessorService imageProcessor)
         {
             _serviceTypeRepository = serviceTypeRepository;
             _projectRepository = projectRepository;
             _mapper = mapper;
             _webHostEnvironment = webHostEnvironment;
             _logger = logger;
+            _imageProcessor = imageProcessor;
         }
         public async Task CreateServiceTypeAsync(ServiceTypeRequest request)
         {
             if (request.Image != null)
             {
-                request.ImageLink = await Helper.Helper.UploadImage(request.Image, _webHostEnvironment, StaticDetails.StandardImage);
+                request.ImageLink = await _imageProcessor.ProcessImageAsync(request.Image, _webHostEnvironment, StaticDetails.StandardImage);
             }
             var serviceType = _mapper.Map<ServiceType>(request);
             await _serviceTypeRepository.AddAsync(serviceType);
@@ -45,27 +48,9 @@ namespace cherrys_construction_mvc.Services
 
             if (serviceType != null)
             {
-                //TODOx : Investigate
-                // When deleting a ServiceType, we remove connections to service type in all projects
-                //var projectsList = await _projectRepository.ListAsync();
-                //// oooooooooooooooooooooooooooooooooo
-                //foreach (var item in projectsList)
-                //{
-                //    if (item.ServiceTypeId == serviceTypeId)
-                //    {
-                //        item.ServiceType = null;
-                //        await _projectRepository.UpdateAsync(item);
-                //        await _projectRepository.SaveChangesAsync();
-                //    }
-                //}
                 if (!string.IsNullOrWhiteSpace(serviceType.ImageLink))
                 {
-                    string wwwRootPath = _webHostEnvironment.WebRootPath;
-                    var oldImagePath = Path.Combine(wwwRootPath, serviceType.ImageLink.TrimStart('\\'));
-                    if (File.Exists(oldImagePath))
-                    {
-                        File.Delete(oldImagePath);
-                    }
+                    _imageProcessor.DeleteImage(_webHostEnvironment.WebRootPath, serviceType.ImageLink);
                 }
                 await _serviceTypeRepository.DeleteAsync(serviceType);
                 await _serviceTypeRepository.SaveChangesAsync();
@@ -99,20 +84,14 @@ namespace cherrys_construction_mvc.Services
                 {
                     if (!string.IsNullOrWhiteSpace(serviceType.ImageLink))
                     {
-                        string wwwRootPath = _webHostEnvironment.WebRootPath;
-                        var oldImagePath = Path.Combine(wwwRootPath, serviceType.ImageLink.TrimStart('\\'));
-                        if (File.Exists(oldImagePath))
-                        {
-                            File.Delete(oldImagePath);
-                        }
+                        _imageProcessor.DeleteImage(_webHostEnvironment.WebRootPath, serviceType.ImageLink);
                     }
-                    request.ImageLink = await Helper.Helper.UploadImage(request.Image, _webHostEnvironment, StaticDetails.StandardImage);
+                    request.ImageLink = await _imageProcessor.ProcessImageAsync(request.Image, _webHostEnvironment, StaticDetails.StandardImage);
                 }
                 else
                 {
                     request.ImageLink = serviceType.ImageLink;
                 }
-
                 _mapper.Map(request, serviceType);
                 await _serviceTypeRepository.UpdateAsync(serviceType);
                 await _serviceTypeRepository.SaveChangesAsync();

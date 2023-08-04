@@ -5,12 +5,11 @@ namespace cherrys_construction_mvc.ViewModels.Requests
 {
     public class CompanyInfoRequest
     {
-        public int Id { get; set; }
         [Required(ErrorMessage = "Please add the company name to display across the website")]
         public string? CompanyName { get; set; }
        
         public string? CompanyPhoneNumber { get; set; }
-        [Required(ErrorMessage = "Please add email to be able to send and recieve messages from the website")]
+        [Required(ErrorMessage = "Please add email to be able to send and receive messages from the website")]
         public string? CompanyEmail { get; set; }
 
         public string? ServiceArea { get; set; }

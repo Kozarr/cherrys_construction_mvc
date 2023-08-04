@@ -2,7 +2,7 @@
 {
     public interface IImageProcessorService
     {
-        public void Resize(IFormFile formFile);
-        public Task<string> UploadImage(IFormFile formFile, IWebHostEnvironment webHostEnvironment, int size);
+        public Task<string> ProcessImageAsync(IFormFile formFile, IWebHostEnvironment webHostEnv, int size, bool autoRotate = false);
+        public void DeleteImage(string webRootPath, string oldImagePath);
     }
 }

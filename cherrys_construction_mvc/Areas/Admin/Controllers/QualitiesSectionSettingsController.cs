@@ -23,7 +23,7 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var quality = await _qualitiesSettings.GetCompanyQualitiySettingsAsync();
+            var quality = await _qualitiesSettings.GetCompanyQualitiesSettingsAsync();
             return View(quality);
         }
 
@@ -39,7 +39,7 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var checker = await _qualitiesSettings.GetCompanyQualitiySettingsAsync();
+                var checker = await _qualitiesSettings.GetCompanyQualitiesSettingsAsync();
                 if(checker.Any())
                 {
                     TempData["error"] = "Qualities Section Information Already Exists";
@@ -55,7 +55,7 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
                     {
                         request.Description = request.Description.Trim();
                     }
-                    await _qualitiesSettings.CreateCompanyQualitiySettingAsync(request);
+                    await _qualitiesSettings.CreateCompanyQualitiesSettingAsync(request);
                     TempData["success"] = "Qualities Section Information Created";
                     return RedirectToAction(nameof(Index));
                 }             
@@ -72,7 +72,7 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         {
             if(id > 0)
             {
-                var item = await _qualitiesSettings.GetCompanyQualitiySettingByIdAsync(id);
+                var item = await _qualitiesSettings.GetCompanyQualitiesSettingByIdAsync(id);
                 if(item != null)
                 {
                     var request = _mapper.Map<CompanyQualitySettingRequest>(item);
@@ -98,7 +98,7 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var checker = await _qualitiesSettings.GetCompanyQualitiySettingByIdAsync(id);
+                var checker = await _qualitiesSettings.GetCompanyQualitiesSettingByIdAsync(id);
                 if(checker != null)
                 {
                     if (!string.IsNullOrWhiteSpace(request.Title))
@@ -109,7 +109,7 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
                     {
                         request.Description = request.Description.Trim();
                     }
-                    await _qualitiesSettings.UpdateCompanyQualitiySettingAsync(id, request);
+                    await _qualitiesSettings.UpdateCompanyQualitiesSettingAsync(id, request);
                     TempData["success"] = "Qualities Section Information Updated";
                 }
                 else
