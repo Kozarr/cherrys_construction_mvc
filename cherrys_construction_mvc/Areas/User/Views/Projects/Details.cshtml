@@ -46,73 +46,80 @@ else
 }
 
 <!-- ======= Projet Details Section ======= -->
-@if (Model.Project != null)
+@if (Model != null)
 {
-    <section id="project-details" class="project-details">
-        <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-            @if (Model.Project.Images.Any())
-            {
-                <div class="position-relative h-70">
-                    <div class="slides-1 portfolio-details-slider swiper">
-                        <div class="swiper-wrapper text-center">
-                            @foreach (var item in Model.Project.Images)
-                            {
-                                <div class="swiper-slide">
-                                    <img src="@item.PathImage" alt="">
+    @if (Model.Project != null)
+    {
+        <section id="project-details" class="project-details">
+            <div class="container" data-aos="fade-up" data-aos-delay="100">
+                @if(Model.Project.Images != null)
+                {
+                    @if (Model.Project.Images.Any())
+                    {
+                        <div class="position-relative h-70">
+                            <div class="slides-1 portfolio-details-slider swiper">
+                                <div class="swiper-wrapper text-center">
+                                    @foreach (var item in Model.Project.Images)
+                                    {
+                                        <div class="swiper-slide">
+                                            <img src="@item.PathImage" alt="">
+                                        </div>
+                                    }
                                 </div>
-                            }
+                                <div class="swiper-pagination"></div>
+                            </div>
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-button-next"></div>
 
                         </div>
-                        <div class="swiper-pagination"></div>
-                    </div>
-                    <div class="swiper-button-prev"></div>
-                    <div class="swiper-button-next"></div>
+                    }
+                }               
+                <div class="row justify-content-between gy-4 mt-4">
 
-                </div>
-            }
-            <div class="row justify-content-between gy-4 mt-4">
-
-                <div class="col-lg-8">
-                    <div class="portfolio-description">
-                        <h2>@Model.Project.Title</h2>
-                        <p>
+                    <div class="col-lg-8">
+                        <div class="portfolio-description">
+                            <h2>@Model.Project.Title</h2>
                             @Html.Raw(Model.Project.Description)
-                        </p>
 
-                        @if (Model.Project.ProjectTestimony.Id != 0)
-                        {
-                            <div class="testimonial-item">
-                                <p>
-                                    @Html.Raw(Model.Project.ProjectTestimony.Description)
-                                </p>
-                                <div>
-                                    <img src="@Model.Project.ProjectTestimony.ImageLink" class="testimonial-img" alt="">
-                                    <h3>@Model.Project.ProjectTestimony.Name</h3>
-                                    <h4>@Model.Project.ProjectTestimony.Position</h4>
-                                </div>
-                            </div>
-                        }
-
+                            @if(Model.Project.Testimony != null)
+                            {
+                                @if (Model.Project.Testimony.Id > 0)
+                                {
+                                    <div class="testimonial-item">
+                                        <p>
+                                            @Html.Raw(Model.Project.Testimony.Description)
+                                        </p>
+                                        <div>
+                                            <img src="@Model.Project.Testimony.ImageLink" class="testimonial-img" alt="">
+                                            <h3>@Model.Project.Testimony.Name</h3>
+                                            <h4>@Model.Project.Testimony.Position</h4>
+                                        </div>
+                                    </div>
+                                }
+                            }                     
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-lg-3">
-                    <div class="portfolio-info">
-                        <h3>Project information</h3>
-                        <ul>
-                            <li><strong>Category</strong> <span>@Model.Project.ProjectServiceType.Title</span></li>
-                            <li><strong>Client</strong> <span>@Model.Project.ClientName</span></li>
-                            <li><strong>Project Start Date</strong> <span>@Model.Project.ProjectStartDate.ToString("D")</span></li>
-                            <li><strong>Project End Date</strong> <span>@Model.Project.ProjectEndDate.ToString("D")</span></li>
-                        </ul>
+                    <div class="col-lg-3">
+                        <div class="portfolio-info">
+                            <h3>Project information</h3>
+                            <ul>
+                                @if(Model.Project.ServiceType != null)
+                                {
+                                    <li><strong>Category</strong> <span>@Model.Project.ServiceType.Title</span></li>
+                                }
+                                <li><strong>Client</strong> <span>@Model.Project.ClientName</span></li>
+                                <li><strong>Project Start Date</strong> <span>@Model.Project.ProjectStartDate.ToString("D")</span></li>
+                                <li><strong>Project End Date</strong> <span>@Model.Project.ProjectEndDate.ToString("D")</span></li>
+                            </ul>
+                        </div>
                     </div>
+
                 </div>
 
             </div>
-
-        </div>
-    </section>
+        </section>
+    }
 }
 else
 {

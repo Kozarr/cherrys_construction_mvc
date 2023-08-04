@@ -6,7 +6,7 @@ namespace cherrys_construction_mvc.Interfaces
     public interface IMemberService
     {
         Task CreateMemberAsync(MemberRequest request);
-        Task<IEnumerable<MemberResponce>> GetMemberssAsync();
+        Task<IEnumerable<MemberResponce>> GetMembersAsync();
         Task DeleteMemberAsync(int memberId);
         Task<MemberResponce> GetMemberByIdAsync(int memberId);
         Task UpdateMemberAsync(int memberId, MemberRequest request);

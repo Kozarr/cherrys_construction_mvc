@@ -54,13 +54,16 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var tag = await _tagService.GetTagByIdAsync(id);
-            var editRequest = new TagRequest()
+            if(tag != null)
             {
-                Name = tag.Name,
+                var editRequest = new TagRequest()
+                {
+                    Name = tag.Name,
 
-            };
-
-            return View(editRequest);
+                };
+                return View(editRequest);
+            }
+            return View(); 
         }
 
         [ValidateAntiForgeryToken]

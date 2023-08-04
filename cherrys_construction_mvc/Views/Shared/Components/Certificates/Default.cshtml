@@ -1,0 +1,74 @@
+﻿@using cherrys_construction_mvc.ViewModels.ComponentVMs;
+@model CertificateCVM
+ <!-- End Services Section -->
+@if (Model != null)
+{
+    <!-- ======= Company Certificates Section ======= -->
+    <section id="alt-services" class="alt-services">
+        <div class="container" data-aos="fade-up">
+
+            <div class="row justify-content-around gy-4">
+                @if (Model.CertSettings != null)
+                {
+                    @if (!string.IsNullOrWhiteSpace(Model.CertSettings.ImageLink))
+                    {
+                        string imageLink = Model.CertSettings.ImageLink.Remove(0, 8);
+                        string image = ("~/images/" + imageLink);
+                        <div class="col-lg-6 img-bg" style="background-image: url('@Url.Content(image)');" data-aos="zoom-in" data-aos-delay="100"></div>
+                        <div class="col-lg-5 d-flex flex-column justify-content-center">
+                            @if (Model.CertSettings != null)
+                            {
+                                <h3>@Model.CertSettings.Title</h3>
+                                @Html.Raw(Model.CertSettings.Description)
+                            }
+                            @if(Model.CompanyCertificates != null)
+                            {
+                                @if (Model.CompanyCertificates.Any())
+                                {
+                                    @foreach (var item in Model.CompanyCertificates)
+                                    {
+                                        <div class="icon-box d-flex position-relative" data-aos="fade-up" data-aos-delay="100">
+                                            <div>
+                                                <h4><a class="stretched-link">@item.Title</a></h4>
+                                                <p>@Html.Raw(item.Description)</p>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            }
+                            
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-lg-12 d-flex flex-column justify-content-center">
+                            @if (Model.CertSettings != null)
+                            {
+                                <h3>@Model.CertSettings.Title</h3>
+                                @Html.Raw(Model.CertSettings.Description)
+                            }
+                            @if (Model.CompanyCertificates != null)
+                            {
+                                @if (Model.CompanyCertificates.Any())
+                                {
+                                    @foreach (var item in Model.CompanyCertificates)
+                                    {
+                                        <div class="icon-box d-flex position-relative" data-aos="fade-up" data-aos-delay="100">
+                                            <div>
+                                                <h4><a class="stretched-link">@item.Title</a></h4>
+                                                <p>@Html.Raw(item.Description)</p>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            }
+                        </div>
+                    }
+                }
+            </div>
+
+
+        </div>
+    </section>
+}
+<!-- End Company Certificates Section -->

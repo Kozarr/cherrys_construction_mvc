@@ -52,14 +52,19 @@ else
             {
                 <ul class="portfolio-flters" data-aos="fade-up" data-aos-delay="100">
                     <li data-filter="*" class="filter-active">All</li>
-
-                    @foreach (var item in Model.Tags)
+                    @if (Model.Tags.Any())
                     {
-                        string tagName = ".";
-                        string Name = item.Name.Replace(" ", "");
-                        tagName += Name;
-                        <li data-filter="@tagName">@item.Name</li>
-                    }
+                        @foreach (var item in Model.Tags)
+                        {
+                            string tagName = ".";
+                            @if (!string.IsNullOrWhiteSpace(item.Name))
+                            {
+                                string Name = item.Name.Replace(" ", "");
+                                tagName += Name;
+                                <li data-filter="@tagName">@item.Name</li>
+                            }                             
+                        }
+                    }                
                 </ul>
             }
             else
@@ -68,46 +73,56 @@ else
             @if (Model.Projects != null)
             {
                 <div class="row gy-4 portfolio-container" data-aos="fade-up" data-aos-delay="200">
-
-                    @foreach (var project in Model.Projects)
+                    @if (Model.Projects.Any())
                     {
-                        string tags = "";
-                        @foreach (var tag in project.ProjectTags)
+                        @foreach (var project in Model.Projects)
                         {
-                            var tagName = tag.Tag.Name.Replace(" ", "");
-                            tags += tagName;
-                            tags += " ";
-                        }
-
-                        <div class="col-lg-4 col-md-6 portfolio-item @tags">
-                            <a asp-area="@Breadcrumb.HomeArea" asp-action="Details" asp-route-id="@project.Id" title="More Details" class="details-link">
-                                <div class="portfolio-content h-100">
-                                    @if (project.Images.Any())
+                            string tags = "";
+                            @if(project.ProjectTags != null)
+                            {
+                                @if (project.ProjectTags.Any())
+                                {
+                                    @foreach (var tag in project.ProjectTags)
                                     {
-                                        <img src="@project.Images.First().PathImage" class="img-fluid" alt="">
+                                        if(tag.Tag != null)
+                                        {
+                                            @if (!string.IsNullOrWhiteSpace(tag.Tag.Name))
+                                            {
+                                                var tagName = tag.Tag.Name.Replace(" ", "");
+                                                tags += tagName;
+                                                tags += " ";
+                                            }
+                                        }
                                     }
-                                    <div class="portfolio-info">
-                                        <h4>@project.ProjectServiceType.Title</h4>
-                                        <p>@project.Title</p>
+                                }
+                            }
+                            <div class="col-lg-4 col-md-6 portfolio-item @tags">
+                                <a asp-area="@Breadcrumb.HomeArea" asp-action="Details" asp-route-id="@project.Id" title="More Details" class="details-link">
+                                    <div class="portfolio-content h-100">
+                                        @if (project.Images != null)
+                                        {
+                                            @if (project.Images.Any())
+                                            {
+                                                <img src="@project.Images.First().PathImage" class="img-fluid" alt="">
+                                            }
+                                        }
+                                        <div class="portfolio-info">
+                                            @if (project.ServiceType != null)
+                                            {
+                                                <h4>@project.ServiceType.Title</h4>
+                                            }
+                                            <p>@project.Title</p>
 
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
-                        </div>
-
-
-                        <!-- End Projects Item -->
+                                </a>
+                            </div>
+                            <!-- End Projects Item -->
+                        }
                     }
-
                 </div>
-
                 <!-- End Projects Container -->
             }
-            else
-            {
-            }
-
         </div>
-
     </div>
 </section><!-- End Our Projects Section -->

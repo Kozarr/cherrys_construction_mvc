@@ -10,74 +10,32 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
     [Area(Breadcrumb.HomeArea)]
     public class ServicesController : Controller
     {
-        private readonly ILogger<ServicesController> _logger; 
-        private readonly ICompanyValueService _companyValueService;
-        private readonly IServiceTypeService _serviceTypeService;
-        private readonly IServiceService _serviceService;
+        private readonly ILogger<ServicesController> _logger;
         private readonly ICompanyInfoService _companyInfoService;
-        private readonly ITestimonyService _testimonyService;
-
+        private readonly IServiceService _service;
         public ServicesController(
-            ILogger<ServicesController> logger,        
-            ICompanyValueService companyValueService,
-            IServiceTypeService serviceTypeService,
-            IServiceService serviceService,
-            ITestimonyService testimonyService,
-            ICompanyInfoService companyInfoService)
-        {           
+            ILogger<ServicesController> logger,
+            ICompanyInfoService companyInfoService,
+            IServiceService service)
+        {
             _logger = logger;
-            _companyValueService = companyValueService;       
-            _serviceTypeService = serviceTypeService;
-            _serviceService = serviceService;          
-            _testimonyService = testimonyService;
             _companyInfoService = companyInfoService;
+            _service = service;
         }
         public async Task<IActionResult> Index()
         {
-            var serviceResponce = new ServiceViewModel();
-
-            var services = await _serviceService.GetServicessAsync();
-            if(services.Any())
+            var companyInfoList = await _companyInfoService.GetCompanyInfosAsync();
+            if (companyInfoList.Any())
             {
-                serviceResponce.Services = services;
+                var info = companyInfoList.FirstOrDefault();
+                return View(info);
             }
-            else { }
-
-            var serviceTypes = await _serviceTypeService.GetServiceTypesAsync();
-            if (serviceTypes.Any())
-            {
-                serviceResponce.ServiceTypes = serviceTypes;
-            }
-            else { }
-
-            var companyValues = await _companyValueService.GetCompanyValuesAsync();
-            if (companyValues.Any())
-            {
-                serviceResponce.CompanyValues = companyValues;
-            }
-            else { }
-
-            var testimonies = await _testimonyService.GetTestimonysAsync();
-            if (testimonies.Any())
-            {
-                serviceResponce.Testimonies = testimonies;
-            }
-            else { }
-
-            var companyInfo = await _companyInfoService.GetCompanyInfosAsync();
-            if (companyInfo.Any())
-            {
-                var info = companyInfo.ToList()[0];
-                serviceResponce.CompanyInfo = info;
-            }
-            else { }
-
-            return View(serviceResponce);
+            return View(null);
         }
 
         public async Task<IActionResult> Details(int id)
         {
-            var service = await _serviceService.GetServiceByIdAsync(id);
+            var service = await _service.GetServiceByIdAsync(id);
             if (service == null)
             {
                 TempData["error"] = "Service Not Found";
@@ -85,54 +43,23 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
             }
             else
             {
-                var serviceResponce = new ServiceViewModel();
+                ServiceDetailsViewModel serviceDetails = new();
 
-                var services = await _serviceService.GetServicessAsync();
+                var services = await _service.GetServicesAsync();
                 if (services.Any())
                 {
-                    serviceResponce.Services = services;
+                    serviceDetails.Services = services;
                 }
-                else { }
-
-                var serviceTypes = await _serviceTypeService.GetServiceTypesAsync();
-                if (serviceTypes.Any())
-                {
-                    serviceResponce.ServiceTypes = serviceTypes;
-                }
-                else { }
-
-                var companyValues = await _companyValueService.GetCompanyValuesAsync();
-                if (companyValues.Any())
-                {
-                    serviceResponce.CompanyValues = companyValues;
-                }
-                else { }
-
-                var testimonies = await _testimonyService.GetTestimonysAsync();
-                if (testimonies.Any())
-                {
-                    serviceResponce.Testimonies = testimonies;
-                }
-                else { }
 
                 var companyInfo = await _companyInfoService.GetCompanyInfosAsync();
                 if (companyInfo.Any())
                 {
-                    var info = companyInfo.ToList()[0];
-                    serviceResponce.CompanyInfo = info;
+                    var info = companyInfo.FirstOrDefault();
+                    serviceDetails.CompanyInfo = info;
                 }
-                else { }
-
-                serviceResponce.Service = service;
-
-                return View(serviceResponce);
-
+                serviceDetails.Service = service;
+                return View(serviceDetails);
             }
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

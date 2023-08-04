@@ -50,25 +50,22 @@ namespace cherrys_construction_mvc.Services
 
         public async Task<IEnumerable<CompanyInfoResponce>> GetCompanyInfosAsync()
         {
-            var companyInfos = await _companyInfoRepository.ListAsync();
-            return _mapper.Map<IEnumerable<CompanyInfoResponce>>(companyInfos);
+            var companyInfoList = await _companyInfoRepository.ListAsync();
+            return _mapper.Map<IEnumerable<CompanyInfoResponce>>(companyInfoList);
         }
 
         public async Task UpdateCompanyInfoAsync(int oldCompanyInfoId, CompanyInfoRequest request)
         {
             var oldCompanyInfo = await _companyInfoRepository.GetByIdAsync(oldCompanyInfoId);
-
-            
             if (oldCompanyInfo != null)
-            {
-                oldCompanyInfo = _mapper.Map<CompanyInfo>(request);
-                
+            {     
+                _mapper.Map(request, oldCompanyInfo);
                 await _companyInfoRepository.UpdateAsync(oldCompanyInfo);
                 await _companyInfoRepository.SaveChangesAsync();
             }
             else
             {
-                _logger.LogWarning("Cound not find existing company info to update in CompanyInfo Service");
+                _logger.LogWarning("Could not find existing company info to update in CompanyInfo Service");
             }
         }
     }

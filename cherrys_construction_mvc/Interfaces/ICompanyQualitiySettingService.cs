@@ -6,11 +6,11 @@ namespace cherrys_construction_mvc.Interfaces
     public interface ICompanyQualitiySettingService
     {
 
-        Task<IEnumerable<CompanyQualitiySettingResponce>> GetCompanyQualitiySettingsAsync();
-        Task<CompanyQualitiySettingResponce> GetCompanyQualitiySettingByIdAsync(int id);
-        Task CreateCompanyQualitiySettingAsync(CompanyQualitySettingRequest request);
-        Task UpdateCompanyQualitiySettingAsync(int id, CompanyQualitySettingRequest request);
-        Task DeleteCompanyQualitiySettingAsync(int id);
+        Task<IEnumerable<CompanyQualitiySettingResponce>> GetCompanyQualitiesSettingsAsync();
+        Task<CompanyQualitiySettingResponce> GetCompanyQualitiesSettingByIdAsync(int id);
+        Task CreateCompanyQualitiesSettingAsync(CompanyQualitySettingRequest request);
+        Task UpdateCompanyQualitiesSettingAsync(int id, CompanyQualitySettingRequest request);
+        Task DeleteCompanyQualitiesSettingAsync(int id);
 
     }
 }

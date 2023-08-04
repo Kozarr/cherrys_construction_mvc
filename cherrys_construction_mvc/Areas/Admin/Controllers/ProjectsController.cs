@@ -19,24 +19,42 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         private readonly ITagService _tagService;
         private readonly IProjectTagService _projectTagService;
         private readonly ILogger<ProjectsController> _logger;
+        private readonly ITestimonyService _testimonyService;
         public ProjectsController(IProjectService projectService, 
             IServiceTypeService serviceTypeService, 
             ITagService tagService, 
             IProjectTagService projectTagService, 
-            ILogger<ProjectsController> logger)
+            ILogger<ProjectsController> logger,
+            ITestimonyService testimonyService)
         {
             _projectService = projectService;
             _serviceTypeService = serviceTypeService;
             _tagService = tagService;
             _projectTagService = projectTagService;
             _logger = logger;
+            _testimonyService = testimonyService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             var projects = await _projectService.GetProjectsAsync();
-            return View(projects);
+            if (projects.Any())
+            {
+                foreach(var item in projects)
+                {
+                    if(item.ServiceTypeId > 0)
+                    {
+                        var serviceType = await _serviceTypeService.GetServiceTypeByIdAsync(item.ServiceTypeId);
+                        if(serviceType != null)
+                        {
+                            item.ServiceType = serviceType;
+                        }
+                    }                      
+                }
+                return View(projects);
+            }
+            return View();
         }
 
         [HttpGet]

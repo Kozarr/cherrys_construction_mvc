@@ -32,19 +32,20 @@
                 @foreach (var member in Model)
                 {
                         <div class="row gy-4 member-item featured mt-4" data-aos="fade-up" data-aos-delay="200">
-                            <div class="col-lg-4 d-flex align-items-center justify-content-center">
+                            <div class="col-lg-3 col-md-4 d-flex align-items-center justify-content-center">
                                 <div>
                                     <h3>@member.Name</h3>
                                     <h5>@member.Role</h5>
-                                </div>
-                                        
+                                    <img src="@member.ImageLink" class="img-fluid" />
+                                </div>                                       
                             </div>
-                            <div class="col-lg-4 d-flex align-items-center justify-content-center">
+                            <div class="col-lg-9 col-md-8 d-flex align-items-center justify-content-center">
                                 <p>@Html.Raw(@member.Description)</p>
                             </div>
-                            <div class="col-lg-4 align-content-center justify-content-center mb-4">
-                                <img src="@member.ImageLink" />
-                            </div>
+                            @* <div class="col-lg-3 d-flex align-content-center justify-content-center mb-4">
+                                
+                            </div> *@
+
                             <div class="flex-btn-container-row">
                                 <a class="flex-btn-row edit-btn text-center" asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.MembersController"
                                    asp-action="@Breadcrumb.Edit" asp-route-id="@member.Id" class="readmore stretched-link">

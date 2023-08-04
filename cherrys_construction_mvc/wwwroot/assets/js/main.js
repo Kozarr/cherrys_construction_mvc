@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
      * Mobile nav toggle
      */
     const mobileNavShow = document.querySelector('.mobile-nav-show');
-    const mobileNavHide = document.querySelector('.mobile-nav-hide');
+    const mobileNavHide = document.querySelector('.mobile-nav-hide active');
 
     document.querySelectorAll('.mobile-nav-toggle').forEach(el => {
         el.addEventListener('click', function (event) {
@@ -42,8 +42,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function mobileNavToogle() {
         document.querySelector('body').classList.toggle('mobile-nav-active');
-        mobileNavShow.classList.toggle('d-none');
-        mobileNavHide.classList.toggle('d-none');
+        mobileNavShow.classList.toggle('active');
+        mobileNavHide.classList.toggle('active');
     }
 
     /**

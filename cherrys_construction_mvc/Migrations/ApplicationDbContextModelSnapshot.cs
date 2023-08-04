@@ -241,7 +241,7 @@ namespace cherrys_construction_mvc.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BlogCategories");
+                    b.ToTable("BlogCategories", (string)null);
                 });
 
             modelBuilder.Entity("cherrys_construction_mvc.Models.BlogPost", b =>
@@ -275,7 +275,7 @@ namespace cherrys_construction_mvc.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BlogPosts");
+                    b.ToTable("BlogPosts", (string)null);
                 });
 
             modelBuilder.Entity("cherrys_construction_mvc.Models.CallToActionMessage", b =>
@@ -308,7 +308,7 @@ namespace cherrys_construction_mvc.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CallToActionMessages");
+                    b.ToTable("CallToActionMessages", (string)null);
                 });
 
             modelBuilder.Entity("cherrys_construction_mvc.Models.CallToActionSetting", b =>
@@ -339,7 +339,7 @@ namespace cherrys_construction_mvc.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("callToActionSettings");
+                    b.ToTable("callToActionSettings", (string)null);
                 });
 
             modelBuilder.Entity("cherrys_construction_mvc.Models.CompanyCertificate", b =>
@@ -359,7 +359,7 @@ namespace cherrys_construction_mvc.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CompanyCertificates");
+                    b.ToTable("CompanyCertificates", (string)null);
                 });
 
             modelBuilder.Entity("cherrys_construction_mvc.Models.CompanyCertificateSetting", b =>
@@ -381,7 +381,7 @@ namespace cherrys_construction_mvc.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CompanyCertificateSettings");
+                    b.ToTable("CompanyCertificateSettings", (string)null);
                 });
 
             modelBuilder.Entity("cherrys_construction_mvc.Models.CompanyInfo", b =>
@@ -433,7 +433,7 @@ namespace cherrys_construction_mvc.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CompanyInfos");
+                    b.ToTable("CompanyInfos", (string)null);
                 });
 
             modelBuilder.Entity("cherrys_construction_mvc.Models.CompanyQuality", b =>
@@ -453,7 +453,7 @@ namespace cherrys_construction_mvc.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("companyQualities");
+                    b.ToTable("companyQualities", (string)null);
                 });
 
             modelBuilder.Entity("cherrys_construction_mvc.Models.CompanyQualitySetting", b =>
@@ -475,7 +475,7 @@ namespace cherrys_construction_mvc.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CompanyQualitySettings");
+                    b.ToTable("CompanyQualitySettings", (string)null);
                 });
 
             modelBuilder.Entity("cherrys_construction_mvc.Models.CompanyStory", b =>
@@ -503,7 +503,7 @@ namespace cherrys_construction_mvc.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CompanyStories");
+                    b.ToTable("CompanyStories", (string)null);
                 });
 
             modelBuilder.Entity("cherrys_construction_mvc.Models.CompanyValue", b =>
@@ -525,7 +525,7 @@ namespace cherrys_construction_mvc.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CompanyValues");
+                    b.ToTable("CompanyValues", (string)null);
                 });
 
             modelBuilder.Entity("cherrys_construction_mvc.Models.HeroSlider", b =>
@@ -547,7 +547,7 @@ namespace cherrys_construction_mvc.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("HeroSliders");
+                    b.ToTable("HeroSliders", (string)null);
                 });
 
             modelBuilder.Entity("cherrys_construction_mvc.Models.HeroSliderImage", b =>
@@ -569,7 +569,7 @@ namespace cherrys_construction_mvc.Migrations
 
                     b.HasIndex("HeroSliderId");
 
-                    b.ToTable("HeroSliderImages");
+                    b.ToTable("HeroSliderImages", (string)null);
                 });
 
             modelBuilder.Entity("cherrys_construction_mvc.Models.ImageModel", b =>
@@ -581,7 +581,6 @@ namespace cherrys_construction_mvc.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("PathImage")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ProjectId")
@@ -591,7 +590,7 @@ namespace cherrys_construction_mvc.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Images");
+                    b.ToTable("Images", (string)null);
                 });
 
             modelBuilder.Entity("cherrys_construction_mvc.Models.LegalDocument", b =>
@@ -610,7 +609,7 @@ namespace cherrys_construction_mvc.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LegalDocuments");
+                    b.ToTable("LegalDocuments", (string)null);
                 });
 
             modelBuilder.Entity("cherrys_construction_mvc.Models.Member", b =>
@@ -638,7 +637,7 @@ namespace cherrys_construction_mvc.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Members");
+                    b.ToTable("Members", (string)null);
                 });
 
             modelBuilder.Entity("cherrys_construction_mvc.Models.Project", b =>
@@ -669,9 +668,7 @@ namespace cherrys_construction_mvc.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ServiceTypeId");
-
-                    b.ToTable("Projects");
+                    b.ToTable("Projects", (string)null);
                 });
 
             modelBuilder.Entity("cherrys_construction_mvc.Models.ProjectTag", b =>
@@ -691,7 +688,7 @@ namespace cherrys_construction_mvc.Migrations
 
                     b.HasIndex("TagId");
 
-                    b.ToTable("ProjectTag");
+                    b.ToTable("ProjectTag", (string)null);
                 });
 
             modelBuilder.Entity("cherrys_construction_mvc.Models.Service", b =>
@@ -713,7 +710,7 @@ namespace cherrys_construction_mvc.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Services");
+                    b.ToTable("Services", (string)null);
                 });
 
             modelBuilder.Entity("cherrys_construction_mvc.Models.ServiceType", b =>
@@ -741,7 +738,7 @@ namespace cherrys_construction_mvc.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ServiceTypes");
+                    b.ToTable("ServiceTypes", (string)null);
                 });
 
             modelBuilder.Entity("cherrys_construction_mvc.Models.Tag", b =>
@@ -757,7 +754,7 @@ namespace cherrys_construction_mvc.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tags");
+                    b.ToTable("Tags", (string)null);
                 });
 
             modelBuilder.Entity("cherrys_construction_mvc.Models.Testimony", b =>
@@ -791,7 +788,7 @@ namespace cherrys_construction_mvc.Migrations
                     b.HasIndex("ProjectId")
                         .IsUnique();
 
-                    b.ToTable("Testimonies");
+                    b.ToTable("Testimonies", (string)null);
                 });
 
             modelBuilder.Entity("cherrys_construction_mvc.Models.ApplicationUser", b =>
@@ -890,17 +887,6 @@ namespace cherrys_construction_mvc.Migrations
                     b.Navigation("Project");
                 });
 
-            modelBuilder.Entity("cherrys_construction_mvc.Models.Project", b =>
-                {
-                    b.HasOne("cherrys_construction_mvc.Models.ServiceType", "ServiceType")
-                        .WithMany("Projects")
-                        .HasForeignKey("ServiceTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ServiceType");
-                });
-
             modelBuilder.Entity("cherrys_construction_mvc.Models.ProjectTag", b =>
                 {
                     b.HasOne("cherrys_construction_mvc.Models.Project", "Project")
@@ -922,13 +908,13 @@ namespace cherrys_construction_mvc.Migrations
 
             modelBuilder.Entity("cherrys_construction_mvc.Models.Testimony", b =>
                 {
-                    b.HasOne("cherrys_construction_mvc.Models.Project", "Project")
+                    b.HasOne("cherrys_construction_mvc.Models.Project", "CurrentProject")
                         .WithOne("Testimony")
                         .HasForeignKey("cherrys_construction_mvc.Models.Testimony", "ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Project");
+                    b.Navigation("CurrentProject");
                 });
 
             modelBuilder.Entity("cherrys_construction_mvc.Models.HeroSlider", b =>
@@ -943,11 +929,6 @@ namespace cherrys_construction_mvc.Migrations
                     b.Navigation("ProjectTags");
 
                     b.Navigation("Testimony");
-                });
-
-            modelBuilder.Entity("cherrys_construction_mvc.Models.ServiceType", b =>
-                {
-                    b.Navigation("Projects");
                 });
 
             modelBuilder.Entity("cherrys_construction_mvc.Models.Tag", b =>

@@ -1,0 +1,67 @@
+﻿@using cherrys_construction_mvc.ViewModels.ComponentVMs;
+@model QualitiesCVM
+
+@if (Model != null)
+{
+    <!-- ======= Company Qualities Section ======= -->
+    @if (Model.Qualities != null)
+    {
+        <section id="alt-services-2" class="alt-services section-bg">
+            <div class="container" data-aos="fade-up">
+
+                <div class="row justify-content-around gy-4">
+                    @if(Model.CompanyQualitiesSettings != null)
+                    {
+                        @if (!string.IsNullOrWhiteSpace(Model.CompanyQualitiesSettings.ImageLink))
+                        {
+                            <div class="col-lg-5 d-flex flex-column justify-content-center">
+
+                                <h3>@Model.CompanyQualitiesSettings.Title</h3>
+                                @Html.Raw(Model.CompanyQualitiesSettings.Description)
+
+                                @if (Model.Qualities.Any())
+                                {
+                                    @foreach (var item in Model.Qualities)
+                                    {
+                                        <div class="icon-box d-flex position-relative" data-aos="fade-up" data-aos-delay="100">
+                                            <div>
+                                                <h4><a href="" class="stretched-link">@item.Title</a></h4>
+                                                <p>@Html.Raw(item.Description)</p>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                            string imageLink = Model.CompanyQualitiesSettings.ImageLink.Remove(0, 8);
+                            string image = ("~/images/" + imageLink);
+                            <div class="col-lg-6 img-bg" style="background-image: url('@Url.Content(image)');" data-aos="zoom-in" data-aos-delay="100"></div>
+                        }
+                        else
+                        {
+                            <div class="col-12 d-flex flex-column justify-content-center">
+
+                                <h3>@Model.CompanyQualitiesSettings.Title</h3>
+                                @Html.Raw(Model.CompanyQualitiesSettings.Description)
+
+                                @if (Model.Qualities.Any())
+                                {
+                                    @foreach (var item in Model.Qualities)
+                                    {
+                                        <div class="icon-box d-flex position-relative" data-aos="fade-up" data-aos-delay="100">
+                                            <div>
+                                                <h4><a href="" class="stretched-link">@item.Title</a></h4>
+                                                <p>@Html.Raw(item.Description)</p>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        }
+                    }                                                                                    
+                </div>
+
+            </div>
+        </section>
+        <!-- End Company Qualities Section -->
+    }
+}

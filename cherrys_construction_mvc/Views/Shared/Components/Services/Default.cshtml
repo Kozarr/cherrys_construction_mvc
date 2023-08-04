@@ -1,0 +1,33 @@
+﻿@model List<ServiceResponce>
+@if (Model != null)
+{
+    <!-- ======= Services Section ======= -->
+    <section id="services" class="services section-bg">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-header">
+                <h2>Services</h2>
+                <p>
+                    Discover a spectrum of construction services tailored to meet your specific needs
+                </p>
+            </div>
+
+            <div class="row gy-4">
+                @if (Model.Any())
+                {
+                    @foreach (var service in Model)
+                    {
+                        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                            <div class="service-item position-relative h-100">
+                                <h3>@service.Title</h3>
+                                <p>@Html.Raw(service.ShortDescription)</p>
+                                <a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.UserServicesController" asp-action="Details" asp-route-id="@service.Id" class="readmore stretched-link">Learn more <i class="bi bi-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </section>
+    <!-- End Services Section -->
+}

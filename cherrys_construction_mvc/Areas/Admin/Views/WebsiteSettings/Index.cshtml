@@ -18,7 +18,7 @@
     </div>
 </div><!-- End Breadcrumbs -->
 
-<section id="list" class="list">
+<section id="website-settings" class="website-settings">
     <div class="container" data-aos="fade-up">
 
         <div class="section-header">
@@ -33,62 +33,38 @@
         }
         else
         {
-            <div class="text-center pt-5 pb-5">
-                <div class="container" data-aos="fade-up">
-
-                    <div class="row gy-4 list-item featured mt-4" data-aos="fade-up" data-aos-delay="200">
-                        <div class="col-md-12 d-flex">
-                            <div class="col-4" style="padding-left:10px;">
-                                <div class="mb-3">
-                                    @if (Model.NavigationImageURL != null)
-                                    {
-                                        <img src="@Model.NavigationImageURL" class="img-fluid" style="clip-path:none;">
-                                    }
-                                </div>
-                                <div>
-                                    @if (Model.FooterImageURL != null)
-                                    {
-                                        <img src="@Model.FooterImageURL" class="img-fluid" style="clip-path:none;">
-                                    }
-                                </div>
-
-                            </div>
-                            <div class="col-8">
-                                <h3>@Model.CompanyName</h3>
-                                <h4>@Model.CompanyEmail</h4>
-                                <h4>@Model.CompanyPhoneNumber</h4>
-
-                                <br />
-                                @if (Model.FaceBookLink != null)
-                                {
-                                    <h5>@Model.FaceBookLink</h5>
-                                }
-                                @if (Model.InstagramLink != null)
-                                {
-                                    <h5>@Model.InstagramLink</h5>
-                                }
-                                @if (Model.YoutubeLink != null)
-                                {
-                                    <h5>@Model.YoutubeLink</h5>
-                                }
-                                @if (Model.LinkedInLink != null)
-                                {
-                                    <h5>@Model.LinkedInLink</h5>
-                                }
-                                @if (Model.TwitterLink != null)
-                                {
-                                    <h5>@Model.TwitterLink</h5>
-                                }
-                            </div>
+            <div class="web-container" data-aos="fade-up" data-aos-delay="200">
+                <div class="img-container">
+                    @if (!string.IsNullOrWhiteSpace(Model.NavigationImageURL))
+                    {
+                        <div class="img-div">
+                            <img src="@Model.NavigationImageURL" class="img-fluid">
+                            <h5>Header</h5>
                         </div>
-                        <div class="col-md-12 d-flex flex-row justify-content-around align-items-center">
-                            <div class="m-auto">
-                                <a class="edit-btn" asp-area="@Breadcrumb.AdminArea" asp-action="Edit" asp-route-id="@Model.Id">@Breadcrumb.Edit</a>
-                            </div>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Model.FooterImageURL))
+                    {
+                        <div class="img-div">
+                            <img src="@Model.FooterImageURL" class="img-fluid">
+                            <h5>Footer</h5>
                         </div>
-                    </div>
-
+                    }
+                    
                 </div>
+                <div class="web-content">
+                    <h4>Business Name: @Model.CompanyName</h4>
+                    <h4>Email: @Model.CompanyEmail</h4>
+                    <h4>Phone: @Model.CompanyPhoneNumber</h4>
+                </div>
+                
+            </div>
+
+            <div class="flex-btn-container-row pt-2">
+                <a class="flex-btn-row edit-btn text-center" asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.WebsiteSettingsController"
+                   asp-action="@Breadcrumb.Edit" asp-route-id="@Model.Id" class="readmore stretched-link">
+                    <span>@Breadcrumb.Edit</span><i class="fa-regular fa-pen-to-square"></i>
+                </a>
+                <br>
             </div>
         }
     </div>

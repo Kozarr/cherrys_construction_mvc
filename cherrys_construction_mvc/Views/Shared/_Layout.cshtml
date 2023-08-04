@@ -1,9 +1,7 @@
 ﻿@using cherrys_construction_mvc.Utility;
 @using Microsoft.AspNetCore.Identity
-
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -31,9 +29,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
-    <!-- FontAwesome -->
-@*    <script src="https://kit.fontawesome.com/8a1d5615a6.js" crossorigin="anonymous"></script>*@
-
     <!-- TinyMCE -->
     <script src="~/lib/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
 
@@ -42,7 +37,6 @@
 
 </head>
 <body>
-
     <header id="header" class="header d-flex align-items-center fixed-top">
 
         <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
@@ -51,8 +45,22 @@
                 <img src="~/assets/img/brand/cherrys-logo-white.png" alt="Logo">
             </a>
 
-            <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+            @* <i class="mobile-nav-toggle mobile-nav-show d-none bi bi-list"></i>
             <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+            *@
+
+
+            <svg class="mobile-nav-toggle mobile-nav-show toggle-rotate" viewBox="0 0 100 100" width="80">
+                    <path class="line top"
+                          d="m 70,33 h -40 c 0,0 -6,1.368796 -6,8.5 0,7.131204 6,8.5013 6,8.5013 l 20,-0.0013" />
+                    <path class="line middle"
+                          d="m 70,50 h -40" />
+                    <path class="line bottom"
+                          d="m 69.575405,67.073826 h -40 c -5.592752,0 -6.873604,-9.348582 1.371031,-9.348582 8.244634,0 19.053564,21.797129 19.053564,12.274756 l 0,-40" />
+            </svg>
+          
+            
+
             <nav id="navbar" class="navbar">
                 <ul>
                     <li><a asp-area="@Breadcrumb.HomeArea" asp-controller="@Breadcrumb.HomeController" asp-action="Index">@Breadcrumb.Home</a></li>
@@ -69,7 +77,6 @@
                     {
                         <li><a asp-area="@Breadcrumb.AdminArea" asp-controller="@Breadcrumb.AdminController" asp-action="Index">@Breadcrumb.Admin</a></li>
                     }
-
                     <partial name="_LoginPartial" />
                 </ul>
             </nav><!-- .navbar -->
@@ -97,10 +104,7 @@
     <script src="~/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
     <script src="~/assets/vendor/swiper/swiper-bundle.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-
 
     <!-- Could Get Rid of this below-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -114,7 +118,6 @@
     <!-- Swal -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/js/swal.js"></script>
-
 
     @await RenderSectionAsync("Scripts", required: false)
 

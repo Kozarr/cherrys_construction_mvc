@@ -5,6 +5,7 @@ namespace cherrys_construction_mvc.ViewModels.Requests
 {
     public class MemberRequest
     {
+        public int Id { get; set; } 
         [Required]
         [Display(Name = "Name")]
         public string? Name { get; set; }
@@ -12,7 +13,7 @@ namespace cherrys_construction_mvc.ViewModels.Requests
         [ValidateNever]
         public string? Role { get; set; }
         [Display(Name = "Description")]
-        [Required]
+        [ValidateNever]
         public string? Description { get; set; }
         [ValidateNever]
         public string? ImageLink { get; set; }

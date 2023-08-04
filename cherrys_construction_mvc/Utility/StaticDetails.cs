@@ -20,14 +20,12 @@ namespace cherrys_construction_mvc.Utility
         public const string SendGridKey = "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";
 
         // Photo Sizes
-        public const int LargeCoverImage = 1920;
+        public const int LargeCoverImage = 3000;
         public const int LargeImage = 1280;
         public const int WideImage = 1280;
         public const int StandardImage = 1200;
-        public const int SquareImage = 1000;
+        public const int PortraitImage = 500;
         public const int SquareAvatarImage = 500;
-        public const int UltrawideImage = 1080;
-
-
+        public const int UltrawideImage = 5000;
     }
 }

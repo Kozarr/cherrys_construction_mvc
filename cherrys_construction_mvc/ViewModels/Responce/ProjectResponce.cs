@@ -12,11 +12,10 @@ namespace cherrys_construction_mvc.ViewModels.Responce
         public DateTime ProjectStartDate { get; set; }
         public DateTime ProjectEndDate { get; set; }
         public int ServiceTypeId { get; set; }
-        [ForeignKey("ServiceTypeId")]
-        public ServiceType? ProjectServiceType { get; set; }
+        public ServiceTypeResponce? ServiceType { get; set; }
 
         //public Category? Category { get; set; }
-        public Testimony? ProjectTestimony { get; set; }
+        public TestimonyResponce? Testimony { get; set; }
 
         public List<ImageResponce>? Images { get; set; }
         public List<ProjectTag>? ProjectTags { get; set; }

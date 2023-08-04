@@ -1,0 +1,53 @@
+﻿@model List<ServiceTypeResponce>
+@if (Model != null)
+{
+    <!-- ======= Service Types Section ======= -->
+    <section id="constructions" class="constructions">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-header">
+                <h2>Industries</h2>
+                <p>We're not just builders - we're partners. And at Cherry's Construction, we're shaping the future of ICF Construction in Kentucky.  Explore our site to discover how we transform the construction process into a seamless, rewarding journey.</p>
+            </div>
+
+            <div class="row gy-4">
+                @if (Model.Any())
+                {
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                            <div class="card-item h-100">
+                                <div class="row">
+                                    @if (!string.IsNullOrWhiteSpace(item.ImageLink))
+                                    {
+                                        string imageLink = item.ImageLink.Remove(0, 8);
+                                        string image = ("~/images/" + imageLink);
+                                        <div class="col-xl-5">
+                                            <div class="card-bg" style="background-image: url('@Url.Content(image)');"></div>
+                                        </div>
+                                        <div class="col-xl-7 d-flex align-items-center">
+                                            <div class="card-body">
+                                                <h4 class="card-title">@item.Title</h4>
+                                                <p>@Html.Raw(item.Description)</p>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-xl-12 d-flex align-items-center">
+                                            <div class="card-body">
+                                                <h4 class="card-title">@item.Title</h4>
+                                                <p>@Html.Raw(item.Description)</p>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </section>
+    <!-- End Service Types Section -->
+}

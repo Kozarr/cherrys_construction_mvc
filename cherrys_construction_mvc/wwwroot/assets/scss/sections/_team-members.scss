@@ -1,0 +1,136 @@
+﻿/*
+=======================================================
+* Template Name: Presento - v3.6.0
+* Template URL: https: //bootstrapmade.com/presento-bootstrap-corporate-template/
+* Author: BootstrapMade.com
+* License: https: //bootstrapmade.com/license/
+========================================================
+*/
+/*--------------------------------------------------------------
+# Team
+--------------------------------------------------------------*/
+.team {
+
+    .team-member {
+        margin-bottom: 20px;
+        overflow: hidden;
+        background: $white;
+        position: relative;
+        border-radius: 0;
+        box-shadow: rgba(0,0,0,0.1) 10px 10px 4px;
+        height: 100%;
+        background-repeat: no-repeat;
+        /*        .member-img {
+            position: relative;
+            overflow: hidden;
+        }*/
+
+        .img-bg {
+            position: relative;
+            overflow: hidden;
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 460px;
+            background-position: top;
+            width: auto;
+
+            @media screen and (max-width: $lg-desktop-max) {
+                height: 380px;
+            }
+
+            @media screen and (max-width: $desktop-max) {
+                height: 360px;
+            }
+
+            @media screen and (max-width: $tablet-max) {
+                height: 380px;
+            }
+
+            @media screen and (max-width: $tablet-min) {
+                height: 420px;
+            }
+
+            @media (max-width: $tablet-medium) and (max-height: $tablet-medium) {
+            }
+
+            @media (max-width: $sm-tablet-max) and (max-height: $sm-tablet-max) {
+                height: 70vh;
+            }
+
+            @media (max-width: $sm-tablet-max) and (max-height: $laptop-max) {
+                height: 60vh;
+            }
+        }
+
+        .social {
+            position: absolute;
+            left: 0;
+            bottom: 30px;
+            right: 0;
+            opacity: 0;
+            transition: ease-in-out 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            a {
+                transition: color 0.3s;
+                color: $secondary;
+                margin: 0 3px;
+                width: 36px;
+                height: 36px;
+                background: $primary;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                transition: ease-in-out 0.3s;
+                color: $white;
+
+                &:hover {
+                    background: lighten($cherrys-blue, 15);
+                    transform: scale(1.1);
+                }
+            }
+
+            i {
+                font-size: 18px;
+                line-height: 0;
+            }
+        }
+
+        .member-info {
+            padding: 25px 15px 0px 15px;
+
+            h4 {
+                font-weight: 700;
+                margin-bottom: 5px;
+                font-size: 1.4rem;
+                color: $cherrys-black;
+                text-align: center;
+            }
+
+            span {
+                display: block;
+                font-size: 13px;
+                font-weight: 500;
+                /*color: lighten($cherrys-gray, 15);*/
+                color: darken($cherrys-yellow, 15);
+                text-align: center;
+            }
+
+            p {
+                font-size: 0.8rem;
+                line-height: 26px;
+                color: lighten($cherrys-darkgray, 20);
+            }
+        }
+
+        &:hover {
+
+            .social {
+                opacity: 1;
+                bottom: 15px;
+            }
+        }
+    }
+}

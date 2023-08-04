@@ -14,36 +14,48 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
         private readonly IProjectService _projectService;
         private readonly ITagService _tagService;
         private readonly ICompanyInfoService _companyInfoService;
+        private readonly IServiceTypeService _serviceTypeService;
         public ProjectsController(
             ILogger<ProjectsController> logger,
             IProjectService projectService,
             ITagService tagService,
-            ICompanyInfoService companyInfoService)
+            ICompanyInfoService companyInfoService,
+            IServiceTypeService serviceTypeService)
         {
             _logger = logger;
             _projectService = projectService;
             _tagService = tagService;
             _companyInfoService = companyInfoService;
+            _serviceTypeService = serviceTypeService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var projectViewModelResponce = new ProjectViewModel();
+            ProjectViewModel projectViewModelResponce = new();
 
             var projects = await _projectService.GetProjectsAsync();
             if(projects.Any())
             {
+                foreach(var item in projects)
+                {
+                    if(item.ServiceTypeId > 0)
+                    {
+                        var serviceType = await _serviceTypeService.GetServiceTypeByIdAsync(item.ServiceTypeId);
+                        if(serviceType != null)
+                        {
+                            item.ServiceType = serviceType;
+                        }
+                    }
+                }
                 projectViewModelResponce.Projects = projects;
             }
-            else { }
 
             var tags = await _tagService.GetTagsAsync();
             if (tags.Any())
             {
                 projectViewModelResponce.Tags = tags;
             }
-            else { }
 
             var companyInfo = await _companyInfoService.GetCompanyInfosAsync();
             if (companyInfo.Any())
@@ -51,7 +63,6 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
                 var info = companyInfo.ToList()[0];
                 projectViewModelResponce.CompanyInfo = info;
             }
-            else { }
             
             return View(projectViewModelResponce);
 
@@ -65,9 +76,16 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
             var project = await _projectService.GetProjectByIdAsync(id);
             if(project != null)
             {
+                if(project.ServiceTypeId > 0)
+                {
+                    var serviceType = await _serviceTypeService.GetServiceTypeByIdAsync(project.ServiceTypeId);
+                    if(serviceType != null)
+                    {
+                        project.ServiceType = serviceType;
+                    }
+                }
                 projectDetails.Project = project;
             }
-            else { }
 
             var companyInfo = await _companyInfoService.GetCompanyInfosAsync();
             if (companyInfo.Any())
@@ -75,14 +93,8 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
                 var info = companyInfo.First();
                 projectDetails.CompanyInfo = info;
             }
-            else { }
 
             return View(projectDetails);
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

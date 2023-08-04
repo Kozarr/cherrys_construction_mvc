@@ -4,7 +4,7 @@ namespace cherrys_construction_mvc.Interfaces
 {
     public interface IServiceService
     {
-        Task<IEnumerable<ServiceResponce>> GetServicessAsync();
+        Task<IEnumerable<ServiceResponce>> GetServicesAsync();
         Task<ServiceResponce> GetServiceByIdAsync(int serviceId);
         Task CreateServiceAsync(ServiceRequest request);
         Task UpdateServiceAsync(int serviceId, ServiceRequest request);

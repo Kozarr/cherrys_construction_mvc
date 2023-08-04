@@ -28,7 +28,7 @@ namespace cherrys_construction_mvc.Areas.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> Index()
         {
-            var services = await _serviceService.GetServicessAsync();
+            var services = await _serviceService.GetServicesAsync();
             if (services.Any())
             {
                 foreach(var item in services)

@@ -14,9 +14,11 @@ Template: Logis Pricing Section
     }
 
     img {
-        width: 200px;
-        height: 200px;
-        clip-path: circle();
+         height: auto;
+         max-height: 30vh;
+         max-width: 100%;
+         position: relative;
+         overflow: hidden;
     }
 
     h2 {

@@ -2,10 +2,10 @@
 using cherrys_construction_mvc.EfRepository.Interfaces;
 using cherrys_construction_mvc.Interfaces;
 using cherrys_construction_mvc.Models;
+using cherrys_construction_mvc.Services.ImageSharp.Interface;
 using cherrys_construction_mvc.Utility;
 using cherrys_construction_mvc.ViewModels.Requests;
 using cherrys_construction_mvc.ViewModels.Responce;
-using Microsoft.IdentityModel.Tokens;
 
 namespace cherrys_construction_mvc.Services
 {
@@ -15,28 +15,28 @@ namespace cherrys_construction_mvc.Services
         private readonly IEfRepository<BlogPost> _blogPostRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<BlogPost> _logger;
-
+        private readonly IImageProcessorService _imageProcessor;
 
         public BlogPostService(IWebHostEnvironment webHostEnvironment,
             IEfRepository<BlogPost> blogPost,
             IMapper mapper,
-            ILogger<BlogPost> logger)
+            ILogger<BlogPost> logger,
+            IImageProcessorService imageProcessor)
         {
             _blogPostRepository = blogPost;
             _mapper = mapper;
             _webHostEnvironment = webHostEnvironment;
             _logger = logger;
+            _imageProcessor = imageProcessor;
         }
 
         public async Task CreateBlogPostAsync(BlogPostRequest request)
         {
             if (request.Image != null)
             {
-                request.ImageLink = await Helper.Helper.UploadImage(request.Image, _webHostEnvironment, StaticDetails.SquareImage);
+                request.ImageLink = await _imageProcessor.ProcessImageAsync(request.Image, _webHostEnvironment, StaticDetails.StandardImage);
             }
-
             var post = _mapper.Map<BlogPost>(request);
-
             await _blogPostRepository.AddAsync(post);
         }
 
@@ -51,13 +51,9 @@ namespace cherrys_construction_mvc.Services
             }
             else
             {
-                var oldImagePath = Path.Combine(wwwRootPath, post.ImageLink.TrimStart('\\'));
-                if (oldImagePath != null)
+                if(!string.IsNullOrEmpty(post.ImageLink))
                 {
-                    if (File.Exists(oldImagePath))
-                    {
-                        File.Delete(oldImagePath);
-                    }
+                    _imageProcessor.DeleteImage(_webHostEnvironment.WebRootPath, post.ImageLink);
                 }
                 await _blogPostRepository.DeleteAsync(post);
             }
@@ -90,23 +86,17 @@ namespace cherrys_construction_mvc.Services
                 {
                     if (!string.IsNullOrWhiteSpace(request.ImageLink))
                     {
-                        string wwwRootPath = _webHostEnvironment.WebRootPath;
-                        var oldImagePath = Path.Combine(wwwRootPath, post.ImageLink.TrimStart('\\'));
-                        if (File.Exists(oldImagePath))
-                        {
-                            File.Delete(oldImagePath);
-                        }
+                        _imageProcessor.DeleteImage(_webHostEnvironment.WebRootPath, request.ImageLink);
+                     
                     }
-                    request.ImageLink = await Helper.Helper.UploadImage(request.Image, _webHostEnvironment, StaticDetails.SquareImage);
+                    request.ImageLink = await _imageProcessor.ProcessImageAsync(request.Image, _webHostEnvironment, StaticDetails.StandardImage);
                 }
                 else
                 {
                     request.ImageLink = post.ImageLink;
                 }
                 request.CreatedDate = post.CreatedDate;
-
                 request.Author ??= post.Author;
-
                 _mapper.Map(request, post);
                 await _blogPostRepository.UpdateAsync(post);
             }

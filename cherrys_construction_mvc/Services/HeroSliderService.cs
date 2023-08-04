@@ -2,6 +2,7 @@
 using cherrys_construction_mvc.EfRepository.Interfaces;
 using cherrys_construction_mvc.Interfaces;
 using cherrys_construction_mvc.Models;
+using cherrys_construction_mvc.Services.ImageSharp.Interface;
 using cherrys_construction_mvc.Specification.HeroSliderSpec;
 using cherrys_construction_mvc.Utility;
 using cherrys_construction_mvc.ViewModels.Requests;
@@ -17,12 +18,14 @@ namespace cherrys_construction_mvc.Services
         private readonly IHeroSliderImageService _imageService;
         private readonly IMapper _mapper;
         private readonly ILogger<HeroSliderService> _logger;
+        private readonly IImageProcessorService _imageProcessor;
         public HeroSliderService(IEfRepository<HeroSliderImage> heroSliderImageRepository,
             IEfRepository<HeroSlider> heroSliderRepository,
             IMapper mapper,
             IWebHostEnvironment webHostEnvironment,
             IHeroSliderImageService imageService,
-            ILogger<HeroSliderService> logger)
+            ILogger<HeroSliderService> logger,
+            IImageProcessorService imageProcessor)
         {
             _heroSliderRepository = heroSliderRepository;
             _heroSliderImageRepository = heroSliderImageRepository;
@@ -30,6 +33,7 @@ namespace cherrys_construction_mvc.Services
             _webHostEnvironment = webHostEnvironment;
             _imageService = imageService;
             _logger = logger;
+            _imageProcessor = imageProcessor;
         }
         public async Task CreateHeroSliderAsync(HeroSliderRequest request)
         {
@@ -46,7 +50,7 @@ namespace cherrys_construction_mvc.Services
                     {
                         var imageRequest = new HeroSliderImageRequest()
                         {
-                            PathImage = Helper.Helper.UploadImage(item, _webHostEnvironment, StaticDetails.LargeCoverImage).Result,
+                            PathImage = await _imageProcessor.ProcessImageAsync(item, _webHostEnvironment, StaticDetails.LargeCoverImage),
                             HeroSliderId = heroSlider.Id
                         };
                         await _imageService.CreateHeroSliderImageAsync(imageRequest);
@@ -110,7 +114,7 @@ namespace cherrys_construction_mvc.Services
                             {
                                 var imageRequest = new HeroSliderImageRequest()
                                 {
-                                    PathImage = Helper.Helper.UploadImage(item, _webHostEnvironment, StaticDetails.LargeCoverImage).Result,
+                                    PathImage = await _imageProcessor.ProcessImageAsync(item, _webHostEnvironment, StaticDetails.LargeCoverImage),
                                     HeroSliderId = heroSliderId
                                 };
                                 await _imageService.CreateHeroSliderImageAsync(imageRequest);
@@ -132,8 +136,7 @@ namespace cherrys_construction_mvc.Services
                                 {
                                     if (!string.IsNullOrWhiteSpace(imageForDelete.PathImage))
                                     {
-                                        var fullPathForDelete = _webHostEnvironment.WebRootPath + imageForDelete.PathImage;
-                                        Helper.Helper.DeleteImage(fullPathForDelete);
+                                        _imageProcessor.DeleteImage(_webHostEnvironment.WebRootPath, imageForDelete.PathImage);
                                     }                                   
                                     await _imageService.DeleteHeroSliderImageAsync(id);
                                 }
