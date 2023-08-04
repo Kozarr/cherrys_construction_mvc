@@ -1,8 +1,6 @@
 ﻿using cherrys_construction_mvc.Services.ImageSharp.Interface;
 using cherrys_construction_mvc.Utility;
-using Microsoft.AspNetCore.Hosting;
 using SixLabors.ImageSharp.Formats.Jpeg;
-using System.Security.Cryptography;
 
 namespace cherrys_construction_mvc.Services.ImageSharp
 {
@@ -36,7 +34,7 @@ namespace cherrys_construction_mvc.Services.ImageSharp
                 }
 
                 //default compression quality
-                int quality = 30;
+                int quality = 75;
 
                 //get aspect ration
                 int imageWidth, imageHeight;
@@ -53,7 +51,7 @@ namespace cherrys_construction_mvc.Services.ImageSharp
                 // ultra-wide image
                 if (aspectRatio > 1.9)
                 {
-                    quality = 25;
+                    quality = 85;
                     size = StaticDetails.UltrawideImage;
                 }
 
