@@ -34,24 +34,24 @@ namespace cherrys_construction_mvc.Areas.User.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            HomeViewModel homeResponce = new();
+            HomeViewModel homeResponse = new();
 
             // Call To Action Settings
             var ctaToReturn = await _callToActionSetting.GetCallToActionSettingsAsync();
             if (ctaToReturn.Any())
             {
                 var returnCTA = ctaToReturn.First();
-                homeResponce.CallToActionSettings = returnCTA;
+                homeResponse.CallToActionSettings = returnCTA;
             }
 
             var companyInfo = await _companyInfoService.GetCompanyInfosAsync();
             if (companyInfo.Any())
             {
                 var compInfo = companyInfo.First();
-                homeResponce.CompanyInfo = compInfo;
+                homeResponse.CompanyInfo = compInfo;
             }
 
-            return View(homeResponce);
+            return View(homeResponse);
         }
 
         [HttpPost]
