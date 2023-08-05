@@ -1,4 +1,5 @@
 ﻿using cherrys_construction_mvc.Interfaces;
+using cherrys_construction_mvc.ViewModels.Responce;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cherrys_construction_mvc.ViewComponents
@@ -12,15 +13,13 @@ namespace cherrys_construction_mvc.ViewComponents
         }
         public async Task<IViewComponentResult> InvokeAsync()
         {
+            List<TestimonyResponce> reviews = new();
             var testimonies = await _testimonyService.GetTestimoniesAsync();
             if(testimonies.Any())
             {
-                return View(testimonies);
+                reviews = testimonies.ToList();
             }
-            else
-            {
-                return View(null);
-            }
+            return View(reviews);
         }
     }
 }

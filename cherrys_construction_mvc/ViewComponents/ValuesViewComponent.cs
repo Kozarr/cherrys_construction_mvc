@@ -1,4 +1,5 @@
 ﻿using cherrys_construction_mvc.Interfaces;
+using cherrys_construction_mvc.ViewModels.Responce;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cherrys_construction_mvc.ViewComponents
@@ -12,12 +13,13 @@ namespace cherrys_construction_mvc.ViewComponents
         }
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var values = await _valuesService.GetCompanyValuesAsync();
-            if(values.Any())
+            List<CompanyValueResponce> values = new();
+            var valuesFromDb = await _valuesService.GetCompanyValuesAsync();
+            if(valuesFromDb.Any())
             {
-                return View(values);
+                values = valuesFromDb.ToList();
             }
-            return View(null);
+            return View(values);
         }
     }
 }
