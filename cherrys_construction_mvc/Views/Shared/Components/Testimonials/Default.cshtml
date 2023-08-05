@@ -1,8 +1,10 @@
 ﻿@model List<TestimonyResponce>
 
-@if(Model != null)
+@if (Model != null)
 {
-<!-- ======= Testimonials Section ======= -->
+    @if (Model.Any())
+    {
+        <!-- ======= Testimonials Section ======= -->
         <section id="testimonials" class="testimonials section">
             <div class="container" data-aos="fade-up">
 
@@ -15,34 +17,34 @@
 
                 <div class="slides-2 swiper">
                     <div class="swiper-wrapper">
-                        @if (Model.Any())
+
+                        @foreach (var item in Model)
                         {
-                            @foreach (var item in Model)
-                            {
-                                <div class="swiper-slide">
-                                    <div class="testimonial-wrap">
-                                        <div class="testimonial-item">
-                                            <img src="@item.ImageLink" class="testimonial-img" alt="">
-                                            <h3>@item.Name</h3>
-                                            <h4>@item.Position</h4>
-                                            <div class="stars">
-                                                @for (int star = 0; star != item.Stars; star++)
-                                                {
-                                                    <i class="bi bi-star-fill"></i>
-                                                }
-                                            </div>
-                                            <p>
-                                                @Html.Raw(@item.Description)
-                                            </p>
+                            <div class="swiper-slide">
+                                <div class="testimonial-wrap">
+                                    <div class="testimonial-item">
+                                        <img src="@item.ImageLink" class="testimonial-img" alt="">
+                                        <h3>@item.Name</h3>
+                                        <h4>@item.Position</h4>
+                                        <div class="stars">
+                                            @for (int star = 0; star != item.Stars; star++)
+                                            {
+                                                <i class="bi bi-star-fill"></i>
+                                            }
                                         </div>
+                                        <p>
+                                            @Html.Raw(@item.Description)
+                                        </p>
                                     </div>
                                 </div>
-                            }
+                            </div>
                         }
+
                     </div>
                     <div class="swiper-pagination"></div>
                 </div>
             </div>
-        </section>   
-    <!-- End Testimonials Section -->
+        </section>
+        <!-- End Testimonials Section -->
+    }
 }
