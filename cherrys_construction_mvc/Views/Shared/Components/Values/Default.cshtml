@@ -1,13 +1,15 @@
-﻿@model IEnumerable<CompanyValueResponce>
-<!-- ======= Company Values Features Section ======= -->
+﻿@model List<CompanyValueResponce>
+
 @if (Model != null)
 {
-    <section id="features" class="features section">
-        <div class="container" data-aos="fade-up" data-aos-delay="150">
-            @if (Model.Any())
-            {
-                int tabItem = 1;
-                int tabContentItem = 1;
+    @if (Model.Any())
+    {
+        int tabItem = 1;
+        int tabContentItem = 1;
+        <!-- ======= Company Values Features Section ======= -->
+        <section id="features" class="features section">
+            <div class="container" data-aos="fade-up" data-aos-delay="150">
+
                 <ul class="nav nav-tabs row g-2 d-flex">
                     @foreach (var item in Model)
                     {
@@ -92,8 +94,9 @@
                         tabContentItem += 1;
                     }
                 </div>
-            }
-        </div>
-    </section>
+
+            </div>
+        </section>
+        <!-- End Company Values Features Section -->
+    }
 }
-<!-- End Company Values Features Section -->

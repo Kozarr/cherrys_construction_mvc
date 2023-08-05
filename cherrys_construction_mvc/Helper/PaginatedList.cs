@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace cherrys_construction_mvc.Helper
+﻿namespace cherrys_construction_mvc.Helper
 {
     public class PaginatedList<T> : List<T>
     {
