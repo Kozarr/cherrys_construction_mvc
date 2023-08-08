@@ -6,10 +6,10 @@ namespace cherrys_construction_mvc.Models
     {
 
         public int Id { get; set; }
-        public string PathImage { get; set; }
+        public string? PathImage { get; set; }
 
         public int HeroSliderId { get; set; }
-        public HeroSlider HeroSlider { get; set; }
+        public HeroSlider? HeroSlider { get; set; }
 
 
     }

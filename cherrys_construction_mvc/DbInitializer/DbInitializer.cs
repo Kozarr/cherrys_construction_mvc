@@ -1,4 +1,5 @@
 ﻿using cherrys_construction_mvc.Data;
+using cherrys_construction_mvc.DbInitializer.Interface;
 using cherrys_construction_mvc.Models;
 using cherrys_construction_mvc.Utility;
 using Microsoft.AspNetCore.Identity;
