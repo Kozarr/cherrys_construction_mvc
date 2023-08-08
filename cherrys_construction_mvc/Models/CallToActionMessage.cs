@@ -11,7 +11,7 @@ namespace cherrys_construction_mvc.Models
         public string? Name { get; set; }
         [Required]
         [EmailAddress]
-        public string Email { get; set; }
+        public string? Email { get; set; }
         [Phone]
         public string? Phone { get; set; }
         [Required]

@@ -22,12 +22,22 @@ builder.Services.AddControllersWithViews();
 // Add services to the container.
 
 //Microsoft SQL Server Connection
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+//var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+//builder.Services.AddDbContext<ApplicationDbContext>(options =>
+//    options.UseSqlServer(connectionString));
 
+//Postgres Connection
+var connectionString = builder.Configuration.GetConnectionString("PostgresDbConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseNpgsql(connectionString));
 
-// Identity Configuration                                                                                           
+//Identity Configuration for Microsoft SQL Server                                                                                          
+//builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+//    .AddDefaultTokenProviders()
+//    .AddEntityFrameworkStores<ApplicationDbContext>()
+//    .AddDefaultUI();
+
+//Identity Configuration for Postgres
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddDefaultTokenProviders()
     .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -117,9 +127,7 @@ app.Run();
 
 void SeedDatabase()
 {
-    using (var scope = app.Services.CreateScope())
-    {
-        var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
-        dbInitializer.Initialize();
-    }
+    using var scope = app.Services.CreateScope();
+    var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+    dbInitializer.Initialize();
 }
