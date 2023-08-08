@@ -1,5 +1,6 @@
 using cherrys_construction_mvc.Data;
 using cherrys_construction_mvc.DbInitializer;
+using cherrys_construction_mvc.DbInitializer.Interface;
 using cherrys_construction_mvc.EfRepository;
 using cherrys_construction_mvc.EfRepository.Interfaces;
 using cherrys_construction_mvc.Helper;
@@ -19,7 +20,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 // Add services to the container.
+
+//Microsoft SQL Server Connection
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
@@ -64,8 +68,6 @@ builder.Services.AddScoped(typeof(IEfRepository<>), typeof(EfRepository<>));
 builder.Services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
 
 builder.Services.AddAutoMapper(typeof(AppMappingProfile));
-
-//builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {

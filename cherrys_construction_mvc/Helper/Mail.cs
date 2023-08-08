@@ -19,7 +19,6 @@ namespace cherrys_construction_mvc.Helper
         }
 
         // Send Grid Send Email
-
         public async Task SendGridEmail(IFormFile formFile, CallToActionMessageResponce message, CompanyInfoResponce passedInfo)
         {
             CompanyInfoResponce info = new();
@@ -40,8 +39,7 @@ namespace cherrys_construction_mvc.Helper
             try
             {
                 var client = new SendGridClient(StaticDetails.SendGridKey);
-                SendGridMessage msg = new SendGridMessage();
-
+                SendGridMessage msg = new();
                 var to = new EmailAddress(info.CompanyEmail, info.CompanyName);
                 var from = new EmailAddress(info.CompanyEmail, message.Name);
                 msg.AddTo(to);

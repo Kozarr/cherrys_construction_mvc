@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace cherrys_construction_mvc.DbInitializer
+namespace cherrys_construction_mvc.DbInitializer.Interface
 {
     public interface IDbInitializer
     {
