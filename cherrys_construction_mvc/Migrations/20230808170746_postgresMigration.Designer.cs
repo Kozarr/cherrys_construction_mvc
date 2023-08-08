@@ -2,9 +2,9 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using cherrys_construction_mvc.Data;
 
 #nullable disable
@@ -12,42 +12,41 @@ using cherrys_construction_mvc.Data;
 namespace cherrys_construction_mvc.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230731172416_testimonyProjectRelationshiptUpdate")]
-    partial class testimonyProjectRelationshiptUpdate
+    [Migration("20230808170746_postgresMigration")]
+    partial class postgresMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.8")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+                .HasAnnotation("ProductVersion", "7.0.10")
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+                        .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
                 });
@@ -56,19 +55,19 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("RoleId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -80,58 +79,58 @@ namespace cherrys_construction_mvc.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.HasKey("Id");
 
@@ -140,8 +139,7 @@ namespace cherrys_construction_mvc.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
 
@@ -154,19 +152,19 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -178,17 +176,17 @@ namespace cherrys_construction_mvc.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -200,10 +198,10 @@ namespace cherrys_construction_mvc.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -215,16 +213,16 @@ namespace cherrys_construction_mvc.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
@@ -235,12 +233,12 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -251,30 +249,30 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Author")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int?>("BlogCategoryId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ImageLink")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -285,29 +283,29 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Body")
                         .IsRequired()
                         .HasMaxLength(500000)
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("character varying(500000)");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Subject")
                         .IsRequired()
                         .HasMaxLength(140)
-                        .HasColumnType("nvarchar(140)");
+                        .HasColumnType("character varying(140)");
 
                     b.HasKey("Id");
 
@@ -318,27 +316,27 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ButtonText")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("FormDescription")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("FormTitle")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -349,16 +347,16 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -369,18 +367,18 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ImageLink")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -391,48 +389,48 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CompanyEmail")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("CompanyName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("CompanyPhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("FaceBookLink")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("FooterImageURL")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("InstagramLink")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("LinkedInLink")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("NavigationImageURL")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("SendButton")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ServiceArea")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("TwitterLink")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("YoutubeLink")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -443,16 +441,16 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -463,18 +461,18 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ImageLink")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -485,24 +483,24 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ArticleDescription")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ArticleSmallText")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ArticleTitle")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ImageLink")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -513,18 +511,18 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ImageLink")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -535,18 +533,18 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ButtonText")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -557,16 +555,15 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("HeroSliderId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("PathImage")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -579,15 +576,15 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("PathImage")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("ProjectId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -600,15 +597,15 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Body")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -619,24 +616,24 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ImageLink")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("InstagramLink")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Role")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -647,27 +644,27 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClientName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("ProjectEndDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("ProjectStartDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("ServiceTypeId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -677,15 +674,15 @@ namespace cherrys_construction_mvc.Migrations
             modelBuilder.Entity("cherrys_construction_mvc.Models.ProjectTag", b =>
                 {
                     b.Property<int>("ProjectId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnOrder(1);
 
                     b.Property<int>("TagId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnOrder(0);
 
                     b.Property<int>("Id")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("ProjectId", "TagId");
 
@@ -698,18 +695,18 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ImageLink")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -720,24 +717,24 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ImageLink")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("PageDescription")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("PageTitle")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -748,12 +745,12 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -764,27 +761,27 @@ namespace cherrys_construction_mvc.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ImageLink")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Position")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("ProjectId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Stars")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -799,20 +796,20 @@ namespace cherrys_construction_mvc.Migrations
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
                     b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("PostalCode")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("State")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("StreetAddress")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
@@ -911,11 +908,13 @@ namespace cherrys_construction_mvc.Migrations
 
             modelBuilder.Entity("cherrys_construction_mvc.Models.Testimony", b =>
                 {
-                    b.HasOne("cherrys_construction_mvc.Models.Project", null)
+                    b.HasOne("cherrys_construction_mvc.Models.Project", "CurrentProject")
                         .WithOne("Testimony")
                         .HasForeignKey("cherrys_construction_mvc.Models.Testimony", "ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("CurrentProject");
                 });
 
             modelBuilder.Entity("cherrys_construction_mvc.Models.HeroSlider", b =>
