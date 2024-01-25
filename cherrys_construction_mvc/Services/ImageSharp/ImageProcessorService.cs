@@ -1,6 +1,8 @@
 ﻿using cherrys_construction_mvc.Services.ImageSharp.Interface;
 using cherrys_construction_mvc.Utility;
+using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Jpeg;
+using SixLabors.ImageSharp.Processing;
 
 namespace cherrys_construction_mvc.Services.ImageSharp
 {
