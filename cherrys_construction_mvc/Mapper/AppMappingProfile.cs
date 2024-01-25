@@ -107,6 +107,8 @@ namespace cherrys_construction_mvc.Mapper
             _ = CreateMap<Service, ServiceRequest>();
             _ = CreateMap<ServiceRequest, Service>();
 
+            _ = CreateMap<ServiceResponce, ServiceRequest>().ReverseMap();
+
             #endregion
             #region CompanyStory
 
