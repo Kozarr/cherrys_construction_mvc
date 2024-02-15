@@ -85,6 +85,8 @@ builder.Services.AddSession(options =>
 
 var app = builder.Build();
 
+app.UseHttpsRedirection();
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -98,7 +100,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-SeedDatabase();
+//SeedDatabase();
 
 app.UseAuthentication();
 app.UseAuthorization();
