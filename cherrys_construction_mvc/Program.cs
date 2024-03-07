@@ -5,7 +5,6 @@ using cherrys_construction_mvc.EfRepository;
 using cherrys_construction_mvc.EfRepository.Interfaces;
 using cherrys_construction_mvc.Helper;
 using cherrys_construction_mvc.Interfaces;
-using cherrys_construction_mvc.Mapper;
 using cherrys_construction_mvc.Services;
 using cherrys_construction_mvc.Services.ImageSharp;
 using cherrys_construction_mvc.Services.ImageSharp.Interface;
@@ -66,7 +65,9 @@ builder.Services.AddScoped<IImageProcessorService, ImageProcessorService>();
 builder.Services.AddScoped(typeof(IEfRepository<>), typeof(EfRepository<>));
 builder.Services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
 
-builder.Services.AddAutoMapper(typeof(AppMappingProfile));
+//builder.Services.AddAutoMapper(typeof(AppMappingProfile));
+// AutoMapper
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
