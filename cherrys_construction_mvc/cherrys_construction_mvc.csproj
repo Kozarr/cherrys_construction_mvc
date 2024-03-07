@@ -92,6 +92,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="CompiledModels\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 

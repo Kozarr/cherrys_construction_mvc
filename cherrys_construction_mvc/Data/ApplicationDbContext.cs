@@ -46,6 +46,5 @@ namespace cherrys_construction_mvc.Data
                 .WithMany(c => c.ProjectTags)
                 .HasForeignKey(bc => bc.TagId);
         }
-
     }
 }

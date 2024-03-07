@@ -22,8 +22,9 @@ builder.Services.AddControllersWithViews();
 
 //Microsoft SQL Server Connection
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+builder.Services.AddDbContextPool<ApplicationDbContext>(options =>
+    options.UseModel(CompiledModels.ApplicationDbContextModel.Instance)
+    .UseSqlServer(connectionString));
 
 //Identity Configuration for Microsoft SQL Server                                                                                          
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
