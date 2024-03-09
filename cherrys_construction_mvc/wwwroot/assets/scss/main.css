@@ -1491,6 +1491,7 @@ section {
   box-shadow: rgba(0, 0, 0, 0.1) 10px 10px 4px;
   height: 100%;
   background-repeat: no-repeat;
+  min-width: 100%;
   /*        .member-img {
       position: relative;
       overflow: hidden;
