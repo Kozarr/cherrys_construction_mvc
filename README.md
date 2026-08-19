@@ -7,46 +7,45 @@
 
 ## 📖 About the Project
 
-Cherry's Construction MVC is a full-stack web application designed to streamline the digital presence and operational data for a construction business. Built on the MVC design pattern, it strictly separates the application logic, user interface, and data models to ensure scalability and maintainable code. 
+Cherry's Construction MVC is a full-stack web application designed to streamline the digital presence and operational data for a construction business. Built on the ASP.NET MVC framework, it strictly separates the application logic, user interface, and data models to ensure scalability, maintainability, and secure data handling.
 
 **Core Objectives:**
 * Provide a clean, intuitive interface for prospective clients to view construction services and past projects.
-* [Add another objective here, e.g., Manage internal project timelines / Accept customer inquiries / Track equipment].
-* Demonstrate clean architectural principles and secure data handling.
+* Demonstrate clean architectural principles, secure data handling, and structured routing.
+* Leverage relational database management for reliable business data storage.
 
 ## ✨ Features
 
-* **Dynamic Service Showcasing:** Users can browse through various construction and hauling services.
-* **MVC Architecture:** Clean separation of concerns making the codebase highly maintainable.
-* **Responsive Design:** Fully optimized for desktop and mobile viewing.
-* **[Feature 3]:** [e.g., Admin dashboard for managing project portfolios]
-* **[Feature 4]:** [e.g., Secure contact form with form validation and email routing]
+* **Dynamic Service Showcasing:** Users can browse through various construction services with a responsive, custom-styled frontend.
+* **MVC Architecture:** Clean separation of concerns using C# Controllers, Razor Views, and Data Models.
+* **Interactive UI:** Enhanced frontend functionality and dynamic DOM manipulation using vanilla JavaScript.
+* **Data Integration:** Seamlessly connects to a SQL Server database for dynamic content generation and data persistence.
 
 ## 🛠️ Tech Stack
 
-* **Architecture:** MVC (Model-View-Controller)
-* **Frontend:** [e.g., HTML5, SCSS/CSS3, JavaScript, Bootstrap/Tailwind]
-* **Backend:** [e.g., Node.js with Express / C# ASP.NET Core / Python Django]
-* **Database:** [e.g., PostgreSQL, MySQL, or MongoDB]
-* **Hosting/Deployment:** [e.g., Heroku, Vercel, AWS]
+* **Language:** C#
+* **Framework:** ASP.NET MVC
+* **Frontend:** HTML5, CSS3, JavaScript, Razor Syntax (`.cshtml`)
+* **Database:** Microsoft SQL Server
 
 ## 📂 Architecture Overview
 
-The project follows a strict MVC pattern:
-* **Models (`/models`):** Handles data logic, database schemas, and interactions with the database.
-* **Views (`/views`):** Contains the UI templates (e.g., EJS, Razor, Handlebars) rendered to the client.
-* **Controllers (`/controllers`):** Acts as the middleman, processing incoming requests, fetching data from models, and passing it to the views.
+The project follows the standard ASP.NET MVC pattern:
+* **Models (`/Models`):** C# classes representing the data schema and business logic, mapped to the SQL database.
+* **Views (`/Views`):** Razor templates (`.cshtml`), combined with HTML/CSS/JS, that render the user interface dynamically based on Model data.
+* **Controllers (`/Controllers`):** C# classes that handle incoming HTTP requests, interact with the database via Models, and return the appropriate Views.
 
 ## 🚀 Getting Started
 
-Follow these instructions to set up the project locally on your machine.
+Follow these instructions to set up the project locally. 
 
 ### Prerequisites
-* [e.g., Node.js installed (v16+)]
-* [e.g., Local instance of MySQL or PostgreSQL running]
+* Visual Studio (2019 or 2022 recommended) with the "ASP.NET and web development" workload installed.
+* SQL Server installed locally (or SQL Server Express).
 
-### Installation
+### Installation & Setup
 
 1. **Clone the repository**
+   Open your terminal or Git Bash and run:
    ```bash
    git clone [https://github.com/Kozarr/cherrys_construction_mvc.git](https://github.com/Kozarr/cherrys_construction_mvc.git)
